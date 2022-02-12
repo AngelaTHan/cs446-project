@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable;
+package uwaterloo.cs446group7.myapplication;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("uwaterloo.cs446group7.increpeable", appContext.getPackageName());
+        assertEquals("uwaterloo.cs446group7.myapplication", appContext.getPackageName());
     }
 }
