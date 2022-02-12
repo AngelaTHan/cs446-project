@@ -1,9 +1,8 @@
-# cs446-project
-# group 7
+# cs446-project group 7
 
 ## Table of Contents
 ###### Get Data from Server
-'''
+```
 	logIn(str: username, str: password)
   	getProfile(str: username)
 	viewPost(str: username, str: article_id)
@@ -11,10 +10,10 @@
 	createPage(str: username)
 	getHomePage(str: username)
 	viewNotification(str: username)
-'''
+```
 	
 ###### Save Data to Server
-'''
+```
 	checkName(str: name)
 	createAccount(str: name, str: password, image: abe.jpg, str: description)
 	likePost(str: article_id, str: username)
@@ -23,18 +22,18 @@
 	createNewPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)
 	saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)
 	followAuthor(str:username, str: authorName)
-'''
+```
 ###### Details
 **Login –logIn(str: username, str: password)**
-'''
+```
 {
   Username:xxx,
   Password:xxx,
 }
-'''
+```
 
 **My profile, View A Post -> View Author Profile – getProfile(str: username)**
-'''
+```
 {
   Username:xxx,
   Description: “mhnafhawo“,
@@ -69,7 +68,7 @@
     …
   ]
 }
-'''
+```
 
 **My Profile –>View A Post – viewPost(str: usrname, str: article id)** 
 {
