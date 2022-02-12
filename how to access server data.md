@@ -1,5 +1,3 @@
-# cs446-project group 7
-
 ## Table of Contents
 ###### Get Data from Server
 ```
@@ -23,7 +21,7 @@
 	saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)
 	followAuthor(str:username, str: authorName)
 ```
-###### Details
+## Details
 **Login –logIn(str: username, str: password)**
 ```
 {
@@ -71,6 +69,7 @@
 ```
 
 **My Profile –>View A Post – viewPost(str: usrname, str: article id)** 
+```
 {
   My own post: true / false,
   Article id: 18h3n9snj,
@@ -93,8 +92,10 @@
   ],
   Comment number: 333
 }
+```
 
 **View A Post –>Comment – readComments(str: article_id)**
+```
 {
   [
     Comment1: {
@@ -109,8 +110,10 @@
     …
   ]
 }
+```
 
 **Create New Page -> createPage(str: username)**
+```
 {
   Continue last edit: false 
 }  
@@ -129,8 +132,10 @@ Or
     …
   ]
 }
+```
 
 **Home Page – getHomePage(str: username)**
+```
 {
   New notifications: true / false,
   Recommended posts: [
@@ -144,8 +149,10 @@ Or
     …
   ]
 }
+```
   
 **Home Page –> View Notifications – viewNotification(str: username)**
+```
 {
   [
     N1: {
@@ -156,46 +163,63 @@ Or
     }
   ]
 }
+```
 
 **Registration –> check whether a username has been used – checkName(str: name)**
+```
 {
   canUse: true / false
 }
+```
 
 **Registration -> save all information and create new account – createAccount(str: name, str: password, image: abe.jpg, str: description)**
+```
 {
   Account created: true / false
 }
+```
 
 **View A Post -> like the post - likePost(str: article_id, str: username)**
+```
 {
   Action succussed: true/false,
   Post likes: number
 }
+```
 
 **View A Post –> collect the post – collectPost(str: article_id, str: username)**
+```
 {
   Action succussed: true/false,
   Post collects: number
 }
+```
 
 **View Post Comments -> make a comment – addComment(str: username, str: article_id, str: comment)**
+```
 {
   Action succussed: true / false
 }
+```
 
 **View A Post -> follow the author – followAuthor(str:username, str: authorName)**
+```
 {
   Action succussed: true / false
 }
+```
 
 **Create New Post –> new post – createNewPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
+```
 {
   Action succussed: true / false,
   Article id: number
 }
+```
 
 **Create New Post –> save post – saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
+```
 {
   Action succussed: true / false
 }
+```
