@@ -1,8 +1,8 @@
 # cs446-project
 # group 7
 
-# Table of Contents
-## Get Data from Server
+## Table of Contents
+###### Get Data from Server
 	logIn(str: username, str: password)
   getProfile(str: username)
 	viewPost(str: username, str: article_id)
@@ -11,7 +11,7 @@
 	getHomePage(str: username)
 	viewNotification(str: username)
 	
-## Save Data to Server
+###### Save Data to Server
 	checkName(str: name)
 	createAccount(str: name, str: password, image: abe.jpg, str: description)
 	likePost(str: article_id, str: username)
