@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.myapplication;
+package uwaterloo.cs446group7.increpeable;
 
 import org.junit.Test;
 
