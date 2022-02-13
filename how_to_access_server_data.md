@@ -1,5 +1,10 @@
+# Functions to interact with the Database
+This document includes all functions that the frontend (pages) can call to read / write from the database. They're roughly divided into two categories:
+- Functions to read from the db
+- Functions to write to db.
+
 ## Table of Contents
-###### Get Data from Server
+###### Functions to read from db
 ```
 	logIn(str: username, str: password)
   	getProfile(str: username)
@@ -10,7 +15,7 @@
 	viewNotification(str: username)
 ```
 	
-###### Save Data to Server
+###### Functions to write to db
 ```
 	checkName(str: name)
 	createAccount(str: name, str: password, image: abe.jpg, str: description)
@@ -21,8 +26,10 @@
 	saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)
 	followAuthor(str:username, str: authorName)
 ```
-## Details
-**Login –logIn(str: username, str: password)**
+
+## Function details - Database Read Functions
+
+**logIn(str: username, str: password)**
 ```
 {
   Username:xxx,
@@ -30,7 +37,7 @@
 }
 ```
 
-**My profile, View A Post -> View Author Profile – getProfile(str: username)**
+**getProfile(str: username)**
 ```
 {
   Username:xxx,
@@ -68,7 +75,7 @@
 }
 ```
 
-**My Profile –>View A Post – viewPost(str: usrname, str: article id)** 
+**viewPost(str: usrname, str: article id)** 
 ```
 {
   My own post: true / false,
@@ -94,7 +101,7 @@
 }
 ```
 
-**View A Post –>Comment – readComments(str: article_id)**
+**readComments(str: article_id)**
 ```
 {
   [
@@ -112,7 +119,7 @@
 }
 ```
 
-**Create New Page -> createPage(str: username)**
+**createPage(str: username)**
 ```
 {
   Continue last edit: false 
@@ -134,7 +141,7 @@ Or
 }
 ```
 
-**Home Page – getHomePage(str: username)**
+**getHomePage(str: username)**
 ```
 {
   New notifications: true / false,
@@ -151,7 +158,7 @@ Or
 }
 ```
   
-**Home Page –> View Notifications – viewNotification(str: username)**
+**viewNotification(str: username)**
 ```
 {
   [
@@ -165,21 +172,23 @@ Or
 }
 ```
 
-**Registration –> check whether a username has been used – checkName(str: name)**
+## Function details - Database Write Functions
+
+**checkName(str: name)**
 ```
 {
   canUse: true / false
 }
 ```
 
-**Registration -> save all information and create new account – createAccount(str: name, str: password, image: abe.jpg, str: description)**
+**createAccount(str: name, str: password, image: abe.jpg, str: description)**
 ```
 {
   Account created: true / false
 }
 ```
 
-**View A Post -> like the post - likePost(str: article_id, str: username)**
+**likePost(str: article_id, str: username)**
 ```
 {
   Action succussed: true/false,
@@ -187,7 +196,7 @@ Or
 }
 ```
 
-**View A Post –> collect the post – collectPost(str: article_id, str: username)**
+**collectPost(str: article_id, str: username)**
 ```
 {
   Action succussed: true/false,
@@ -195,21 +204,21 @@ Or
 }
 ```
 
-**View Post Comments -> make a comment – addComment(str: username, str: article_id, str: comment)**
+**addComment(str: username, str: article_id, str: comment)**
 ```
 {
   Action succussed: true / false
 }
 ```
 
-**View A Post -> follow the author – followAuthor(str:username, str: authorName)**
+**followAuthor(str:username, str: authorName)**
 ```
 {
   Action succussed: true / false
 }
 ```
 
-**Create New Post –> new post – createNewPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
+**createNewPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
 ```
 {
   Action succussed: true / false,
@@ -217,7 +226,7 @@ Or
 }
 ```
 
-**Create New Post –> save post – saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
+**saveCurPost(str: username, str: title, str: summary, str:location, Arrary of [(str, str)]: ingredients, Array of [(str, image)]: steps)**
 ```
 {
   Action succussed: true / false
