@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'realm-android'
 }
 
 android {
@@ -26,10 +25,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
-
-realm {
-    syncEnabled = true
 }
 
 dependencies {

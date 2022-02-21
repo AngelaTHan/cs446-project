@@ -4,9 +4,6 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath "io.realm:realm-gradle-plugin:10.10.1"
-    }
 }
 
 plugins {
