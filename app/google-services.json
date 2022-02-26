@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "195492603032",
+    "project_id": "cs446increpeable-720c5",
+    "storage_bucket": "cs446increpeable-720c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195492603032:android:ef772c1f21368433191ced",
+        "android_client_info": {
+          "package_name": "uwaterloo.cs446group7.increpeable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195492603032-h7oiscmk7cbm6661ua1osgeccm5t7hbb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uwaterloo.cs446group7.increpeable",
+            "certificate_hash": "b5ff4be500dd76dbd6c04c127bdd8b6c67d792a3"
+          }
+        },
+        {
+          "client_id": "195492603032-kkubfd5m5b15eg2ej83qnqkgjm2igj6a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5N9jd6X9xnZfb0mKiJZFUeHFNNE3eQoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "195492603032-kkubfd5m5b15eg2ej83qnqkgjm2igj6a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
