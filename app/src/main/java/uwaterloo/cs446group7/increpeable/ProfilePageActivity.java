@@ -1,51 +1,58 @@
 package uwaterloo.cs446group7.increpeable;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import uwaterloo.cs446group7.increpeable.databinding.ActivityProfilePageBinding;
-
 public class ProfilePageActivity extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityProfilePageBinding binding;
+    private static final int PICK_IMAGE = 100;
+    private ImageView profileImage;
+    private EditText username;
+    private EditText userBio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+        
+        // profile user interactions
+        profileImage = findViewById(R.id.profile_image);
+        username = findViewById(R.id.username);
+        userBio = findViewById(R.id.userBio);
 
-        binding = ActivityProfilePageBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        // load profile information
+        profileImage.setImageDrawable(getResources().getDrawable(R.drawable.gordon));
+        username.setText("Gordon Ramsay");
+        userBio.setText("Gordon is a British chef, restaurateur, television personality, and " +
+                "writer. His global restaurant group was founded in 2000 and has been awarded " +
+                "16 Michelin stars overall.");
 
-        setSupportActionBar(binding.toolbar);
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_profile_page);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent GalleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(GalleryIntent, PICK_IMAGE);
             }
         });
+
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_profile_page);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            Uri imageUri = data.getData();
+            profileImage.setImageURI(imageUri);
+        }
     }
 }
