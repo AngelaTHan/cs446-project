@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Switch to Login page. For development / debug purposes, feel free to change this to
         // your page.
-        Intent intent = new Intent(this, ProfilePageActivity.class);
+
+        Intent intent = new Intent(this, homeActivity.class);
         startActivity(intent);
 
     }

@@ -15,6 +15,9 @@
             android:label="@string/title_activity_profile_page"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
+            android:name=".homeActivity"
+            android:exported="false" />
+        <activity
             android:name=".AuthenticationActivity"
             android:exported="false" />
         <activity
