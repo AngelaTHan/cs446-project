@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
+
     private void loginUserAccount() {
         String email = loginEmailInput.getText().toString();
         String password = loginPasswordInput.getText().toString();
@@ -216,6 +217,35 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+    }
+
+    // After signed into google and firebase, check whether user is a first-time user.
+    // First time user -> Personal profile page
+    // Registered user -> Home page
+    private void checkRegistered(FirebaseUser user) {
+        String user_email = user.getEmail();
+//        if (false){
+        if (registered_users.contains(user_email)) {
+            System.out.println("user found");
+            // intent to home page, also passes user info
+//            Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
+//            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
+//            intent.putExtra("username", user.getDisplayName())
+//            startActivity(intent);
+        } else {
+            // first time user
+            User save_new_user = new User(user.getEmail(), user.getDisplayName(), "Click to edit your description...", user.getPhotoUrl().toString());
+            String user_key = mDatabase.child(USER)
+                    .push()
+                    .getKey();
+            save_new_user.setKey(user_key);
+            mDatabase.child("UserAccounts").child(user_key).setValue(save_new_user);
+            System.out.println("first time user saved");
+            save_new_user.setUsername("change to Kevin");
+            System.out.println("changed username");
+//            Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
+//            startActivity(intent);
+        }
     }
 
     private void showErrorToast(Exception e) {
