@@ -10,6 +10,11 @@
         <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/content_authentication.xml" value="0.30932971014492755" />
         <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/fragment_first.xml" value="0.30932971014492755" />
         <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/fragment_second.xml" value="0.30932971014492755" />
+        <entry key="app/src/main/res/drawable/ic_baseline_mic_24px.xml" value="0.1645" />
+        <entry key="app/src/main/res/layout/activity_authentication.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
+        <entry key="app/src/main/res/layout/content_play.xml" value="0.14375" />
+        <entry key="app/src/main/res/menu/activity_play_drawer.xml" value="0.14375" />
       </map>
     </option>
   </component>

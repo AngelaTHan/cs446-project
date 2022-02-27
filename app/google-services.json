@@ -1,41 +1,79 @@
 {
   "project_info": {
-    "project_number": "195492603032",
-    "project_id": "cs446increpeable-720c5",
-    "storage_bucket": "cs446increpeable-720c5.appspot.com"
+    "project_number": "1075063855951",
+    "firebase_url": "https://playchat-ba480-default-rtdb.firebaseio.com",
+    "project_id": "playchat-ba480",
+    "storage_bucket": "playchat-ba480.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:195492603032:android:ef772c1f21368433191ced",
+        "mobilesdk_app_id": "1:1075063855951:android:b64988222b698cbd6c433a",
         "android_client_info": {
-          "package_name": "uwaterloo.cs446group7.increpeable"
+          "package_name": "com.google.cloud.solutions.flexenv"
         }
       },
       "oauth_client": [
         {
-          "client_id": "195492603032-h7oiscmk7cbm6661ua1osgeccm5t7hbb.apps.googleusercontent.com",
+          "client_id": "1075063855951-5av2gm54tpt7e210ne5ava6kagps1ls0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "uwaterloo.cs446group7.increpeable",
-            "certificate_hash": "b5ff4be500dd76dbd6c04c127bdd8b6c67d792a3"
+            "package_name": "com.google.cloud.solutions.flexenv",
+            "certificate_hash": "dcc873038dda5e86714a06ec6144716d94237bf4"
           }
         },
         {
-          "client_id": "195492603032-kkubfd5m5b15eg2ej83qnqkgjm2igj6a.apps.googleusercontent.com",
+          "client_id": "1075063855951-k5is7tqjofgluvffuhvpmmhe15jhgub8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5N9jd6X9xnZfb0mKiJZFUeHFNNE3eQoo"
+          "current_key": "AIzaSyAvdX25Qm6OL8W2fkk8PA6xub-FY3bJpPM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "195492603032-kkubfd5m5b15eg2ej83qnqkgjm2igj6a.apps.googleusercontent.com",
+              "client_id": "1075063855951-k5is7tqjofgluvffuhvpmmhe15jhgub8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075063855951:android:f2fc28d05cc3b6126c433a",
+        "android_client_info": {
+          "package_name": "uwaterloo.cs446group7.increpeable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075063855951-us9qvja4gpt19ss8khum411i05e2j6ju.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uwaterloo.cs446group7.increpeable",
+            "certificate_hash": "dcc873038dda5e86714a06ec6144716d94237bf4"
+          }
+        },
+        {
+          "client_id": "1075063855951-k5is7tqjofgluvffuhvpmmhe15jhgub8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvdX25Qm6OL8W2fkk8PA6xub-FY3bJpPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075063855951-k5is7tqjofgluvffuhvpmmhe15jhgub8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
