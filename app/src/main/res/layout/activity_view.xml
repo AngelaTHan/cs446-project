@@ -109,7 +109,7 @@
                     <TextView
                         android:id="@+id/viewPostAuthorName"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
+                        android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:layout_gravity="left|center"
                         android:layout_marginLeft="75dp"
@@ -117,6 +117,21 @@
                         android:textColor="@android:color/black"
                         android:textSize="15sp"
                         android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:paddingVertical="2dp"
+                        android:ellipsize="end"
+                        android:layout_gravity="right|center"
+                        android:layout_marginRight="25dp"
+                        android:text="Follow"
+                        android:textColor="@color/red"
+                        android:textSize="14sp"
+                        android:textAllCaps="false"
+                        app:strokeColor="@color/red"
+                        app:strokeWidth="2dp"/>
 
                 </FrameLayout>
 
@@ -272,7 +287,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <Button
+            <Button style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/like"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -286,7 +301,7 @@
                 android:textAllCaps="false"
                 app:iconSize="30dp"/>
 
-            <Button
+            <Button style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/collect"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -300,7 +315,7 @@
                 android:textAllCaps="false"
                 app:iconSize="30dp"/>
 
-            <Button
+            <Button style="?android:attr/borderlessButtonStyle"
                 android:id="@+id/comment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
