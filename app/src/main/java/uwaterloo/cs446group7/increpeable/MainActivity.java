@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = new Intent(this, ProfilePageActivity.class);
         startActivity(intent);
-
         // Initialize google sign in service
 //        initGoogleLogin();
 
@@ -162,10 +161,14 @@ public class MainActivity extends AppCompatActivity
         } else {
             // first time user
             User save_new_user = new User(user.getEmail(), user.getDisplayName(), "Click to edit your description...", user.getPhotoUrl().toString());
-            mDatabase.child(USER)
+            String user_key = mDatabase.child(USER)
                     .push()
-                    .setValue(save_new_user);
+                    .getKey();
+            save_new_user.setKey(user_key);
+            mDatabase.child("UserAccounts").child(user_key).setValue(save_new_user);
             System.out.println("first time user saved");
+            save_new_user.setUsername("change to Kevin");
+            System.out.println("changed username");
 //            Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
 //            startActivity(intent);
         }
