@@ -3,15 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/drawable/ic_launcher_background.xml" value="0.352" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/activity_authentication.xml" value="0.30932971014492755" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/activity_authentication2.xml" value="0.31145833333333334" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/activity_main.xml" value="0.296875" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/content_authentication.xml" value="0.30932971014492755" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/fragment_first.xml" value="0.30932971014492755" />
-        <entry key="..\:/Study/4ABC/Winter 22/CS446/increpeable/app/src/main/res/layout/fragment_second.xml" value="0.30932971014492755" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.36" />
+        <entry key="app/src/main/res/drawable/round_button.xml" value="0.2005" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.44067028985507245" />
+        <entry key="app/src/main/res/drawable/custom_rectangle.xml" value="0.281" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.4689165186500888" />
+        <entry key="app/src/main/res/layout/custom_rectangle.xml" value="0.2866847826086957" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.212" />
         <entry key="app/src/main/res/drawable/ic_baseline_mic_24px.xml" value="0.1645" />
-        <entry key="app/src/main/res/layout/activity_authentication.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
         <entry key="app/src/main/res/layout/content_play.xml" value="0.14375" />
         <entry key="app/src/main/res/menu/activity_play_drawer.xml" value="0.14375" />
@@ -24,5 +24,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.3313008130081301" />
+      </ProjectState>
+    </option>
   </component>
 </project>
