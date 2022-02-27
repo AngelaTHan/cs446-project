@@ -46,14 +46,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_profile);
+
+        Intent intent = new Intent(this, ProfilePageActivity.class);
+        startActivity(intent);
 
         // Initialize google sign in service
-        initGoogleLogin();
+//        initGoogleLogin();
 
         // Fetch registered users from database; This will be used to check if current user
         // is a first-time user, and switch to an Activity accordingly.
-        getRegisteredUsers();
+//        getRegisteredUsers();
     }
 
     @Override
