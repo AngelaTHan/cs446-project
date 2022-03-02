@@ -19,6 +19,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private ImageView profileImage;
     private EditText username;
     private EditText userBio;
+    private ImageView home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,16 @@ public class ProfilePageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent GalleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(GalleryIntent, PICK_IMAGE);
+            }
+        });
+
+        // bottom bar interactions
+        home = findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goHomeIntent = new Intent(ProfilePageActivity.this, homeActivity.class);
+                startActivity(goHomeIntent);
             }
         });
 
