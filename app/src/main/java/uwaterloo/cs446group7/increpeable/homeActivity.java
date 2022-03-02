@@ -20,8 +20,9 @@ public class homeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goHomeIntent = new Intent(homeActivity.this, ProfilePageActivity.class);
-                startActivity(goHomeIntent);
+                Intent goProfileIntent = new Intent(homeActivity.this, ProfilePageActivity.class);
+                goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goProfileIntent, 0);
             }
         });
     }

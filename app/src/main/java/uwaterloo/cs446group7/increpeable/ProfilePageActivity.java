@@ -52,7 +52,8 @@ public class ProfilePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent goHomeIntent = new Intent(ProfilePageActivity.this, homeActivity.class);
-                startActivity(goHomeIntent);
+                goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goHomeIntent, 0);
             }
         });
 
