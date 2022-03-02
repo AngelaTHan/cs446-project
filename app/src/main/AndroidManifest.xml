@@ -12,11 +12,11 @@
         <activity
             android:name=".ProfilePageActivity"
             android:exported="false"
-            android:label="@string/title_activity_profile_page"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".homeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".ViewPageActivity"
             android:exported="false"
