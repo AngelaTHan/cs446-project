@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        Intent intent = new Intent(this, ProfilePageActivity.class);
+        Intent intent = new Intent(this, ViewPageActivity.class);
         startActivity(intent);
 
         // Initialize google sign in service
