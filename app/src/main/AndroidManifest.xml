@@ -18,6 +18,10 @@
             android:name=".homeActivity"
             android:exported="false" />
         <activity
+            android:name=".ViewPageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
