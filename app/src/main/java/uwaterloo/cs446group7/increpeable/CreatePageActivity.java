@@ -1,7 +1,6 @@
 package uwaterloo.cs446group7.increpeable;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +51,7 @@ public class CreatePageActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goPostIntent = new Intent(CreatePageActivity.this, ProfilePageActivity.class);
+                Intent goPostIntent = new Intent(CreatePageActivity.this, HomePageActivity.class);
                 goPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goPostIntent, 0);
             }

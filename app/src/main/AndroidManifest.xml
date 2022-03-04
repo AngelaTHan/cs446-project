@@ -19,7 +19,7 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".homeActivity"
+            android:name=".HomePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity

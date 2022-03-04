@@ -198,8 +198,7 @@
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/mypost"
-                app:tint="#FF0000" />
+                app:srcCompat="@drawable/mypost" />
 
             <ImageView
                 android:id="@+id/collections"
