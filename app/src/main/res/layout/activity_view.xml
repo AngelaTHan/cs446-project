@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="30dp"
-        android:text="Likes 28.7k      Collects 1.4k"
+        android:text="Likes 1.1M      Collects 987k"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -94,7 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/profile" />
+                    app:srcCompat="@drawable/gordon" />
 
             </androidx.cardview.widget.CardView>
 

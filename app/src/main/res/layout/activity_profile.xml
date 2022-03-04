@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="1,000"
+                    android:text="12.8M"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="1,000,000"
+                    android:text="200M"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -198,8 +198,7 @@
                 android:paddingTop="10sp"
                 android:paddingBottom="10sp"
                 android:scaleType="fitCenter"
-                app:srcCompat="@drawable/mypost"
-                app:tint="#FF0000" />
+                app:srcCompat="@drawable/mypost" />
 
             <ImageView
                 android:id="@+id/collections"

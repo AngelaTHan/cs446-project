@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable;
+package uwaterloo.cs446group6.increpeable;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-public class homeActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity {
     private ImageView profile;
     private ImageView createPost;
 
@@ -21,7 +21,7 @@ public class homeActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goProfileIntent = new Intent(homeActivity.this, ProfilePageActivity.class);
+                Intent goProfileIntent = new Intent(HomePageActivity.this, ProfilePageActivity.class);
                 goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goProfileIntent, 0);
             }
@@ -32,7 +32,7 @@ public class homeActivity extends AppCompatActivity {
         createPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goCreatePostIntent = new Intent(homeActivity.this, CreatePageActivity.class);
+                Intent goCreatePostIntent = new Intent(HomePageActivity.this, CreatePageActivity.class);
                 goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goCreatePostIntent, 0);
             }

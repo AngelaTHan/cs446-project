@@ -1,12 +1,11 @@
-package uwaterloo.cs446group7.increpeable;
+package uwaterloo.cs446group6.increpeable;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 //import androidx.activity.result.ActivityResultCallback;
@@ -22,6 +21,8 @@ public class ProfilePageActivity extends AppCompatActivity {
     private ImageView home;
     private ImageView newPost;
     private ImageView post1image;
+    private ImageView myPosts;
+    private ImageView collections;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goHomeIntent = new Intent(ProfilePageActivity.this, homeActivity.class);
+                Intent goHomeIntent = new Intent(ProfilePageActivity.this, HomePageActivity.class);
                 goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goHomeIntent, 0);
             }
@@ -80,6 +81,26 @@ public class ProfilePageActivity extends AppCompatActivity {
                 Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
                 goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goViewPostIntent, 0);
+            }
+        });
+
+        // my post and collection interaction
+        myPosts = findViewById(R.id.myPosts);
+        collections = findViewById(R.id.collections);
+        myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
+        collections.setColorFilter(Color.argb(255, 0, 0, 0));
+        myPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                collections.setColorFilter(Color.argb(255, 0, 0, 0));
+                myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
+            }
+        });
+        collections.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myPosts.setColorFilter(Color.argb(255, 0, 0, 0));
+                collections.setColorFilter(Color.argb(255, 255, 0, 0));
             }
         });
 
