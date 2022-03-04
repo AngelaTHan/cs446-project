@@ -19,6 +19,9 @@ public class ProfilePageActivity extends AppCompatActivity {
     private ImageView profileImage;
     private EditText username;
     private EditText userBio;
+    private ImageView home;
+    private ImageView newPost;
+    private ImageView post1image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class ProfilePageActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         userBio = findViewById(R.id.userBio);
+        newPost = findViewById(R.id.newPost);
+        post1image = findViewById(R.id.post1image);
 
         // load profile information
         profileImage.setImageDrawable(getResources().getDrawable(R.drawable.gordon));
@@ -42,6 +47,39 @@ public class ProfilePageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent GalleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(GalleryIntent, PICK_IMAGE);
+            }
+        });
+
+        // bottom bar interactions
+        home = findViewById(R.id.home);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goHomeIntent = new Intent(ProfilePageActivity.this, homeActivity.class);
+                goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goHomeIntent, 0);
+            }
+        });
+
+        // create recipe interaction
+        newPost = findViewById(R.id.newPost);
+        newPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goCreatePostIntent = new Intent(ProfilePageActivity.this, CreatePageActivity.class);
+                goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goCreatePostIntent, 0);
+            }
+        });
+
+        // view beef wellington recipe interaction
+        post1image = findViewById(R.id.post1image);
+        post1image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goViewPostIntent, 0);
             }
         });
 

@@ -262,7 +262,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/seafood" />
+                        app:srcCompat="@drawable/wellington" />
 
                     <TextView
                         android:id="@+id/post1title"
@@ -271,7 +271,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Seafood Spaghetti"
+                        android:text="Beef Wellington"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -320,7 +320,7 @@
                         android:layout_weight="5"
                         android:gravity="center"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/wellington" />
+                        app:srcCompat="@drawable/seafood" />
 
                     <TextView
                         android:id="@+id/post2title"
@@ -329,7 +329,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Beef Wellington"
+                        android:text="Seafood Spaghetti"
                         android:textStyle="bold" />
 
                     <LinearLayout

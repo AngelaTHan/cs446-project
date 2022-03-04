@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //Remove title bar
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
