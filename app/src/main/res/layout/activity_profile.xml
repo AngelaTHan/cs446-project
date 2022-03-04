@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="1,000"
+                    android:text="12.8M"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:text="1,000,000"
+                    android:text="200M"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textSize="18sp"
                     android:textStyle="bold" />

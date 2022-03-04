@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable.databaseClasses;
+package uwaterloo.cs446group6.increpeable.databaseClasses;
 
 import com.google.firebase.database.FirebaseDatabase;
 

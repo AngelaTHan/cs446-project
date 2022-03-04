@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable;
+package uwaterloo.cs446group6.increpeable;
 
 import androidx.appcompat.app.AppCompatActivity;
 

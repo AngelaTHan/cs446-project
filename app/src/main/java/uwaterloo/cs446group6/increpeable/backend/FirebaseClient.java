@@ -1,10 +1,10 @@
-package uwaterloo.cs446group7.increpeable.backend;
+package uwaterloo.cs446group6.increpeable.backend;
 
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 
-import uwaterloo.cs446group7.increpeable.databaseClasses.User;
+import uwaterloo.cs446group6.increpeable.databaseClasses.User;
 
 public class FirebaseClient {
 //            Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
