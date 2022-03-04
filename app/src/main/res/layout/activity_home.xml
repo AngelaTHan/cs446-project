@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".homeActivity">
+
+    <ImageView
+        android:id="@+id/searchBox"
+        android:layout_width="284dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="20dp"
+        android:background="#198A8A8A"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/custom_rectangle" />
+
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="215dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Search Recipes or Ingredients Here"
+        android:textColor="#D88A8A8A"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBox"
+        app:layout_constraintEnd_toEndOf="@+id/searchBox"
+        app:layout_constraintTop_toTopOf="@+id/searchBox"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="32dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchText"
+        app:layout_constraintEnd_toStartOf="@+id/searchText"
+        app:layout_constraintStart_toStartOf="@+id/searchBox"
+        app:layout_constraintTop_toTopOf="@+id/searchBox"
+        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+
+    <ImageButton
+        android:id="@+id/notif"
+        android:layout_width="34dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="#FFFFFF"
+        android:foregroundTint="#FFFFFF"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/postScollWrapper"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.26"
+        app:layout_constraintStart_toEndOf="@+id/searchBox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/notification"
+        app:tint="#050505"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ScrollView
+        android:id="@+id/postScollWrapper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchText">
+
+        <LinearLayout
+            android:id="@+id/postLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/post1"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:cardBackgroundColor="#258A8A8A"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post1TextBox"
+                    android:layout_width="256dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/post1Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Potluck Chopped Salad"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post1Intro"
+                        android:layout_width="220dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="4"
+                        android:text="This style of salad is a staple of Hmong potlucks. It was one of the first things that new Hmong immigrants learned to make ..."
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.432"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post1Name"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/post1Like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="104dp"
+                        android:layout_marginTop="1dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post1Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/likes" />
+
+                    <ImageView
+                        android:id="@+id/post1Collect"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="70dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post1Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/collects" />
+
+                    <TextView
+                        android:id="@+id/post1LikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="30.7k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post1Like"
+                        app:layout_constraintTop_toBottomOf="@+id/post1Intro"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/post1CollectNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="1.4k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post1Collect"
+                        app:layout_constraintTop_toBottomOf="@+id/post1Intro"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/post1Image"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/post_image_1" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:id="@+id/space1"
+                android:layout_width="match_parent"
+                android:layout_height="3dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/post2"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:cardBackgroundColor="#258A8A8A"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post2TextBox"
+                    android:layout_width="256dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/post2Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Mushroom YouFan"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post2Intro"
+                        android:layout_width="220dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="4"
+                        android:text="This Taiwanese steamed sticky rice dish is made with glutinous rice mixed together with lots of savory seasonings and often dried ingredients"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.432"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post2Name"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/post2Like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="104dp"
+                        android:layout_marginTop="1dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post2Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/likes" />
+
+                    <ImageView
+                        android:id="@+id/post2Collect"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="70dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post2Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/collects" />
+
+                    <TextView
+                        android:id="@+id/post2LikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="11.2k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post2Like"
+                        app:layout_constraintTop_toBottomOf="@+id/post2Intro"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/post2CollectNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="996"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post2Collect"
+                        app:layout_constraintTop_toBottomOf="@+id/post2Intro"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/post2Image"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/post_image_2" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:id="@+id/space2"
+                android:layout_width="match_parent"
+                android:layout_height="3dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/post3"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:cardBackgroundColor="#258A8A8A"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post3TextBox"
+                    android:layout_width="256dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/post3Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Wali Ya Mboga"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post3Intro"
+                        android:layout_width="220dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="4"
+                        android:text="This is everything we want in a hearty, cozy meal: Tender yogurt-marinated chicken in an aromatic tomato curry, lots of caramelized onion, and  rice."
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.432"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post3Name"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/post3Like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="104dp"
+                        android:layout_marginTop="1dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post3Intro"
+                        app:layout_constraintVertical_bias="0.25"
+                        app:srcCompat="@drawable/likes" />
+
+                    <ImageView
+                        android:id="@+id/post3Collect"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="70dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post3Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/collects" />
+
+                    <TextView
+                        android:id="@+id/post3LikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="123k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/post3Collect"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/post3Like"
+                        app:layout_constraintTop_toBottomOf="@+id/post3Intro"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/post3CollectNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="12.6k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post3Collect"
+                        app:layout_constraintTop_toBottomOf="@+id/post3Intro"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/post3Image"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/post_image_3" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:id="@+id/space3"
+                android:layout_width="match_parent"
+                android:layout_height="3dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/post4"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:cardBackgroundColor="#258A8A8A"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post4TextBox"
+                    android:layout_width="256dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/post4Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Basic Crepes"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post4Intro"
+                        android:layout_width="220dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="4"
+                        android:text="This easy crepe recipe from French chef Ludo Lefebvre makes enough for a party or leftovers"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.432"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post4Name"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/post4Like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="104dp"
+                        android:layout_marginTop="1dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post4Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/likes" />
+
+                    <ImageView
+                        android:id="@+id/post4Collect"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="70dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post4Intro"
+                        app:layout_constraintVertical_bias="0.25"
+                        app:srcCompat="@drawable/collects" />
+
+                    <TextView
+                        android:id="@+id/post4LikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="330k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/post4Collect"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/post4Like"
+                        app:layout_constraintTop_toBottomOf="@+id/post4Intro"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/post4CollectNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="21.4k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post4Collect"
+                        app:layout_constraintTop_toBottomOf="@+id/post4Intro"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/post4Image"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/post_image_4" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:id="@+id/space4"
+                android:layout_width="match_parent"
+                android:layout_height="3dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/post5"
+                android:layout_width="match_parent"
+                android:layout_height="137dp"
+                app:cardBackgroundColor="#258A8A8A"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/post5TextBox"
+                    android:layout_width="256dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/post5Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Special Steamed Whole Fish"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post5Intro"
+                        android:layout_width="220dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLines="4"
+                        android:text="A showstopping whole fish is a Lunar New Year staple. This version is straightforward yet stunning and doesn’t require any special equipment."
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.432"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post5Name"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                        android:id="@+id/post5Like"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="104dp"
+                        android:layout_marginTop="1dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post5Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/likes" />
+
+                    <ImageView
+                        android:id="@+id/post5Collect"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="70dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/post5Intro"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/collects" />
+
+                    <TextView
+                        android:id="@+id/post5LikeNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="1.2k"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/post5Collect"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toEndOf="@+id/post5Like"
+                        app:layout_constraintTop_toBottomOf="@+id/post5Intro"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/post5CollectNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:maxLength="6"
+                        android:text="187"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/post5Collect"
+                        app:layout_constraintTop_toBottomOf="@+id/post5Intro"
+                        app:layout_constraintVertical_bias="0.666" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <ImageView
+                    android:id="@+id/post5Image"
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/post_image_5" />
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/homeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@drawable/home_icon" />
+
+        <ImageView
+            android:id="@+id/postButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="-10dp"
+            app:srcCompat="@drawable/post_icon" />
+
+        <ImageView
+            android:id="@+id/profileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:srcCompat="@drawable/profile_icon" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
