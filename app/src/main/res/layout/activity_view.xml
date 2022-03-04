@@ -118,12 +118,10 @@
                 android:layout_marginRight="25dp"
                 android:ellipsize="end"
                 android:paddingVertical="2dp"
+                android:backgroundTint="@color/red"
                 android:text="Follow"
                 android:textAllCaps="false"
-                android:textColor="@color/red"
-                android:textSize="14sp"
-                app:strokeColor="@color/red"
-                app:strokeWidth="2dp" />
+                android:textSize="14sp" />
 
         </FrameLayout>
 
@@ -282,7 +280,7 @@
     app:layout_constraintStart_toStartOf="parent">
 
     <Button
-        android:id="@+id/like"
+        android:id="@+id/like2"
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -290,11 +288,11 @@
         android:gravity="left|center_vertical"
         android:text="like"
         android:textAllCaps="false"
-        android:textColor="@color/grey_500"
+        android:textColor="@color/dark_gray"
         android:textSize="14sp"
         app:icon="@drawable/like"
         app:iconSize="30dp"
-        app:iconTint="@color/grey_500" />
+        app:iconTint="@color/dark_gray" />
 
     <Button
         android:id="@+id/collect"
@@ -305,11 +303,11 @@
         android:gravity="left|center_vertical"
         android:text="collect"
         android:textAllCaps="false"
-        android:textColor="@color/grey_500"
+        android:textColor="@color/dark_gray"
         android:textSize="14sp"
         app:icon="@drawable/collect"
         app:iconSize="30dp"
-        app:iconTint="@color/grey_500" />
+        app:iconTint="@color/dark_gray" />
 
     <Button
         android:id="@+id/comment"
@@ -320,11 +318,11 @@
         android:gravity="left|center_vertical"
         android:text="comment"
         android:textAllCaps="false"
-        android:textColor="@color/grey_500"
+        android:textColor="@color/dark_gray"
         android:textSize="14sp"
         app:icon="@drawable/comment"
         app:iconSize="22dp"
-        app:iconTint="@color/grey_500" />
+        app:iconTint="@color/dark_gray" />
 
 </LinearLayout>
 
