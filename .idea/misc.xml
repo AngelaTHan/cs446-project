@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_mic_24px.xml" value="0.1645" />
+        <entry key="app/src/main/res/layout/activity_authentication.xml" value="0.19375" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.36" />
         <entry key="app/src/main/res/drawable/custom_rectangle.xml" value="0.281" />
         <entry key="app/src/main/res/drawable/ic_baseline_mic_24px.xml" value="0.1645" />
