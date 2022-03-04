@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 public class homeActivity extends AppCompatActivity {
     private ImageView profile;
+    private ImageView createPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,17 @@ public class homeActivity extends AppCompatActivity {
                 Intent goProfileIntent = new Intent(homeActivity.this, ProfilePageActivity.class);
                 goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goProfileIntent, 0);
+            }
+        });
+
+        // create recipe interaction
+        createPost = findViewById(R.id.postButton);
+        createPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goCreatePostIntent = new Intent(homeActivity.this, CreatePageActivity.class);
+                goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goCreatePostIntent, 0);
             }
         });
     }

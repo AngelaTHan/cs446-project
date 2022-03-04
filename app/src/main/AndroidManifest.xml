@@ -9,8 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+
         <activity
             android:name=".ProfilePageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name=".CreatePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
