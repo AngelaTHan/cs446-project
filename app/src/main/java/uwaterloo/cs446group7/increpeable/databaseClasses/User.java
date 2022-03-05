@@ -2,6 +2,7 @@ package uwaterloo.cs446group7.increpeable.databaseClasses;
 
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,10 +14,7 @@ public class User {
     private Integer numLikes = 0;
     private Integer numFollowers = 0;
     private String key;
-//    private RealmList<ObjectId> myPostIDs;
-//    private RealmList<ObjectId> collectedPostIDs;
-//    private RealmList<ObjectId> followerIDs;
-//    private RealmList<ObjectId> followingIDs;
+    private ArrayList<String> postIDs = new ArrayList<String>();
 
     public User() {}
 
@@ -35,11 +33,7 @@ public class User {
     public Integer getNumFollowers() { return numFollowers; }
     public String getEmail() { return email; }
     public String getKey() { return key; }
-
-//    public RealmList<ObjectId> getMyPostIDs() { return myPostIDs; }
-//    public RealmList<ObjectId> getCollectedPostIDs() { return collectedPostIDs; }
-//    public RealmList<ObjectId> getFollowerIDs() { return followerIDs; }
-//    public RealmList<ObjectId> getFollowingIDs() { return followingIDs; }
+    public ArrayList<String> getPostIDs() { return postIDs; }
 
     // setters
     public void setUsername(String username) {
@@ -55,14 +49,22 @@ public class User {
         FirebaseDatabase.getInstance().getReference().child("UserAccounts").child(key).updateChildren(postValues);
     }
     public void setDescription(String description) { this.description = description; }
-    public void setProfileImageURL(String profileImageURL) { this.profileImageURL = profileImageURL; }
+    public void setProfileImageURL(String profileImageURL) {
+        this.profileImageURL = profileImageURL;
+        Map<String, Object> postValues = new HashMap<String,Object>();
+        postValues.put("description", description);
+        postValues.put("email", email);
+        postValues.put("key", key);
+        postValues.put("numFollowers", numFollowers);
+        postValues.put("numLikes", numLikes);
+        postValues.put("profileImageURL", profileImageURL);
+        postValues.put("username", username);
+        FirebaseDatabase.getInstance().getReference().child("UserAccounts").child(key).updateChildren(postValues);
+    }
     public void setNumLikes(Integer numLikes) { this.numLikes = numLikes; }
     public void setNumFollowers(Integer numFollowers) { this.numFollowers = numFollowers; }
     public void setEmail(String email) { this.email = email; }
     public void setKey(String key) { this.key = key; } // this function should only be called once
+    public void setPostIDs(ArrayList<String> postIDs) { this.postIDs = postIDs; }
 
-//    public void setMyPostIDs(RealmList<ObjectId> myPostIDs) { this.myPostIDs = myPostIDs; }
-//    public void setCollectedPostIDs(RealmList<ObjectId> collectedPostIDs) { this.collectedPostIDs = collectedPostIDs; }
-//    public void setFollowerIDs(RealmList<ObjectId> followerIDs) { this.followerIDs = followerIDs; }
-//    public void setFollowingIDs(RealmList<ObjectId> followingIDs) { this.followingIDs = followingIDs; }
 } 
