@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
 
 import android.util.Log;
 import android.util.Pair;
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
 //        riversRef.putFile(file);
 
         super.onCreate(savedInstanceState);
+
         //Remove title bar
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -162,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
 //
 // Fetch registered users from database; This will be used to check if current user
         // is a first-time user, and switch to an Activity accordingly.
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 //        getRegisteredUsers();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         initializeUI();
         setOnClickListeners();
@@ -241,7 +244,9 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUserAccount();
+//                loginUserAccount();
+                Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+                startActivity(intent);
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +272,8 @@ public class MainActivity extends AppCompatActivity {
     private void registerUserAccount() {
         String email = registerEmailInput.getText().toString();
         String password = registerPasswordInput.getText().toString();
+        String username = registerUsernameInput.getText().toString();
+        Log.i(TAG, "Start to register user account with: " + email + " " + password);
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -275,6 +282,18 @@ public class MainActivity extends AppCompatActivity {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "createUserWithEmail:success");
                         FirebaseUser user = mAuth.getCurrentUser();
+
+                        // Insert user information into database
+                        User save_new_user = new User(email, username, "Click to edit your description...", "");
+                        String user_key = mDatabase.child(USER)
+                                .push()
+                                .getKey();
+                        save_new_user.setKey(user_key);
+                        mDatabase.child("UserAccounts").child(user_key).setValue(save_new_user);
+
+//                        FirebaseClient();
+//                        Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+//                        startActivity(intent);
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -288,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
     private void loginUserAccount() {
         String email = loginEmailInput.getText().toString();
         String password = loginPasswordInput.getText().toString();
-        System.out.println("login user account");
+        Log.i(TAG, "Start to login user account with: " + email + " " + password);
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
