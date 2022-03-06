@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 //import androidx.activity.result.ActivityResultCallback;
@@ -55,7 +53,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goHomeIntent = new Intent(ProfilePageActivity.this, homeActivity.class);
+                Intent goHomeIntent = new Intent(ProfilePageActivity.this, HomeActivity.class);
                 goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goHomeIntent, 0);
             }

@@ -106,10 +106,10 @@
         android:text="Email address"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logoImage"
         android:layout_width="218dp"
         android:layout_height="196dp"
         android:layout_marginStart="84dp"
@@ -184,7 +184,7 @@
         android:layout_marginTop="16dp"
         android:text="Email address"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logoImage" />
 
     <EditText
         android:id="@+id/LoginEmailInput"
@@ -196,6 +196,14 @@
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LoginEmailLabel" />
+
+    <ImageView
+        android:id="@+id/collect_solid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/collect_solid"
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="-89dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

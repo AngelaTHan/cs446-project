@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeActivity">
+    tools:context=".HomeActivity">
 
     <ImageView
         android:id="@+id/searchBox"
@@ -190,7 +190,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
-                    android:id="@+id/logo"
+                    android:id="@+id/logoImage"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
                     app:srcCompat="@drawable/post_image_1" />
