@@ -18,11 +18,10 @@ public class DB_User {
 
     public DB_User() {}
 
-    public DB_User(DatabaseReference mDatabase, String email, String username, String key) {
+    public DB_User(String email, String username, String key) {
         this.email = email;
         this.username = username;
         this.key = key;
-        mDatabase.child("UserAccounts").child(key).setValue(this);
     }
 
     // getters
@@ -37,6 +36,11 @@ public class DB_User {
     public ArrayList<String> getCollectedPostIDs() { return collectedPostIDs; }
     public ArrayList<String> getFollowerIDs() { return followerIDs; }
     public ArrayList<String> getFollowingIDs() { return followingIDs; }
+
+    // Register myself into database
+    public void registerUser(DatabaseReference mDatabase) {
+        mDatabase.child("UserAccounts").child(key).setValue(this);
+    }
 
     // setters
     public void setUsername(DatabaseReference mDatabase, String username) {

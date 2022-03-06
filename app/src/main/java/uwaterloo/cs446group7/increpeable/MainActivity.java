@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MAIN_ACTIVITY";
     private static final String USER = "UserAccounts";
     private FirebaseClient firebaseClient;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private ArrayList<String> registeredUsers = new ArrayList<>();
 
     private TextView registerPasswordLabel;
     private EditText registerPasswordInput;
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         setOnClickListeners();
 
         firebaseClient = FirebaseClient.getInstance();
+
+        getRegisterUsers();
     }
 
 
@@ -188,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public boolean loginUserAccount(String email, String password) {
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -198,6 +202,28 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
+
+                        // get current user
+                        mDatabase.child("UserAccounts").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e(TAG, "Error getting all registered users data", task.getException());
+                                }
+                                else {
+                                    DataSnapshot result_ds = task.getResult(); // result_ds is all users in database
+                                    for (DataSnapshot ds : result_ds.getChildren()) {
+                                        System.out.println(ds.child("email").getValue(String.class) + " " + email);
+                                        if (ds.child("email").getValue(String.class).equals(email)) {
+                                            System.out.println("foudj! " + email);
+                                            firebaseClient.setCurrentDBUser(ds.getValue(DB_User.class));
+                                            break;
+                                        }
+                                    }
+                                    Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
+                                }
+                            }
+                        });
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         startActivity(intent);
                     } else {
@@ -225,8 +251,10 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("MainActivity", "createUserWithEmail:success");
                         // Insert user information into database
                         String user_key = UUID.randomUUID().toString();
-                        DB_User save_new_DB_user = new DB_User(mDatabase, email, username, user_key);
+                        DB_User save_new_DB_user = new DB_User(email, username, user_key);
+                        save_new_DB_user.registerUser(mDatabase);
                         mDatabase.child("UserAccounts").child(user_key).setValue(save_new_DB_user);
+                        firebaseClient.setCurrentDBUser(save_new_DB_user);
                         Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
                         startActivity(intent);
                     } else {
@@ -248,5 +276,9 @@ public class MainActivity extends AppCompatActivity {
                 e.getLocalizedMessage(),
                 Toast.LENGTH_LONG).show()
         );
+    }
+
+    public void getRegisterUsers() {
+
     }
 }
