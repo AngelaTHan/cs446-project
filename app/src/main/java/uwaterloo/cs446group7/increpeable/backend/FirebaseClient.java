@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,6 +36,7 @@ public class FirebaseClient {
     private FirebaseClient() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
         this.fileStorageEngine = new FileStorageEngine();
+        this.mAuth = FirebaseAuth.getInstance();
     }
 
     public static FirebaseClient getInstance() {
@@ -46,44 +48,28 @@ public class FirebaseClient {
 
 //    public DB_User getCurrentUser() { return currentDBUser; }
 
-    public boolean loginUserAccount(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(LOG_TAG, "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(LOG_TAG, "signInWithEmail:failure", task.getException());
-                    }
-                }
-            });
-        return true;
-    }
+//    public boolean loginUserAccount(String email, String password) {
+//        mAuth.signInWithEmailAndPassword(email, password)
+//            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()) {
+//                        // Sign in success, update UI with the signed-in user's information
+//                        Log.d(LOG_TAG, "signInWithEmail:success");
+//                        FirebaseUser user = mAuth.getCurrentUser();
+//                    } else {
+//                        // If sign in fails, display a message to the user.
+//                        Log.w(LOG_TAG, "signInWithEmail:failure", task.getException());
+//                    }
+//                }
+//            });
+//        return true;
+//    }
 
-    public boolean registerUserAccount(String email, String password, String username) {
-        Log.i(LOG_TAG, "Start to register user account with: " + email + " " + username);
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Log.d(LOG_TAG, "createUserWithEmail:success");
 
-                        // Insert user information into database
-                        String user_key = UUID.randomUUID().toString();
-                        DB_User save_new_DB_user = new DB_User(mDatabase, email, username, user_key);
-                        mDatabase.child("UserAccounts").child(user_key).setValue(save_new_DB_user);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(LOG_TAG, "createUserWithEmail:failure", task.getException());
-                    }
-                }
-            });
-        return true;
+
+    public void refreshUser(String userid) {
+        DatabaseReference tmp = mDatabase.child("UserAccounts").child(userid);
     }
 }
 

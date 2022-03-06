@@ -197,13 +197,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LoginEmailLabel" />
 
-    <ImageView
-        android:id="@+id/collect_solid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/collect_solid"
-        tools:layout_editor_absoluteX="136dp"
-        tools:layout_editor_absoluteY="-89dp" />
+<!--    <ImageView-->
+<!--        android:id="@+id/collect_solid"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:srcCompat="@drawable/collect_solid"-->
+<!--        tools:layout_editor_absoluteX="136dp"-->
+<!--        tools:layout_editor_absoluteY="-89dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
