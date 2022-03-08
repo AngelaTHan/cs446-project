@@ -17,7 +17,6 @@ This document includes all functions that the frontend (pages) can call to read 
 	
 ###### Functions to write to db
 ```
-	checkName(str: name)
 	createAccount(str: name, str: password, image: abe.jpg, str: description)
 	likePost(str: article_id, str: username)
 	collectPost(str: article_id, str: username)
@@ -173,13 +172,6 @@ Or
 ```
 
 ## Function details - Database Write Functions
-
-**checkName(str: name)**
-```
-{
-  canUse: true / false
-}
-```
 
 **createAccount(str: name, str: password, image: abe.jpg, str: description)**
 ```
