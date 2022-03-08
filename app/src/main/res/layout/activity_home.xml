@@ -190,7 +190,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
-                    android:id="@+id/logo"
+                    android:id="@+id/logoImage"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
                     app:srcCompat="@drawable/post_image_1" />

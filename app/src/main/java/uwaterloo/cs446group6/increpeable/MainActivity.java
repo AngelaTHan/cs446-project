@@ -1,10 +1,22 @@
 package uwaterloo.cs446group6.increpeable;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import uwaterloo.cs446group7.increpeable.User.DB_User;
+import uwaterloo.cs446group7.increpeable.backend.FirebaseClient;
+
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -12,26 +24,37 @@ import com.google.firebase.auth.FirebaseUser;
 import uwaterloo.cs446group6.increpeable.databaseClasses.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class MainActivity extends AppCompatActivity {
 //    private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "Firebase";
+    private static final String TAG = "MAIN_ACTIVITY";
     private static final String USER = "UserAccounts";
-//    private GoogleSignInClient mGoogleSignInClient;
-    private DatabaseReference mDatabase;
-    private FirebaseAuth mAuth;
-//    private static ArrayList<String> registered_users = new ArrayList<>();
+    private FirebaseClient firebaseClient;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private ArrayList<String> registeredUsers = new ArrayList<>();
 
     private TextView registerPasswordLabel;
     private EditText registerPasswordInput;
@@ -56,43 +79,34 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<View> registerViews = new ArrayList<>();
     ArrayList<View> loginViews = new ArrayList<>();
 
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    // Create a storage reference from our app
+    StorageReference storageRef = storage.getReference();
+    StorageReference imagesRef = storageRef.child("images");
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Remove title bar
-//        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        //Remove notification bar
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        //set content view AFTER ABOVE sequence (to avoid crash)
         this.setContentView(R.layout.activity_main);
 
-        // Initialize google sign in service
-//        initGoogleLogin();
-
-//        Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
-////        intent.putExtra("username", user.getDisplayName())
-//        startActivity(intent);
-//
-//
-// Fetch registered users from database; This will be used to check if current user
-        // is a first-time user, and switch to an Activity accordingly.
-//        getRegisteredUsers();
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
         initializeUI();
         setOnClickListeners();
+
+        firebaseClient = FirebaseClient.getInstance();
+
+        getRegisterUsers();
     }
+
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
-    private void toLogin() {
+    private void toLoginUI() {
         for (View view: registerViews) {
             view.setVisibility(View.INVISIBLE);
         }
@@ -101,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void toRegister() {
+    private void toRegisterUI() {
         for (View view: loginViews) {
             view.setVisibility(View.INVISIBLE);
         }
@@ -152,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
         loginViews.add(toRegisterLabel);
         loginViews.add(loginAccountLabel);
 
-        toLogin();
+        toLoginUI();
     }
 
     private void setOnClickListeners() {
@@ -160,104 +174,108 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                loginUserAccount();
+                /*
                 Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                 startActivity(intent);
+                */
+                loginUserAccount(loginEmailInput.getText().toString(),
+                        loginPasswordInput.getText().toString());
             }
         });
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUserAccount();
+                registerUserAccount(registerEmailInput.getText().toString(), registerPasswordInput.getText().toString(), registerUsernameInput.getText().toString());
             }
         });
         toRegisterLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toRegister();
+                toRegisterUI();
             }
         });
         toLoginLabel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toLogin();
+                toLoginUI();
             }
         });
     }
-
-    private void registerUserAccount() {
-        String email = registerEmailInput.getText().toString();
-        String password = registerPasswordInput.getText().toString();
-        String username = registerUsernameInput.getText().toString();
-        Log.i(TAG, "Start to register user account with: " + email + " " + password);
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-
-                        // Insert user information into database
-                        User save_new_user = new User(email, username, "Click to edit your description...", "");
-                        String user_key = mDatabase.child(USER)
-                                .push()
-                                .getKey();
-                        save_new_user.setKey(user_key);
-                        mDatabase.child("UserAccounts").child(user_key).setValue(save_new_user);
-
-//                        FirebaseClient();
-//                        Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
-//                        startActivity(intent);
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                        showErrorToast(task.getException());
-                    }
-                }
-            });
-    }
-
-
-    private void loginUserAccount() {
-        String email = loginEmailInput.getText().toString();
-        String password = loginPasswordInput.getText().toString();
-        Log.i(TAG, "Start to login user account with: " + email + " " + password);
+    public boolean loginUserAccount(String email, String password) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
+
+                        // get current user
+                        mDatabase.child("UserAccounts").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e(TAG, "Error getting all registered users data", task.getException());
+                                }
+                                else {
+                                    DataSnapshot result_ds = task.getResult(); // result_ds is all users in database
+                                    for (DataSnapshot ds : result_ds.getChildren()) {
+                                        if (ds.child("email").getValue(String.class).equals(email)) {
+                                            firebaseClient.setCurrentDBUser(ds.getValue(DB_User.class));
+                                            break;
+                                        }
+                                    }
+                                    Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
                     } else {
+                        runOnUiThread( () -> {
+                            Toast.makeText(MainActivity.this, "Login failed.",
+                                Toast.LENGTH_SHORT).show();
+                        });
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        showErrorToast(task.getException());
                     }
                 }
             });
+        return true;
     }
 
-    // After signed into google and firebase, check whether user is a first-time user.
-    // First time user -> Personal profile page
-    // Registered user -> Home page
-    private void checkRegistered(FirebaseUser user) {
-        String user_email = user.getEmail();
-//        if (false){
-//        if (registered_users.contains(user_email)) {
-            System.out.println("user found");
-            // intent to home page, also passes user info
-//            Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
-//            Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
-//            intent.putExtra("username", user.getDisplayName())
-//            startActivity(intent);
-//        } else {
-//
-//        }
+    public boolean registerUserAccount(String email, String password, String username) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Log.i("MainActivity", "Start to register user account with: " + email + " " + username);
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    System.out.println("checkpoint 4");
+                    if (task.isSuccessful()) {
+                        Log.d("MainActivity", "createUserWithEmail:success");
+                        // Insert user information into database
+                        String user_key = UUID.randomUUID().toString();
+                        DB_User save_new_DB_user = new DB_User(email, username, user_key);
+                        save_new_DB_user.registerUser(mDatabase);
+                        mDatabase.child("UserAccounts").child(user_key).setValue(save_new_DB_user);
+                        firebaseClient.setCurrentDBUser(save_new_DB_user);
+                        Intent intent = new Intent(MainActivity.this, ProfilePageActivity.class);
+                        startActivity(intent);
+                    } else {
+                        runOnUiThread( () -> {
+                            Toast.makeText(MainActivity.this, "Registration failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        });
+                        Log.w("MainActivity", "createUserWithEmail:failure", task.getException());
+                    }
+                    System.out.println("register completed");
+                }
+            });
+        return true;
     }
-
     private void showErrorToast(Exception e) {
         runOnUiThread(
             () -> Toast.makeText(
@@ -265,5 +283,9 @@ public class MainActivity extends AppCompatActivity {
                 e.getLocalizedMessage(),
                 Toast.LENGTH_LONG).show()
         );
+    }
+
+    public void getRegisterUsers() {
+
     }
 }
