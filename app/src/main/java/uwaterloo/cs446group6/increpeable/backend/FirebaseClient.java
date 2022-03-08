@@ -1,31 +1,21 @@
 package uwaterloo.cs446group6.increpeable.backend;
 
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import uwaterloo.cs446group6.increpeable.databaseClasses.User;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.UUID;
-import android.os.Handler;
+import uwaterloo.cs446group6.increpeable.Users.User;
 
-import uwaterloo.cs446group7.increpeable.HomeActivity;
-import uwaterloo.cs446group7.increpeable.MainActivity;
-import uwaterloo.cs446group7.increpeable.Recipe.DB_Recipe;
-import uwaterloo.cs446group7.increpeable.Recipe.Recipe;
-import uwaterloo.cs446group7.increpeable.User.DB_User;
-import uwaterloo.cs446group7.increpeable.User.User;
+import java.util.ArrayList;
+
+import uwaterloo.cs446group6.increpeable.Recipe.*;
 
 public class FirebaseClient {
     private static FirebaseClient firebaseClient;
@@ -37,7 +27,7 @@ public class FirebaseClient {
     private int startFrom = 0;
 
     // Cache
-    private DB_User currentUser;
+    private uwaterloo.cs446group6.increpeable.Users.DB_User currentUser;
 //    private DB_Recipe currentRecipe; we don't need that
     private ArrayList<DB_Recipe> currentRecipes = new ArrayList<>(); // Recipes for this class, can change values
     public ArrayList<Recipe> recipesToReturn = new ArrayList<>(); // Recipes return to the frontend, cannot change values
@@ -55,7 +45,7 @@ public class FirebaseClient {
         return firebaseClient;
     }
 
-    public void setCurrentDBUser(DB_User user) {
+    public void setCurrentDBUser(uwaterloo.cs446group6.increpeable.Users.DB_User user) {
         System.out.println("Setting curernt user in firebase client");
         this.currentUser = user;
     }

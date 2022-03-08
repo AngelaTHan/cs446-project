@@ -13,8 +13,8 @@ import android.widget.ImageView;
 //import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
-import uwaterloo.cs446group7.increpeable.User.User;
-import uwaterloo.cs446group7.increpeable.backend.FirebaseClient;
+import uwaterloo.cs446group6.increpeable.Users.User;
+import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
 
 public class ProfilePageActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;

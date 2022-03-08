@@ -7,9 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
+import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
+import uwaterloo.cs446group6.increpeable.Users.User;
+import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
+
 public class HomePageActivity extends AppCompatActivity {
     private ImageView profile;
     private ImageView createPost;
+
+    FirebaseClient firebaseClient;
+    User currentUser;
+    ArrayList<Recipe> currentRecipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +31,7 @@ public class HomePageActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goProfileIntent = new Intent(HomePageActivity.this, ProfilePageActivity.class);
+                Intent goProfileIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, ProfilePageActivity.class);
                 goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goProfileIntent, 0);
             }
@@ -32,10 +42,36 @@ public class HomePageActivity extends AppCompatActivity {
         createPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goCreatePostIntent = new Intent(HomePageActivity.this, CreatePageActivity.class);
+                Intent goCreatePostIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, CreatePageActivity.class);
                 goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goCreatePostIntent, 0);
             }
         });
+
+        // Example: uses firebaseClient to get data
+//        firebaseClient = FirebaseClient.getInstance();
+//        currentUser = firebaseClient.getCurrentUser();
+////        firebaseClient.getRecommendedRecipes(1);
+//        ArrayList<String> ids = new ArrayList<>();
+//        ids.add("-MxbcLk3zwIqHMUsKeWE");
+//        firebaseClient.getRecipesByID(ids, 1);
+//        System.out.println("checkpoint 6");
+////        try {
+////            Thread.sleep(10000);
+////        } catch (InterruptedException e) {
+////            e.printStackTrace();
+////        }
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            public void run() {
+//                // yourMethod();
+//                currentRecipes = firebaseClient.getUpdatedRecipeList();
+//                System.out.println("checkpoint 7");
+//                System.out.println("Recipe size " + currentRecipes.size());
+//                System.out.println("Recipe content " + currentRecipes.get(0).getTitle());
+//            }
+//        }, 5000);
+////        currentRecipes = firebaseClient.getUpdatedRecipeList();
+//        System.out.println("checkpoint 8");
     }
 }

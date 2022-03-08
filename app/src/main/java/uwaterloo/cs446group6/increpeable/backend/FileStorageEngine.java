@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable.backend;
+package uwaterloo.cs446group6.increpeable.backend;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

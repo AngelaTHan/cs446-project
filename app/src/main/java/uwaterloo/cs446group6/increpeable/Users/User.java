@@ -1,6 +1,5 @@
-package uwaterloo.cs446group7.increpeable.User;
+package uwaterloo.cs446group6.increpeable.Users;
 
-import com.google.firebase.database.DatabaseReference;
 import java.util.ArrayList;
 
 public class User {

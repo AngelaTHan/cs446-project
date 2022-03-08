@@ -1,52 +1,35 @@
 package uwaterloo.cs446group6.increpeable;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 
-import uwaterloo.cs446group7.increpeable.User.DB_User;
-import uwaterloo.cs446group7.increpeable.backend.FirebaseClient;
+import uwaterloo.cs446group6.increpeable.Users.DB_User;
+import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import uwaterloo.cs446group6.increpeable.databaseClasses.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 
 public class MainActivity extends AppCompatActivity {
 //    private static final int RC_SIGN_IN = 9001;
@@ -228,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                     Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
-                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                                     startActivity(intent);
                                 }
                             }

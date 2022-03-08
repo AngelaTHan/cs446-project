@@ -1,4 +1,4 @@
-package uwaterloo.cs446group7.increpeable.Recipe;
+package uwaterloo.cs446group6.increpeable.Recipe;
 
 import com.google.firebase.database.DatabaseReference;
 

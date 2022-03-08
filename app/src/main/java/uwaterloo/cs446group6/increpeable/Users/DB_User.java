@@ -1,6 +1,8 @@
-package uwaterloo.cs446group7.increpeable.User;
+package uwaterloo.cs446group6.increpeable.Users;
 
 import com.google.firebase.database.DatabaseReference;
+
+import uwaterloo.cs446group6.increpeable.Users.User;
 
 public class DB_User extends User {
     public DB_User() {}
