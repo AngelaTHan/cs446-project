@@ -1,41 +1,13 @@
 package uwaterloo.cs446group7.increpeable.User;
 
 import com.google.firebase.database.DatabaseReference;
-import java.util.ArrayList;
 
-public class DB_User {
-    private String key;
-    private String email; // cannot be changed
-    private String username;
-    private String description="";
-    private String profileImageName="";
-    private Integer numLikes = 0;
-    private Integer numFollowers = 0;
-    private ArrayList<String> myPostIDs = new ArrayList<String>();
-    private ArrayList<String> collectedPostIDs = new ArrayList<String>();
-    private ArrayList<String> followerIDs = new ArrayList<String>();
-    private ArrayList<String> followingIDs = new ArrayList<String>();
-
+public class DB_User extends User {
     public DB_User() {}
 
     public DB_User(String email, String username, String key) {
-        this.email = email;
-        this.username = username;
-        this.key = key;
+        super(email, username, key);
     }
-
-    // getters
-    public String getKey() { return key; }
-    public String getEmail() { return email; }
-    public String getUsername() { return username; }
-    public String getDescription() { return description; }
-    public String getProfileImageName() { return profileImageName; }
-    public Integer getNumLikes() { return numLikes; }
-    public Integer getNumFollowers() { return numFollowers; }
-    public ArrayList<String> getMyPostIDs() { return myPostIDs; }
-    public ArrayList<String> getCollectedPostIDs() { return collectedPostIDs; }
-    public ArrayList<String> getFollowerIDs() { return followerIDs; }
-    public ArrayList<String> getFollowingIDs() { return followingIDs; }
 
     // Register myself into database
     public void registerUser(DatabaseReference mDatabase) {

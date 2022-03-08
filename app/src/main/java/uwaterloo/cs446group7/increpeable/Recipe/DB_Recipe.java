@@ -10,6 +10,10 @@ public class DB_Recipe extends Recipe {
     public DB_Recipe() {}
     public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<ArrayList<String>> ingredients) {
         super(key, title, location, description, authorKey, getCoverImageName, steps, ingredients);
+    }
+
+    // Upload recipe into database
+    public void uploadRecipe (DatabaseReference mDatabase) {
         mDatabase.child("recipe").child(key).setValue(this);
     }
 

@@ -12,6 +12,9 @@ import android.widget.ImageView;
 //import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import uwaterloo.cs446group7.increpeable.User.User;
+import uwaterloo.cs446group7.increpeable.backend.FirebaseClient;
+
 public class ProfilePageActivity extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
     private ImageView profileImage;
@@ -21,11 +24,14 @@ public class ProfilePageActivity extends AppCompatActivity {
     private ImageView newPost;
     private ImageView post1image;
 
+    private User currentUser;
+    private FirebaseClient firebaseClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        
+
         // profile user interactions
         profileImage = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
@@ -80,7 +86,6 @@ public class ProfilePageActivity extends AppCompatActivity {
                 startActivityIfNeeded(goViewPostIntent, 0);
             }
         });
-
     }
 
     @Override

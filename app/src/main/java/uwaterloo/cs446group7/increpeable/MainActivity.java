@@ -213,19 +213,17 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     DataSnapshot result_ds = task.getResult(); // result_ds is all users in database
                                     for (DataSnapshot ds : result_ds.getChildren()) {
-                                        System.out.println(ds.child("email").getValue(String.class) + " " + email);
                                         if (ds.child("email").getValue(String.class).equals(email)) {
-                                            System.out.println("foudj! " + email);
                                             firebaseClient.setCurrentDBUser(ds.getValue(DB_User.class));
                                             break;
                                         }
                                     }
                                     Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
                                 }
                             }
                         });
-                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                        startActivity(intent);
                     } else {
                         runOnUiThread( () -> {
                             Toast.makeText(MainActivity.this, "Login failed.",
