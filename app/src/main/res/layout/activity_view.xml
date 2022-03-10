@@ -218,7 +218,7 @@
         <TextView
             android:id="@+id/viewPostStep3Header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:orientation="vertical"
             android:text="Step 3"
             android:textColor="@android:color/black"
@@ -238,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="2dp"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/darker_gray"/>
 
         <TextView
             android:id="@+id/viewPostStep4Header"
@@ -269,61 +269,105 @@
 
 </ScrollView>
 
-<LinearLayout
-    android:id="@+id/navBar"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    <LinearLayout
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/like2"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="like"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/like"
-        app:iconSize="30dp"
-        app:iconTint="@color/dark_gray" />
+        <LinearLayout
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/collect"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="collect"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/collect"
-        app:iconSize="30dp"
-        app:iconTint="@color/dark_gray" />
+            <ImageView
+                android:id="@+id/likeIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/like"
+                android:backgroundTint="@color/dark_gray"
+                android:layout_marginRight="5dp">
+            </ImageView>
 
-    <Button
-        android:id="@+id/comment"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="comment"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/comment"
-        app:iconSize="22dp"
-        app:iconTint="@color/dark_gray" />
+            <TextView
+                android:id="@+id/likeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="like"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp">
+            </TextView>
 
-</LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/collect"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/collectIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/collect"
+                android:backgroundTint="@color/dark_gray"
+                android:layout_marginRight="5dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/collectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="collect"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp">
+            </TextView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/commentIcon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:background="@drawable/comment"
+                android:backgroundTint="@color/dark_gray"
+                android:layout_marginRight="5dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/commentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="comment"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp">
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
