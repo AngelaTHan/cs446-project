@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import uwaterloo.cs446group6.increpeable.Users.DB_User;
 import uwaterloo.cs446group6.increpeable.Users.User;
 
 import java.util.ArrayList;
@@ -241,8 +242,6 @@ public class FirebaseClient {
             }
         }
     }
-}
-
 }
 
 
