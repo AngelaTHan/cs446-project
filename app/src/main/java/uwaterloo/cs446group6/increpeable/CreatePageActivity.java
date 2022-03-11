@@ -56,6 +56,5 @@ public class CreatePageActivity extends AppCompatActivity {
                 startActivityIfNeeded(goPostIntent, 0);
             }
         });
-
     }
 }
