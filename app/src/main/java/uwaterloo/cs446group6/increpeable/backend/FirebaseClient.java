@@ -125,9 +125,124 @@ public class FirebaseClient {
     public ArrayList<Recipe> getUpdatedRecipeList() {
         return recipesToReturn;
     }
-//    public void refreshUser(String userid) {
-//        DatabaseReference tmp = mDatabase.child("UserAccounts").child(userid);
-//    }
+
+    // async function. update currentUser
+    public void refreshUser() {
+        String userid = currentUser.getKey();
+        mDatabase.child("UserAccounts").child(userid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting data", task.getException());
+                } else {
+                    Log.d(LOG_TAG, "refresh User success");
+                    currentUser = task.getResult().getValue(DB_User.class);
+                }
+            }
+        });
+    }
+    // async function. update currentRecipes and recipesToReturn
+    public void refreshRecipes() {
+        if (currentRecipes.isEmpty()) {
+            Log.d(LOG_TAG, "cannot refresh recipes because currentRecipes is empty");
+            return;
+        }
+        ArrayList<String> ids = new ArrayList<>();
+        for (DB_Recipe recipe : currentRecipes) {
+            ids.add(recipe.getKey());
+        }
+        getRecipesByID(ids, currentRecipes.size());
+    }
+    // async function
+    public void likePost(String article_id) {
+        // increase the numLike in the recipe
+        DB_Recipe recipe = new DB_Recipe();
+        for (int i = 0; i < currentRecipes.size(); i++) {
+            if (article_id.equals(currentRecipes.get(i).getKey())) {
+                recipe = currentRecipes.get(i);
+                recipe.setNumLikes(mDatabase, recipe.getNumLikes() + 1);
+                // update the recioes to return list
+                recipesToReturn.remove(i);
+                recipesToReturn.add(i, recipe);
+                break;
+            }
+        }
+        // update post author numLike
+        mDatabase.child("UserAccounts").child(recipe.getAuthorKey()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting data at likePost", task.getException());
+                } else {
+                    DB_User tmp = task.getResult().getValue(DB_User.class);
+                    tmp.setNumLikes(mDatabase, tmp.getNumLikes() + 1);
+                }
+            }
+        });
+    }
+    // async function
+    public void collectPost(String article_id) {
+        // increase the numCollects in the recipe
+        DB_Recipe recipe = new DB_Recipe();
+        for (int i = 0; i < currentRecipes.size(); i++) {
+            if (article_id.equals(currentRecipes.get(i).getKey())) {
+                recipe = currentRecipes.get(i);
+                recipe.setNumLikes(mDatabase, recipe.getNumCollects() + 1);
+                // update the recioes to return list
+                recipesToReturn.remove(i);
+                recipesToReturn.add(i, recipe);
+                break;
+            }
+        }
+        // add the collected recipe to current user's collectedRecipes list
+        currentUser.addCollectedPostID(mDatabase, recipe.getKey());
+    }
+    public void followAuthor(String idToFollow) {
+        // add the id of user that the current user wants to follow to its followingIDs array
+        currentUser.addFollowingsID(mDatabase, idToFollow);
+        // add the id of the currentUser to the idToFollow's follower array
+        mDatabase.child("UserAccounts").child(idToFollow).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting data at followAuthor", task.getException());
+                } else {
+                    DB_User tmp = task.getResult().getValue(DB_User.class);
+                    tmp.addFollowersID(mDatabase, currentUser.getKey());
+                    // increase the number of followers for the idToFollow user
+                    tmp.setNumFollowers(mDatabase, tmp.getNumFollowers() + 1);
+                }
+            }
+        });
+    }
+    // async function.
+    public void createNewPost(Recipe newPost) {
+        // empty the arraylist
+        if (!currentRecipes.isEmpty()) {
+            currentRecipes.clear();
+            recipesToReturn.clear();
+        }
+        // save newPost locally
+        DB_Recipe recipe = (DB_Recipe) newPost; // cast Recipe to DB_Recipe
+        currentRecipes.add(recipe);
+        recipesToReturn.add(newPost);
+        // save newPost to firebase
+        mDatabase.child("Recipes").child(newPost.getKey()).setValue(newPost);
+    }
+    // async function
+    public void addComment(String postID, String comment, String time, String username) {
+        ArrayList<String> newComment = new ArrayList<>();
+        newComment.add(comment);
+        newComment.add(time);
+        newComment.add(username);
+        for (DB_Recipe dr : currentRecipes) {
+            if (dr.getKey().equals(postID)) {
+                dr.addComment(mDatabase, newComment);
+            }
+        }
+    }
+}
+
 }
 
 
