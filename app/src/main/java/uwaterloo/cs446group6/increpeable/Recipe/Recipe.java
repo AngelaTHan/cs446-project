@@ -17,8 +17,8 @@ public class Recipe {
     protected String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
     protected ArrayList<String> steps = new ArrayList<>();
-    protected ArrayList<ArrayList<String>> ingredients = new ArrayList<>(); // Array of <amount, unit, ingredient>
-    protected ArrayList<ArrayList<String>> comments = new ArrayList<>(); // Array of <username, comment>
+    protected ArrayList<ArrayList<String>> ingredients = new ArrayList<>(); // Array of <amount, ingredient, unit> <5, salt, g>
+    protected ArrayList<ArrayList<String>> comments = new ArrayList<>(); // Array of <username, comment, timestamp>
 
     // constructor
     public Recipe() {}
