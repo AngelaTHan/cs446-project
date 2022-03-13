@@ -14,6 +14,7 @@ public class User {
     protected ArrayList<String> collectedPostIDs = new ArrayList<String>();
     protected ArrayList<String> followerIDs = new ArrayList<String>();
     protected ArrayList<String> followingIDs = new ArrayList<String>();
+    protected ArrayList<String> likedPostIDs = new ArrayList<String>();
 
     public User() {}
 
@@ -35,5 +36,6 @@ public class User {
     public ArrayList<String> getCollectedPostIDs() { return collectedPostIDs; }
     public ArrayList<String> getFollowerIDs() { return followerIDs; }
     public ArrayList<String> getFollowingIDs() { return followingIDs; }
+    public ArrayList<String> getLikedPostIDs() { return likedPostIDs; }
 
 }

@@ -16,6 +16,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 
+import uwaterloo.cs446group6.increpeable.NotifyActivity;
+
 public class FileStorageEngine {
     private StorageReference imagesRef;
     private final String LOG_TAG = "FileStorageEngine";
@@ -24,7 +26,7 @@ public class FileStorageEngine {
     public FileStorageEngine () {
         imagesRef = FirebaseStorage.getInstance().getReference().child("images");
     }
-    public void downloadImage (ImageView imageView, String imageName) {
+    public void downloadImage (ImageView imageView, String imageName, NotifyActivity currentActivity) {
         System.out.println (imageName);
         StorageReference imageRef = imagesRef.child(imageName);
         imageRef.getBytes(FIFTY_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -33,6 +35,7 @@ public class FileStorageEngine {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 imageView.setImageBitmap(bitmap);
                 Log.i(LOG_TAG, "Image Download Succeed: " + imageName);
+                currentActivity.notifyActivity(ReturnFromFunction.GET_IMAGE_VIEW_BY_NAME);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -42,7 +45,7 @@ public class FileStorageEngine {
         });
     }
 
-    public void uploadImage(ImageView imageView, String imageName) {
+    public void uploadImage(ImageView imageView, String imageName, NotifyActivity currentActivity) {
         // Convert imageView to byte stream
         imageView.setDrawingCacheEnabled(true);
         imageView.buildDrawingCache();
@@ -63,6 +66,7 @@ public class FileStorageEngine {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i(LOG_TAG, "Image Upload Succeed: " + imageName);
+                currentActivity.notifyActivity(ReturnFromFunction.Upload_IMAGEVIEW);
             }
         });
     }
