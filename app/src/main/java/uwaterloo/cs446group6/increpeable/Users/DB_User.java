@@ -37,6 +37,10 @@ public class DB_User extends User {
         this.numFollowers = numFollowers;
         mDatabase.child("UserAccounts").child(key).child("numFollowers").setValue(numFollowers);
     }
+    public void setNumFollowing(DatabaseReference mDatabase, Integer numFollowing) {
+        this.numFollowers = numFollowing;
+        mDatabase.child("UserAccounts").child(key).child("numFollowing").setValue(numFollowing);
+    }
 
     // Adders & Deleters
     public void addMyPostID(DatabaseReference mDatabase, String postID) {

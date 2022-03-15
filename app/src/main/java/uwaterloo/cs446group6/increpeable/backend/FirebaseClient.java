@@ -13,14 +13,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import uwaterloo.cs446group6.increpeable.NotifyActivity;
-import uwaterloo.cs446group6.increpeable.Users.DB_User;
-import uwaterloo.cs446group6.increpeable.Users.User;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.math.min;
-import uwaterloo.cs446group6.increpeable.Recipe.*;
+
+import uwaterloo.cs446group6.increpeable.NotifyActivity;
+import uwaterloo.cs446group6.increpeable.Recipe.DB_Recipe;
+import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
+import uwaterloo.cs446group6.increpeable.Users.DB_User;
+import uwaterloo.cs446group6.increpeable.Users.User;
 
 public class FirebaseClient {
     // Local variables
@@ -272,8 +272,8 @@ public class FirebaseClient {
     // Thus, UI activity's NotifyActivity won't be called
     // There's no check for a false collect / uncollect. Please do not collect the post when the
     // post is already collected, and vice versa
-    // isCollect == true  => like the post
-    // isCollect == false => unlike the post
+    // isCollect == true  => collect
+    // isCollect == false => uncollect
     // Always cost money
     public void modifyCollectPost(String article_id, boolean isCollect) {
         // increase the numCollects in the recipe
@@ -282,9 +282,9 @@ public class FirebaseClient {
             if (article_id.equals(currentRecipes.get(i).getKey())) {
                 recipe = currentRecipes.get(i);
                 if (isCollect) {
-                    recipe.setNumLikes(mDatabase, recipe.getNumCollects() + 1);
+                    recipe.setNumCollects(mDatabase, recipe.getNumCollects() + 1);
                 } else {
-                    recipe.setNumLikes(mDatabase, recipe.getNumCollects() - 1);
+                    recipe.setNumCollects(mDatabase, recipe.getNumCollects() - 1);
                 }
                 break;
             }
@@ -302,15 +302,17 @@ public class FirebaseClient {
     // Thus, UI activity's NotifyActivity won't be called
     // There's no check for a false follow / unfollow. Please do not follow the author when the
     // author is already followed, and vice versa
-    // isFollow == true  => like the post
-    // isFollow == false => unlike the post
+    // isFollow == true  => follow
+    // isFollow == false => unfollow
     // Always cost money
     public void modifyFollowAuthor(String idToFollow, boolean isFollow) {
         // add the id of user that the current user wants to follow to its followingIDs array
         if (isFollow) {
             currentUser.addFollowingsID(mDatabase, idToFollow);
+            currentUser.setNumFollowing(mDatabase, currentUser.getNumFollowers() + 1);
         } else {
             currentUser.deleteFollowingsID(mDatabase, idToFollow);
+            currentUser.setNumFollowing(mDatabase, currentUser.getNumFollowers() - 1);
         }
 
         // add the id of the currentUser to the idToFollow's follower array
@@ -413,6 +415,34 @@ public class FirebaseClient {
         fileStorageEngine.uploadImage(iv, name, currentActivity);
     }
 
+    // sync function
+    public void setProfileImageName(String imageName) {
+        currentUser.setProfileImageName(mDatabase, imageName);
+    }
+
+    // sync function
+    public void setRecipeCoverImageName(String recipeID, String imageName) {
+        for (DB_Recipe recipe : currentRecipes) {
+            if (recipe.getKey().equals(recipeID)) {
+                recipe.setCoverImageName(mDatabase, imageName);
+                break;
+            }
+        }
+    }
+
+    //  ==================================================================================
+    //  ===================== setUsername and setUserDescription =====================
+    //  ==================================================================================
+
+    // set current user's username
+    public void setUsername (String name) {
+        currentUser.setUsername(mDatabase, name);
+    }
+
+    // set current user's description
+    public void setUserDescription (String description) {
+        currentUser.setDescription(mDatabase, description);
+    }
 
     //  ==================================================================================
     //  ===================== Singleton Constructor and getInstance() ====================

@@ -7,48 +7,64 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 //import androidx.activity.result.ActivityResultCallback;
 //import androidx.activity.result.ActivityResultLauncher;
 //import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.UUID;
+
 import uwaterloo.cs446group6.increpeable.Users.User;
 import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
 
-public class ProfilePageActivity extends AppCompatActivity {
+public class ProfilePageActivity extends NotifyActivity {
     private static final int PICK_IMAGE = 100;
+    // bottom navigation bar
+    private ImageView home;
+    private ImageView newPost;
+
+    // user information
     private ImageView profileImage;
     private EditText username;
     private EditText userBio;
-    private ImageView home;
-    private ImageView newPost;
-    private ImageView post1image;
     private ImageView myPosts;
-    private ImageView collections;
 
-    private User currentUser;
-    private FirebaseClient firebaseClient;
+    // user stats
+    private TextView followingCount;
+    private TextView followersCount;
+    private TextView likesCount;
+
+    // view options
+    private ImageView collections;
+    private ImageView post1image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // profile user interactions
+        // setup firebase client
+        firebaseClient.setCurrentActivity(this);
+
+        // profile information
         profileImage = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         userBio = findViewById(R.id.userBio);
-        newPost = findViewById(R.id.newPost);
-        post1image = findViewById(R.id.post1image);
+        followingCount = findViewById(R.id.followingCount);
+        followersCount = findViewById(R.id.followersCount);
+        likesCount = findViewById(R.id.likesCount);
 
         // load profile information
-        profileImage.setImageDrawable(getResources().getDrawable(R.drawable.gordon));
-        username.setText("Gordon Ramsay");
-        userBio.setText("Gordon is a British chef, restaurateur, television personality, and " +
-                "writer. His global restaurant group was founded in 2000 and has been awarded " +
-                "16 Michelin stars overall.");
+        firebaseClient.getImageViewByName(profileImage, currentUser.getProfileImageName());
+        username.setText(currentUser.getUsername());
+        userBio.setText(currentUser.getDescription());
+        followingCount.setText(currentUser.getNumFollowing());
+        followersCount.setText(currentUser.getNumFollowers());
+        likesCount.setText(currentUser.getNumLikes());
 
+        // change profile image
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +75,8 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         // bottom bar interactions
         home = findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener() {
+        newPost = findViewById(R.id.newPost);
+        home.setOnClickListener(new View.OnClickListener() {    // go to homepage
             @Override
             public void onClick(View view) {
                 Intent goHomeIntent = new Intent(ProfilePageActivity.this, HomePageActivity.class);
@@ -67,26 +84,12 @@ public class ProfilePageActivity extends AppCompatActivity {
                 startActivityIfNeeded(goHomeIntent, 0);
             }
         });
-
-        // create recipe interaction
-        newPost = findViewById(R.id.newPost);
-        newPost.setOnClickListener(new View.OnClickListener() {
+        newPost.setOnClickListener(new View.OnClickListener() { // create new post
             @Override
             public void onClick(View view) {
                 Intent goCreatePostIntent = new Intent(ProfilePageActivity.this, CreatePageActivity.class);
                 goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goCreatePostIntent, 0);
-            }
-        });
-
-        // view beef wellington recipe interaction
-        post1image = findViewById(R.id.post1image);
-        post1image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
-                goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivityIfNeeded(goViewPostIntent, 0);
             }
         });
 
@@ -110,6 +113,16 @@ public class ProfilePageActivity extends AppCompatActivity {
             }
         });
 
+        // view post
+        post1image = findViewById(R.id.post1image);
+        post1image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goViewPostIntent, 0);
+            }
+        });
     }
 
     @Override
@@ -118,6 +131,9 @@ public class ProfilePageActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             Uri imageUri = data.getData();
             profileImage.setImageURI(imageUri);
+            String imageID = UUID.randomUUID().toString() + ".jpeg";
+            firebaseClient.uploadImageView(profileImage, imageID);
+            firebaseClient.setProfileImageName(imageID);
         }
     }
 }
