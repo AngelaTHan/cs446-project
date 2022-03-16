@@ -9,25 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-
         <activity
-            android:name="uwaterloo.cs446group6.increpeable.ProfilePageActivity"
+            android:name=".uploadPost"
+            android:exported="false" />
+        <activity
+            android:name=".ProfilePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name="uwaterloo.cs446group6.increpeable.CreatePageActivity"
+            android:name=".CreatePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name="uwaterloo.cs446group6.increpeable.HomePageActivity"
+            android:name=".HomePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name="uwaterloo.cs446group6.increpeable.ViewPageActivity"
+            android:name=".ViewPageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name="uwaterloo.cs446group6.increpeable.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

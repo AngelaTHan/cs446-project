@@ -48,13 +48,15 @@ public class DB_Recipe extends Recipe {
         this.steps = steps;
         mDatabase.child("recipe").child(key).child("steps").setValue(steps);
     }
+    //need to change if change the ingredient structure -> please delete me after change
     public void addIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient) {
         this.ingredients.add(ingredient);
         mDatabase.child("recipe").child(key).child("ingredient").setValue(ingredient);
     }
+    //need to change if change the ingredient structure -> please delete me after change
     public void deleteIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient, String followingID) {
         this.ingredients.remove(ingredient);
-        mDatabase.child("recipe").child(key).child("ingredients").setValue(ingredients);
+        mDatabase.child("recipe").child(key).child("ingredients").setValue(ingredients); //may be a bug
     }
     public void addComment (DatabaseReference mDatabase, ArrayList<String> comment) {
         this.comments.add(comment);
