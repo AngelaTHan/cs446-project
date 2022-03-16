@@ -66,7 +66,7 @@ public class FileStorageEngine {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Log.i(LOG_TAG, "Image Upload Succeed: " + imageName);
-                currentActivity.notifyActivity(ReturnFromFunction.Upload_IMAGEVIEW);
+                currentActivity.notifyActivity(ReturnFromFunction.UPLOAD_IMAGEVIEW);
             }
         });
     }
