@@ -17,12 +17,14 @@ public class Recipe {
     protected String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
 
     protected ArrayList<String> steps = new ArrayList<>();
-    protected ArrayList<ArrayList<String>> ingredients = new ArrayList<>(); // Array of <amount, ingredient, unit> <5, salt, g>
+//    protected ArrayList<ArrayList<String>> ingredients = new ArrayList<>(); // Array of <amount, ingredient, unit> <5, salt, g>
+    protected ArrayList<String> ingredients = new ArrayList<>();
     protected ArrayList<ArrayList<String>> comments = new ArrayList<>(); // Array of <username, comment, timestamp>
 
     // constructor
     public Recipe() {}
-    public Recipe(String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<ArrayList<String>> ingredients) {
+//    public Recipe(String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<ArrayList<String>> ingredients) {
+    public Recipe(String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients) {
         this.key = key;
         this.title = title;
         this.location = location;
@@ -44,6 +46,7 @@ public class Recipe {
     public int getNumCollects () { return numCollects;}
     public String timeStamp() { return timeStamp; }
     public ArrayList<String> steps() { return steps; }
-    public ArrayList<ArrayList<String>> getIngredients() { return ingredients; }
+//    public ArrayList<ArrayList<String>> getIngredients() { return ingredients; }
+    public ArrayList<String> getIngredients() { return ingredients; }
     public ArrayList<ArrayList<String>> getComments() { return comments; }
 }

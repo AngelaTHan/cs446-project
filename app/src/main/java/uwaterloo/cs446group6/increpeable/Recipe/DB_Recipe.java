@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class DB_Recipe extends Recipe {
     // constructor
     public DB_Recipe() {}
-    public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<ArrayList<String>> ingredients) {
+//    public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<ArrayList<String>> ingredients) {
+    public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients) {
         super(key, title, location, description, authorKey, getCoverImageName, steps, ingredients);
     }
 
@@ -48,13 +49,23 @@ public class DB_Recipe extends Recipe {
         this.steps = steps;
         mDatabase.child("recipe").child(key).child("steps").setValue(steps);
     }
+//    //need to change if change the ingredient structure -> please delete me after change
+//    public void addIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient) {
+//        this.ingredients.add(ingredient);
+//        mDatabase.child("recipe").child(key).child("ingredient").setValue(ingredient);
+//    }
+//    //need to change if change the ingredient structure -> please delete me after change
+//    public void deleteIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient) {
+//        this.ingredients.remove(ingredient);
+//        mDatabase.child("recipe").child(key).child("ingredients").setValue(ingredients); //may be a bug
+//    }
     //need to change if change the ingredient structure -> please delete me after change
-    public void addIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient) {
+    public void addIngredient (DatabaseReference mDatabase, String ingredient) {
         this.ingredients.add(ingredient);
         mDatabase.child("recipe").child(key).child("ingredient").setValue(ingredient);
     }
     //need to change if change the ingredient structure -> please delete me after change
-    public void deleteIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient, String followingID) {
+    public void deleteIngredient (DatabaseReference mDatabase, String ingredient) {
         this.ingredients.remove(ingredient);
         mDatabase.child("recipe").child(key).child("ingredients").setValue(ingredients); //may be a bug
     }
