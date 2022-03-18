@@ -8,15 +8,18 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
+import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
 import uwaterloo.cs446group6.increpeable.backend.ReturnFromFunction;
 
 public class HomePageActivity extends NotifyActivity {
     private ImageView profile;
     private ImageView createPost;
+    private ImageView home;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         // bottom bar interactions
@@ -36,6 +39,16 @@ public class HomePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 Intent goCreatePostIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, CreatePageActivity.class);
+                goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goCreatePostIntent, 0);
+            }
+        });
+
+        home = findViewById(R.id.homeButton);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goCreatePostIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, uploadPost.class);
                 goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goCreatePostIntent, 0);
             }

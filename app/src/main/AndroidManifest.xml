@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="uwaterloo.cs446group6.increpeable">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="uwaterloo.cs446group6.increpeable">
 
     <application
         android:allowBackup="true"
@@ -8,28 +9,30 @@ package="uwaterloo.cs446group6.increpeable">
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
+
+
         <activity
-            android:name=".UploadPostActivity"
+            android:name="uwaterloo.cs446group6.increpeable.ProfilePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".ProfilePageActivity"
+            android:name="uwaterloo.cs446group6.increpeable.CreatePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".CreatePageActivity"
+            android:name="uwaterloo.cs446group6.increpeable.HomePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".HomePageActivity"
+            android:name="uwaterloo.cs446group6.increpeable.ViewPageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".ViewPageActivity"
+            android:name="uwaterloo.cs446group6.increpeable.uploadPost"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name="uwaterloo.cs446group6.increpeable.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,4 +41,5 @@ package="uwaterloo.cs446group6.increpeable">
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

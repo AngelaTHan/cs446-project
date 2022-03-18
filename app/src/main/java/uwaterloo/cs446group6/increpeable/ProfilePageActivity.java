@@ -43,6 +43,7 @@ public class ProfilePageActivity extends NotifyActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_profile);
 
         // setup firebase client
@@ -57,12 +58,13 @@ public class ProfilePageActivity extends NotifyActivity {
         likesCount = findViewById(R.id.likesCount);
 
         // load profile information
+        System.out.println("***" + currentUser.getProfileImageName());
         firebaseClient.getImageViewByName(profileImage, currentUser.getProfileImageName());
         username.setText(currentUser.getUsername());
         userBio.setText(currentUser.getDescription());
-        followingCount.setText(currentUser.getNumFollowing());
-        followersCount.setText(currentUser.getNumFollowers());
-        likesCount.setText(currentUser.getNumLikes());
+        followingCount.setText(String.valueOf(currentUser.getNumFollowing()));
+        followersCount.setText(String.valueOf(currentUser.getNumFollowers()));
+        likesCount.setText(String.valueOf(currentUser.getNumLikes()));
 
         // change profile image
         profileImage.setOnClickListener(new View.OnClickListener() {

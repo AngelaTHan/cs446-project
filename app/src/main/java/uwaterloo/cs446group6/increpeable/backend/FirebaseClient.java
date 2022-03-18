@@ -351,14 +351,15 @@ public class FirebaseClient {
         }
 
         // save newPost locally
-        DB_Recipe recipe = (DB_Recipe) newPost; // cast Recipe to DB_Recipe
-        currentRecipes.add(recipe);
+        DB_Recipe recipe = new DB_Recipe(newPost); // cast Recipe to DB_Recipe
 
+        currentRecipes.add(recipe);
         // save newPost to firebase
         mDatabase.child("Recipes").child(newPost.getKey()).setValue(newPost);
         if (stage == Stage.DEV) {
             allRecipesInFirebase.add(recipe);
         }
+        currentUser.addMyPostID(mDatabase, newPost.getKey());
         currentActivity.notifyActivity(ReturnFromFunction.CREATE_NEW_POST);
     }
 
