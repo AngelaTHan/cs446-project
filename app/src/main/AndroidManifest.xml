@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uwaterloo.cs446group6.increpeable">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="uwaterloo.cs446group6.increpeable">
 
     <application
         android:allowBackup="true"
@@ -10,8 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
-            android:name=".uploadPost"
-            android:exported="false" />
+            android:name=".UploadPostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
             android:name=".ProfilePageActivity"
             android:exported="false"
@@ -38,5 +38,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
