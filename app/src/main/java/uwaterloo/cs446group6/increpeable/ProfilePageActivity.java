@@ -47,6 +47,8 @@ public class ProfilePageActivity extends NotifyActivity {
         setContentView(R.layout.activity_profile);
 
         // setup firebase client
+        firebaseClient = FirebaseClient.getInstance();
+        currentUser = firebaseClient.getCacheUser();
         firebaseClient.setCurrentActivity(this);
 
         // profile information
@@ -133,9 +135,9 @@ public class ProfilePageActivity extends NotifyActivity {
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             Uri imageUri = data.getData();
             profileImage.setImageURI(imageUri);
-            String imageID = UUID.randomUUID().toString() + ".jpeg";
+            String imageID = UUID.randomUUID().toString();
             firebaseClient.uploadImageView(profileImage, imageID);
-            firebaseClient.setProfileImageName(imageID);
+            firebaseClient.setProfileImageName(imageID + ".jpg");
         }
     }
 }

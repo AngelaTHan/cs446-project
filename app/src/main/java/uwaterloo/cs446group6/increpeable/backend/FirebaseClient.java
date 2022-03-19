@@ -42,7 +42,7 @@ public class FirebaseClient {
         DEV,
         PROD
     }
-    private Stage stage = Stage.DEV;
+    private Stage stage = Stage.PROD;
 
 
     //  ==================================================================================
