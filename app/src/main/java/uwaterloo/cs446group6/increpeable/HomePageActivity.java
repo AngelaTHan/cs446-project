@@ -78,10 +78,10 @@ public class HomePageActivity extends NotifyActivity {
         // Example 1 - perform an async call - get some recipes by id from firebase
         // At login page, use username = lichen@gmail.com and password = abc123.
         // A successful login will open the HomePageActivity, call this onCreate functions, and run the following:
-        ArrayList<String> ids = new ArrayList<>();
-        ids.add("-MxbcLk3zwIqHMUsKeWE");
-        firebaseClient.setCurrentActivity(this); // this is already called in NotifyActivity's onCreate. You might need this in onResume, etc.
-        firebaseClient.getRecipesByID(ids);
+//        ArrayList<String> ids = new ArrayList<>();
+//        ids.add("-MxbcLk3zwIqHMUsKeWE");
+//        firebaseClient.setCurrentActivity(this); // this is already called in NotifyActivity's onCreate. You might need this in onResume, etc.
+//        firebaseClient.getRecipesByID(ids);
         // Rest of the example is in notifyActivity()
 
         // Example 2 - create and upload a new recipe
