@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String USER = "UserAccounts";
     private FirebaseClient firebaseClient;
     private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-    private ArrayList<String> registeredUsers = new ArrayList<>();
+   // private ArrayList<String> registeredUsers = new ArrayList<>();
 
     private TextView registerPasswordLabel;
     private EditText registerPasswordInput;
@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                                             break;
                                         }
                                     }
-                                    Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
+                                    //Log.i(TAG, "Received all users. User lengths: " + registeredUsers.size());
                                     Intent intent = new Intent(MainActivity.this, HomePageActivity.class);
                                     startActivity(intent);
                                 }
