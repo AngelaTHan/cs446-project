@@ -330,6 +330,7 @@ public class FirebaseClient {
         for (int i = 0; i < currentRecipes.size(); i++) {
             if (article_id.equals(currentRecipes.get(i).getKey())) {
                 recipe = currentRecipes.get(i);
+                Log.e("Collect", "before" + recipe.getNumCollects());
                 if (isCollect) {
                     recipe.setNumCollects(mDatabase, recipe.getNumCollects() + 1);
                 } else {
