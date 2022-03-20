@@ -112,9 +112,9 @@ public class FirebaseClient {
                     else {
                         DataSnapshot result_ds = task.getResult();
                         for (DataSnapshot ds : result_ds.getChildren()) {
+                            Log.e(LOG_TAG, "%%%%%%%%%" + ds.child("key").getValue(String.class));
                             if (keys.contains(ds.child("key").getValue(String.class))) {
                                 currentRecipes.add(ds.getValue(DB_Recipe.class));
-                                break;
                             }
                         }
                         if (currentRecipes.size() != keys.size()) {

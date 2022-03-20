@@ -23,6 +23,7 @@ public class uploadPost extends NotifyActivity {
 
         setContentView(R.layout.activity_upload_post);
 
+
         String key = UUID.randomUUID().toString();
         String title = "Good Old Fashioned Pancakes";
         String location = "Toronto, Canada";
@@ -63,7 +64,6 @@ public class uploadPost extends NotifyActivity {
 
         firebaseClient.uploadImageView(i, imageID);
         firebaseClient.setRecipeCoverImageName(key, imageID);
-
     }
 
     /*

@@ -252,6 +252,7 @@ public class HomePageActivity extends NotifyActivity {
             }
         });
 
+
     }
 
     public void refreshHome(ArrayList<Post> posts){

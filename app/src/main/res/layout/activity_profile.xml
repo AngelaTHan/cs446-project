@@ -92,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="200"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -122,7 +121,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="12.8M"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -152,7 +150,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center"
-                android:text="200M"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -249,8 +246,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/wellington" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post1title"
@@ -259,37 +255,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Beef Wellington"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post1info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post1user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post1heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post1star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post1collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post1likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:paddingRight="10sp"
-                            android:text="1.1M" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post1heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post1collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -307,8 +331,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/seafood" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post2title"
@@ -317,37 +340,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Seafood Spaghetti"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post2info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post2user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post2heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post2star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post2collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post2likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:paddingRight="10sp"
-                            android:text="5.8M" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post2heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post2collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -374,8 +425,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/duck" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post3title"
@@ -384,37 +434,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Duck Breast with Orange Cranberry Sauce"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post3info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post3user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post3heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post3star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post3collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post3likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:paddingRight="10sp"
-                            android:text="100" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post3heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post3collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -432,8 +510,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/scallops" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post4title"
@@ -442,37 +519,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Scallops"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post4info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post4user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post4heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post4star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post4collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post4likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:paddingRight="10sp"
-                            android:text="42.3K" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post4heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post4collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -499,8 +604,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/lamb" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post5title"
@@ -509,37 +613,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Rack of Lamb"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post5info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post5user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post5heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post5star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post5collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post5likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:paddingRight="10sp"
-                            android:text="8.7M" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post5heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post5collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -557,8 +689,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:gravity="center"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/fish" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
                         android:id="@+id/post6title"
@@ -567,36 +698,65 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:lines="1"
-                        android:text="Fish Burger"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/post6info"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_gravity="right"
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/post6user"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:lines="1"
-                            android:paddingLeft="10sp"
-                            android:text="Gordon" />
+                        <ImageView
+                            android:id="@+id/post6heart"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/likes" />
+
+                        <ImageView
+                            android:id="@+id/post6star"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/post6collects"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/collects" />
 
                         <TextView
                             android:id="@+id/post6likes"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:lines="1"
-                            android:text="1.4K" />
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            android:gravity="left|center_vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/post6heart"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/post6collects"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:gravity="left|center_vertical"
+                            android:maxLength="6"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
 

@@ -27,7 +27,7 @@ public class DB_User extends User {
     }
     public void setProfileImageName(DatabaseReference mDatabase, String profileImageURL) {
         this.profileImageName = profileImageURL;
-        mDatabase.child("UserAccounts").child(key).child("profileImageURL").setValue(profileImageURL);
+        mDatabase.child("UserAccounts").child(key).child("profileImageName").setValue(profileImageURL);
     }
     public void setNumLikes(DatabaseReference mDatabase, Integer numLikes) {
         this.numLikes = numLikes;
