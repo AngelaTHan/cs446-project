@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
 
+
         <activity
             android:name="uwaterloo.cs446group6.increpeable.ProfilePageActivity"
             android:exported="false"
@@ -27,8 +28,13 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
+            android:name="uwaterloo.cs446group6.increpeable.uploadPost"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
             android:name="uwaterloo.cs446group6.increpeable.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

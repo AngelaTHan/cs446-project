@@ -1,7 +1,7 @@
 package uwaterloo.cs446group6.increpeable.backend;
 
 import static java.lang.Math.min;
-
+import static java.lang.Math.max;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -34,6 +34,7 @@ public class FirebaseClient {
     // Cache; can be accessed with Cache Getters
     private DB_User currentUser;
     private ArrayList<DB_Recipe> currentRecipes = new ArrayList<>(); // Recipes for this class, can change values
+    private DB_Recipe currentRecipe;
 
     // If Stage == DEV, firebase client will make "fake" transaction calls to save cost
     // It will save all the recipes in allRecipesInFirebase
@@ -42,7 +43,7 @@ public class FirebaseClient {
         DEV,
         PROD
     }
-    private Stage stage = Stage.DEV;
+    private Stage stage = Stage.PROD;
 
 
     //  ==================================================================================
@@ -59,6 +60,9 @@ public class FirebaseClient {
         currentRecipes.forEach(recipe -> recipesToReturn.add(recipe));
         return recipesToReturn;
     }
+
+    public void setCurrentRecipe (DB_Recipe recipe) { this.currentRecipe = recipe; }
+    public Recipe getCurrentRecipe () { return currentRecipe; }
 
 
     //  ==================================================================================
@@ -134,10 +138,16 @@ public class FirebaseClient {
         if (stage == Stage.DEV) {
             // Get recipes
             int sizeToGet = min(allRecipesInFirebase.size() - startFrom, size);
-            List<DB_Recipe> recipeSubset = allRecipesInFirebase.subList(startFrom, sizeToGet);
+            List<DB_Recipe> recipeSubset = allRecipesInFirebase.subList(startFrom, startFrom + sizeToGet); // bug here: if required size > current size
             currentRecipes.clear();
             currentRecipes.addAll(recipeSubset);
-            startFrom += sizeToGet;
+            //startFrom += sizeToGet;
+            //changed:
+            if (startFrom == 0){
+                startFrom += sizeToGet - 1;
+            } else {
+                startFrom += sizeToGet;
+            }
             currentActivity.notifyActivity(ReturnFromFunction.GET_RECOMMENDED_POSTS);
         } else {
         // PROD mode - make real transaction calls to the database; costs money
@@ -156,13 +166,52 @@ public class FirebaseClient {
                             returnedRecipes.add(ds.getValue(DB_Recipe.class));
                         });
                         int sizeToGet = min(returnedRecipes.size() - startFrom, size);
-                        List<DB_Recipe> recipeSubset = returnedRecipes.subList(startFrom, sizeToGet);
+                        List<DB_Recipe> recipeSubset = returnedRecipes.subList(startFrom, startFrom + sizeToGet); // bug here: need to fix: returnedRecipes.subList(startFrom - 1, sizeToGet);
+                        currentRecipes.addAll(recipeSubset);
                         startFrom += sizeToGet;
                         currentActivity.notifyActivity(ReturnFromFunction.GET_RECOMMENDED_POSTS);
                     }
                 }
             });
         }
+    }
+
+
+    // returns a list of recipes that contains the keywords in their title
+    public void getRecipesByKeywords(String keyWords) {
+        if (!currentRecipes.isEmpty()) { currentRecipes.clear(); } // empty the arraylist
+        mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
+                }
+                else {
+                    DataSnapshot result_ds = task.getResult();
+                    for (DataSnapshot ds : result_ds.getChildren()) {
+                        DB_Recipe curRecipe = ds.getValue(DB_Recipe.class);
+                        // Search for title
+                        if (curRecipe.getTitle().contains(keyWords)) {
+                            currentRecipes.add(curRecipe);
+                        } else {
+                            // Search for ingredients
+                            for (String ingredient : curRecipe.getIngredients()) {
+                                if (ingredient.contains(keyWords)) {
+                                    currentRecipes.add(curRecipe);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (currentRecipes.size() == 0) {
+                        Log.e(LOG_TAG, "cannot find any recipes that contains " + keyWords);
+                    } else {
+                        Log.i(LOG_TAG, " recipes saved to the arraylist");
+                    }
+                    currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_TITLE);
+                }
+            }
+        });
     }
 
 
@@ -351,14 +400,15 @@ public class FirebaseClient {
         }
 
         // save newPost locally
-        DB_Recipe recipe = (DB_Recipe) newPost; // cast Recipe to DB_Recipe
-        currentRecipes.add(recipe);
+        DB_Recipe recipe = new DB_Recipe(newPost); // cast Recipe to DB_Recipe
 
+        currentRecipes.add(recipe);
         // save newPost to firebase
         mDatabase.child("Recipes").child(newPost.getKey()).setValue(newPost);
         if (stage == Stage.DEV) {
             allRecipesInFirebase.add(recipe);
         }
+        currentUser.addMyPostID(mDatabase, newPost.getKey());
         currentActivity.notifyActivity(ReturnFromFunction.CREATE_NEW_POST);
     }
 

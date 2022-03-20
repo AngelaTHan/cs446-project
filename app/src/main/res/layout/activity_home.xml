@@ -190,9 +190,10 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
-                    android:id="@+id/logoImage"
+                    android:id="@+id/post1Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/post_image_1" />
 
             </androidx.cardview.widget.CardView>
@@ -306,6 +307,7 @@
                     android:id="@+id/post2Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/post_image_2" />
 
             </androidx.cardview.widget.CardView>
@@ -422,6 +424,7 @@
                     android:id="@+id/post3Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/post_image_3" />
 
             </androidx.cardview.widget.CardView>
@@ -538,6 +541,7 @@
                     android:id="@+id/post4Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/post_image_4" />
 
             </androidx.cardview.widget.CardView>
@@ -654,6 +658,7 @@
                     android:id="@+id/post5Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
+                    android:scaleType="centerCrop"
                     app:srcCompat="@drawable/post_image_5" />
 
             </androidx.cardview.widget.CardView>
