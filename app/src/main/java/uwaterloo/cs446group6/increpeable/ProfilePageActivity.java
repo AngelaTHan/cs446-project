@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
@@ -190,35 +191,35 @@ public class ProfilePageActivity extends NotifyActivity {
     }
 
     private void loadRecipes(){
-        Log.w("Profile Page", "load recipes");\
+        Log.w("Profile Page", "load recipes");
 
         postsLoaded = 0;
 
         int size = recipes.size();
         System.out.println("*********************" + Integer.toString(size));
         int counter = 0;
-//        if (size >= 6 + recipeCounter){
-//            post6.setVisibility(View.VISIBLE);
-//            firebaseClient.getImageViewByName(post6image, recipes.get(recipeCounter + 5).getCoverImageName());
-//            post6title.setText(recipes.get(recipeCounter + 5).getTitle());
-//            post6collects.setText(convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
-//            post6likes.setText(convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
-//            post6id = recipes.get(recipeCounter + 5).getKey();
-//            counter++;
-//        } else {
-//            post6.setVisibility(View.GONE);
-//        }
-//        if (size >= 5 + recipeCounter){
-//            post5.setVisibility(View.VISIBLE);
-//            firebaseClient.getImageViewByName(post5image, recipes.get(recipeCounter + 4).getCoverImageName());
-//            post5title.setText(recipes.get(recipeCounter + 4).getTitle());
-//            post5collects.setText(convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
-//            post5likes.setText(convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
-//            post5id = recipes.get(recipeCounter + 4).getKey();
-//            counter++;
-//        } else {
-//            post5.setVisibility(View.GONE);
-//        }
+        if (size >= 6 + recipeCounter){
+            post6.setVisibility(View.VISIBLE);
+            firebaseClient.getImageViewByName(post6image, recipes.get(recipeCounter + 5).getCoverImageName());
+            post6title.setText(recipes.get(recipeCounter + 5).getTitle());
+            post6collects.setText(convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
+            post6likes.setText(convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
+            post6id = recipes.get(recipeCounter + 5).getKey();
+            counter++;
+        } else {
+            post6.setVisibility(View.GONE);
+        }
+        if (size >= 5 + recipeCounter){
+            post5.setVisibility(View.VISIBLE);
+            firebaseClient.getImageViewByName(post5image, recipes.get(recipeCounter + 4).getCoverImageName());
+            post5title.setText(recipes.get(recipeCounter + 4).getTitle());
+            post5collects.setText(convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
+            post5likes.setText(convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
+            post5id = recipes.get(recipeCounter + 4).getKey();
+            counter++;
+        } else {
+            post5.setVisibility(View.GONE);
+        }
         if (size >= 4 + recipeCounter){
             post4.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post4image, recipes.get(recipeCounter + 3).getCoverImageName());
@@ -264,7 +265,7 @@ public class ProfilePageActivity extends NotifyActivity {
             post1.setVisibility(View.GONE);
         }
         postsLoaded += counter;
-        posts.scrollTo(0,50);
+        posts.scrollTo(0,0);
     }
 
     private void setUserInformationListeners() {
@@ -376,6 +377,55 @@ public class ProfilePageActivity extends NotifyActivity {
         });
     }
 
+    private class TouchListenerImpl implements View.OnTouchListener {
+        int touchBottom = 0;
+        int touchTop = 0;
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int scrollY = view.getScrollY();
+                    int height = view.getHeight();
+                    int scrollViewMeasuredHeight = posts.getChildAt(0).getMeasuredHeight();
+                    //Touch Top
+                    if (scrollY == 0) {
+                        touchBottom = 0;
+                        touchTop++;
+                        Log.e("Hi Top","Touch Top"+ touchTop);
+                        if (touchTop >= 15){
+                            touchTop = 0;
+                            if (recipeCounter - 6 >= 0){
+                                recipeCounter -= 6;
+                                loadRecipes();
+                            }
+                        }
+                    }
+                    //Touch Bottom
+                    if ((scrollY + height) == scrollViewMeasuredHeight) {
+                        touchTop = 0;
+                        touchBottom++;
+                        Log.e("Hi Bottom","Touch Bottom"+ touchBottom);
+                        if (touchBottom >= 15){
+                            touchBottom = 0;
+                            if (recipeCounter + postsLoaded <= recipes.size()){
+                                recipeCounter += postsLoaded;
+                                loadRecipes();
+                            }
+                        }
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -392,6 +442,7 @@ public class ProfilePageActivity extends NotifyActivity {
         setUserInformationListeners();
         setBottomBarListeners();
         setViewOptionListeners();
+        posts.setOnTouchListener(new TouchListenerImpl());
 
         // view post
         post1image = findViewById(R.id.post1image);
