@@ -2,10 +2,10 @@ package uwaterloo.cs446group6.increpeable;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.View.OnTouchListener;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -13,9 +13,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.app.AlertDialog;
 
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import uwaterloo.cs446group6.increpeable.Recipe.DB_Recipe;
@@ -197,6 +195,9 @@ public class HomePageActivity extends NotifyActivity {
         posts.add(post4);
         posts.add(post5);
 
+        scrollBox = findViewById(R.id.postScollWrapper);
+        scrollBox.setOnTouchListener(new TouchListenerImpl());
+
         //need to fix here
 //        scrollBox = findViewById(R.id.postScollWrapper);
 //        scrollBox.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -291,6 +292,50 @@ public class HomePageActivity extends NotifyActivity {
             }
         });
 
+
+    }
+
+    private class TouchListenerImpl implements OnTouchListener {
+        int touchBottom = 0;
+        int touchTop = 0;
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int scrollY = view.getScrollY();
+                    int height = view.getHeight();
+                    int scrollViewMeasuredHeight = scrollBox.getChildAt(0).getMeasuredHeight();
+                    //Touch Top
+                    if (scrollY == 0) {
+                        touchBottom = 0;
+                        touchTop++;
+                        Log.e("Hi Top","Touch Top"+ touchTop);
+                        if (touchTop >= 15){
+                            touchTop = 0;
+                            refreshHomeWrapper();
+                        }
+                    }
+                    //Touch Bottom
+                    if ((scrollY + height) == scrollViewMeasuredHeight) {
+                        touchTop = 0;
+                        touchBottom++;
+                        Log.e("Hi Bottom","Touch Bottom"+ touchBottom);
+                        if (touchBottom >= 15){
+                            touchBottom = 0;
+                            refreshHomeWrapper();
+                        }
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            return false;
+        }
 
     }
 
