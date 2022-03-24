@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homeActivity">
+    tools:context=".HomePageActivity">
 
     <ImageView
         android:id="@+id/searchBox"
@@ -108,7 +108,6 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Potluck Chopped Salad"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +121,6 @@
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="8dp"
                         android:maxLines="4"
-                        android:text="This style of salad is a staple of Hmong potlucks. It was one of the first things that new Hmong immigrants learned to make ..."
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -165,7 +163,6 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="30.7k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post1Like"
@@ -180,7 +177,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="1.4k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post1Collect"
@@ -193,7 +189,7 @@
                     android:id="@+id/post1Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
-                    app:srcCompat="@drawable/post_image_1" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
@@ -222,7 +218,6 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Mushroom YouFan"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -236,7 +231,6 @@
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="8dp"
                         android:maxLines="4"
-                        android:text="This Taiwanese steamed sticky rice dish is made with glutinous rice mixed together with lots of savory seasonings and often dried ingredients"
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -278,7 +272,6 @@
                         android:layout_marginTop="3dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="11.2k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post2Like"
@@ -293,7 +286,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="996"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post2Collect"
@@ -306,7 +298,7 @@
                     android:id="@+id/post2Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
-                    app:srcCompat="@drawable/post_image_2" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
@@ -335,7 +327,6 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Wali Ya Mboga"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -349,7 +340,6 @@
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="8dp"
                         android:maxLines="4"
-                        android:text="This is everything we want in a hearty, cozy meal: Tender yogurt-marinated chicken in an aromatic tomato curry, lots of caramelized onion, and  rice."
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -392,7 +382,6 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="123k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/post3Collect"
@@ -409,7 +398,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="12.6k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post3Collect"
@@ -422,7 +410,7 @@
                     android:id="@+id/post3Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
-                    app:srcCompat="@drawable/post_image_3" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
@@ -451,7 +439,6 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Basic Crepes"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -465,7 +452,6 @@
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="8dp"
                         android:maxLines="4"
-                        android:text="This easy crepe recipe from French chef Ludo Lefebvre makes enough for a party or leftovers"
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -508,7 +494,6 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="330k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/post4Collect"
@@ -525,7 +510,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="21.4k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post4Collect"
@@ -538,7 +522,7 @@
                     android:id="@+id/post4Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
-                    app:srcCompat="@drawable/post_image_4" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
 
@@ -567,7 +551,6 @@
                         android:layout_height="0dp"
                         android:layout_marginTop="16dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="Special Steamed Whole Fish"
                         android:textColor="#000000"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -581,7 +564,6 @@
                         android:layout_marginTop="13dp"
                         android:layout_marginBottom="8dp"
                         android:maxLines="4"
-                        android:text="A showstopping whole fish is a Lunar New Year staple. This version is straightforward yet stunning and doesn’t require any special equipment."
                         android:textColor="#000000"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -624,7 +606,6 @@
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="1.2k"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/post5Collect"
@@ -641,7 +622,6 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
                         android:maxLength="6"
-                        android:text="187"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/post5Collect"
@@ -654,7 +634,7 @@
                     android:id="@+id/post5Image"
                     android:layout_width="137dp"
                     android:layout_height="137dp"
-                    app:srcCompat="@drawable/post_image_5" />
+                    android:scaleType="centerCrop" />
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>

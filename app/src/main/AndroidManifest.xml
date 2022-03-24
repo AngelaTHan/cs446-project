@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="uwaterloo.cs446group7.increpeable" >
+    package="uwaterloo.cs446group6.increpeable">
 
     <application
         android:allowBackup="true"
@@ -8,16 +8,32 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication" >
+        android:theme="@style/Theme.MyApplication">
+
         <activity
-            android:name=".homeActivity"
-            android:exported="false" />
+            android:name="uwaterloo.cs446group6.increpeable.ProfilePageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".AuthenticationActivity"
-            android:exported="false" />
+            android:name="uwaterloo.cs446group6.increpeable.CreatePageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true" >
+            android:name="uwaterloo.cs446group6.increpeable.HomePageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name="uwaterloo.cs446group6.increpeable.ViewPageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name="uwaterloo.cs446group6.increpeable.UploadPostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
+            android:name="uwaterloo.cs446group6.increpeable.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MyApplication.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,5 +41,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
