@@ -79,6 +79,8 @@ public class ProfilePageActivity extends NotifyActivity {
 
     // recipe counter
     int recipeCounter = 0;
+    int mypostCounter = 0;
+    int collectedCounter = 0;
 
     // my recipes
     ArrayList<Recipe> recipes;
@@ -156,7 +158,7 @@ public class ProfilePageActivity extends NotifyActivity {
         Log.w("Profile Page", "load recipes");
 
         int size = recipes.size();
-        System.out.println("********************* mypostrecipes" + Integer.toString(size));
+        System.out.println("*********************" + Integer.toString(size));
         int counter = 0;
         if (size >= 6 + recipeCounter){
             firebaseClient.getImageViewByName(post6image, recipes.get(recipeCounter + 5).getCoverImageName());
@@ -190,7 +192,7 @@ public class ProfilePageActivity extends NotifyActivity {
             post3id = recipes.get(recipeCounter + 2).getKey();
             counter++;
         }
-        if (size >= 3 + recipeCounter){
+        if (size >= 2 + recipeCounter){
             firebaseClient.getImageViewByName(post2image, recipes.get(recipeCounter + 1).getCoverImageName());
             post2title.setText(recipes.get(recipeCounter + 1).getTitle());
             post2collects.setText(convertNumber(recipes.get(recipeCounter + 1).getNumCollects()));
@@ -276,7 +278,10 @@ public class ProfilePageActivity extends NotifyActivity {
             public void onClick(View view) {
                 collections.setColorFilter(Color.argb(255, 0, 0, 0));
                 myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
+                System.out.println("$$$$$mypost " + currentUser.getMyPostIDs());
                 firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+                collectedCounter = recipeCounter;
+                recipeCounter = 0;
             }
         });
         collections.setOnClickListener(new View.OnClickListener() {
@@ -284,7 +289,10 @@ public class ProfilePageActivity extends NotifyActivity {
             public void onClick(View view) {
                 myPosts.setColorFilter(Color.argb(255, 0, 0, 0));
                 collections.setColorFilter(Color.argb(255, 255, 0, 0));
+                System.out.println("$$$$$collect " + currentUser.getCollectedPostIDs());
                 firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
+                mypostCounter = recipeCounter;
+                recipeCounter = 0;
             }
         });
 

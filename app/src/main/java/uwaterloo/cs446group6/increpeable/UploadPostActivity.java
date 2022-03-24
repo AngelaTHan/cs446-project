@@ -15,6 +15,8 @@ public class UploadPostActivity extends NotifyActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_post);
 
+        firebaseClient.modifyCollectPost("d8837c3d-e1d6-48de-ac68-4efe2c51d81a", true);
+
 //        String key = UUID.randomUUID().toString();
 //        String title = "Beef Wellington";
 //        String location = "London, UK";
