@@ -2,10 +2,10 @@ package uwaterloo.cs446group6.increpeable;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.View.OnTouchListener;
+import android.view.MotionEvent;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -13,9 +13,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.appcompat.app.AlertDialog;
 
-import org.w3c.dom.Text;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import uwaterloo.cs446group6.increpeable.Recipe.DB_Recipe;
@@ -46,6 +44,7 @@ class Post {
     public void attachRecipe (Recipe recipe) {
         this.recipe = recipe;
     }
+    public void dettachRecipe(){this.recipe = null;}
 
     public CardView getFrame(){
         return postFrame;
@@ -56,14 +55,35 @@ class Post {
     }
     public void setUI() {
         if (recipe != null) {
+            postFrame.setVisibility(View.VISIBLE);
             name.setText(recipe.getTitle());
             intro.setText(recipe.getDescription());
-            likeNum.setText(String.valueOf(recipe.getNumLikes()));
-            collectNum.setText(String.valueOf(recipe.getNumCollects()));
+            likeNum.setText(convertNumber(recipe.getNumLikes()));
+            collectNum.setText(convertNumber(recipe.getNumCollects()));
             firebaseClient.getImageViewByName(img, recipe.getCoverImageName());
         } else {
             Log.d("HomePage", "Recipe Not Attached");
+            postFrame.setVisibility(View.GONE);
+//            name.setText(null);
+//            intro.setText(null);
+//            likeNum.setText(null);
+//            collectNum.setText(null);
+//            img.setImageDrawable(null);
         }
+    }
+
+    private String convertNumber(int num){
+        String result;
+        if (num >= 1000000000){
+            result = String.format("%.1f", num / 1000000000.0) + "B";
+        } else if (num >= 1000000){
+            result = String.format("%.1f", num / 1000000.0) + "M";
+        } else if (num >= 1000){
+            result = String.format("%.1f", num / 1000.0) + "K";
+        } else {
+            result = String.valueOf(num);
+        }
+        return result;
     }
 }
 
@@ -80,12 +100,14 @@ public class HomePageActivity extends NotifyActivity {
     private ImageView post1Image;
     private CardView post1Frame;
 
+
     private TextView post2Name;
     private TextView post2Intro;
     private TextView post2LikeNum;
     private TextView post2CollectNum;
     private ImageView post2Image;
     private CardView post2Frame;
+
 
     private TextView post3Name;
     private TextView post3Intro;
@@ -94,12 +116,14 @@ public class HomePageActivity extends NotifyActivity {
     private ImageView post3Image;
     private CardView post3Frame;
 
+
     private TextView post4Name;
     private TextView post4Intro;
     private TextView post4LikeNum;
     private TextView post4CollectNum;
     private ImageView post4Image;
     private CardView post4Frame;
+
 
     private TextView post5Name;
     private TextView post5Intro;
@@ -108,13 +132,14 @@ public class HomePageActivity extends NotifyActivity {
     private ImageView post5Image;
     private CardView post5Frame;
 
+
     private ScrollView scrollBox;
     private EditText searchText;
     private ImageView searchIcon;
 
     public ArrayList<Recipe> curRecipes;
     public ArrayList<Recipe> searchRecipes;
-    public boolean gotFromServer = false;
+    public boolean searched = false;
     public ArrayList<Post> posts = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +155,7 @@ public class HomePageActivity extends NotifyActivity {
         post1CollectNum = findViewById(R.id.post1CollectNum);
         post1Image = findViewById(R.id.post1Image);
         post1Frame = findViewById(R.id.post1);
+
         Post post1 = new Post(firebaseClient,post1Name,post1Intro,post1LikeNum,post1CollectNum,post1Image,post1Frame);
 
         post2Name = findViewById(R.id.post2Name);
@@ -169,6 +195,9 @@ public class HomePageActivity extends NotifyActivity {
         posts.add(post4);
         posts.add(post5);
 
+        scrollBox = findViewById(R.id.postScollWrapper);
+        scrollBox.setOnTouchListener(new TouchListenerImpl());
+
         //need to fix here
 //        scrollBox = findViewById(R.id.postScollWrapper);
 //        scrollBox.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
@@ -201,21 +230,27 @@ public class HomePageActivity extends NotifyActivity {
 
 
         //first time to refresh the home Post when login
-        refreshHome(posts);
+        refreshHomeWrapper();
 
 
         //search box listener
         searchText = findViewById(R.id.searchText);
+        searchText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchText.setText(null);
+            }
+        });
         searchIcon = findViewById(R.id.searchIcon);
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                searched = true;
                 String searchItem = searchText.getText().toString();
                 firebaseClient.getRecipesByKeywords(searchItem);
 
             }
         });
-
 
 
 
@@ -248,15 +283,128 @@ public class HomePageActivity extends NotifyActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                refreshHome(posts);
+                if (searched) {
+                    searched = false;
+                    refreshHome();
+                } else {
+                    refreshHomeWrapper();
+                }
             }
         });
 
 
     }
 
-    public void refreshHome(ArrayList<Post> posts){
+    private class TouchListenerImpl implements OnTouchListener {
+        int touchBottom = 0;
+        int touchTop = 0;
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int scrollY = view.getScrollY();
+                    int height = view.getHeight();
+                    int scrollViewMeasuredHeight = scrollBox.getChildAt(0).getMeasuredHeight();
+                    //Touch Top
+                    if (scrollY == 0) {
+                        touchBottom = 0;
+                        touchTop++;
+                        Log.e("Hi Top","Touch Top"+ touchTop);
+                        if (touchTop >= 15){
+                            touchTop = 0;
+                            refreshHomeWrapper();
+                        }
+                    }
+                    //Touch Bottom
+                    if ((scrollY + height) == scrollViewMeasuredHeight) {
+                        touchTop = 0;
+                        touchBottom++;
+                        Log.e("Hi Bottom","Touch Bottom"+ touchBottom);
+                        if (touchBottom >= 15){
+                            touchBottom = 0;
+                            refreshHomeWrapper();
+                        }
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            return false;
+        }
+
+    }
+
+    public void refreshHomeWrapper(){
         firebaseClient.getRecommendedRecipes(5);
+    }
+    public void refreshHome(){
+        if (searched){
+            //currently only show up to 5 search results
+            if (searchRecipes.size() >= 5){
+                for (int i = 0; i < 5; i++){
+                    posts.get(i).attachRecipe(searchRecipes.get(i));
+                }
+
+                posts.forEach(curPost -> {
+                    curPost.setUI();
+                });
+
+            } else {
+                //need to set other posts to blank
+                for (int j = 0; j < 5; j++){
+                    if (j < searchRecipes.size()){
+                        posts.get(j).attachRecipe(searchRecipes.get(j));
+                    } else {
+                        posts.get(j).dettachRecipe();
+                    }
+                }
+
+                posts.forEach(curPost -> {
+                    curPost.setUI();
+                });
+            }
+
+        } else {
+            Log.e("HI", "Size: "+ curRecipes.size());
+            if (curRecipes.size() >= 5){
+                for (int i = 0; i < 5; i++){
+                    posts.get(i).attachRecipe(curRecipes.get(i));
+                }
+
+                posts.forEach(curPost -> {
+                    curPost.setUI();
+                });
+
+            } else if (curRecipes.size() > 0) {
+                for (int j = 0; j < 5; j++){
+                    if (j < curRecipes.size()){
+                        posts.get(j).attachRecipe(curRecipes.get(j));
+                    } else {
+                        posts.get(j).dettachRecipe();
+                    }
+                }
+
+                posts.forEach(curPost -> {
+                    curPost.setUI();
+                });
+
+            } else {
+                //need to promt msg to user on the bottom
+                new AlertDialog.Builder(HomePageActivity.this)
+                        .setTitle("No More Recipes")
+                        .setMessage("You Have Reached the Bottom, Please Come Back Later")
+                        .setPositiveButton("OK",null)
+                        .show();
+                return;
+            }
+        }
+
+
     }
 
     @Override
@@ -267,29 +415,17 @@ public class HomePageActivity extends NotifyActivity {
                 System.out.println("in notifyActivity. Here are the async results: " + currentRecipes.get(0).getTitle());
                 break;
             case GET_RECOMMENDED_POSTS:
+                //may need to change here
+                //if refresh once and no more recipe
+                //then search smt and click home, then it will not restore revious posts
+                //if backend change to randomly choose recipes then it will not be a problem
                 curRecipes = firebaseClient.getCacheRecipePosts();
-                Log.e("Hello", "Hi " + curRecipes.size());
-                if (curRecipes.size() >= 5){
-                    for (int i = 0; i < 5; i++){
-                        posts.get(i).attachRecipe(curRecipes.get(i));
-                    }
-
-                    posts.forEach(curPost -> {
-                        curPost.setUI();
-                    });
-
-                } else {
-                    //need to promt msg to user on the bottom
-                    new AlertDialog.Builder(HomePageActivity.this)
-                            .setTitle("No More Recipes")
-                            .setMessage("You Have Reached the Bottom, Please Come Back Later")
-                            .setPositiveButton("OK",null)
-                            .show();
-                    return;
-                }
+                //Log.e("Hello", "Hi " + curRecipes.size());
+                refreshHome();
                 break;
             case GET_RECIPES_BY_TITLE:
                 searchRecipes = firebaseClient.getCacheRecipePosts();
+                refreshHome();
                 break;
             default:
                 // Default case for all unused functions in firebaseClient
