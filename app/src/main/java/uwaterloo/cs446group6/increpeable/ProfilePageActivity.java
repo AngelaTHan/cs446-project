@@ -6,9 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 //import androidx.activity.result.ActivityResultCallback;
@@ -44,8 +48,16 @@ public class ProfilePageActivity extends NotifyActivity {
     // view options
     private ImageView myPosts;
     private ImageView collections;
+    private ImageView profile;
 
     // recipes
+    private ScrollView posts;
+    private LinearLayout post1;
+    private LinearLayout post2;
+    private LinearLayout post3;
+    private LinearLayout post4;
+    private LinearLayout post5;
+    private LinearLayout post6;
     private ImageView post1image;
     private TextView post1title;
     private TextView post1collects;
@@ -78,14 +90,18 @@ public class ProfilePageActivity extends NotifyActivity {
     private String post6id;
 
     // recipe counter
+    Boolean onMyPost = true;
+    int postsLoaded = 0;
     int recipeCounter = 0;
     int mypostCounter = 0;
     int collectedCounter = 0;
 
     // my recipes
     ArrayList<Recipe> recipes;
+    ArrayList<Recipe> myPost;
+    ArrayList<Recipe> collection;
 
-    String convertNumber(int num){
+    private String convertNumber(int num){
         String result;
         if (num >= 1000000000){
             result = String.format("%.1f", num / 1000000000.0) + "B";
@@ -99,7 +115,7 @@ public class ProfilePageActivity extends NotifyActivity {
         return result;
     }
 
-    void initializeUI() {
+    private void initializeUI() {
         // setup firebase client
         firebaseClient = FirebaseClient.getInstance();
         currentUser = firebaseClient.getCacheUser();
@@ -113,36 +129,56 @@ public class ProfilePageActivity extends NotifyActivity {
         followersCount = findViewById(R.id.followersCount);
         likesCount = findViewById(R.id.likesCount);
 
+        // scroll
+        posts = findViewById(R.id.scrollView2);
+
         // posts
+        post1 = findViewById(R.id.post1);
         post1image = findViewById(R.id.post1image);
         post1title = findViewById(R.id.post1title);
         post1collects = findViewById(R.id.post1collects);
         post1likes = findViewById(R.id.post1likes);
 
+        post2 = findViewById(R.id.post2);
         post2image = findViewById(R.id.post2image);
         post2title = findViewById(R.id.post2title);
         post2collects = findViewById(R.id.post2collects);
         post2likes = findViewById(R.id.post2likes);
 
+        post3 = findViewById(R.id.post3);
         post3image = findViewById(R.id.post3image);
         post3title = findViewById(R.id.post3title);
         post3collects = findViewById(R.id.post3collects);
         post3likes = findViewById(R.id.post3likes);
 
+        post4 = findViewById(R.id.post4);
         post4image = findViewById(R.id.post4image);
         post4title = findViewById(R.id.post4title);
         post4collects = findViewById(R.id.post4collects);
         post4likes = findViewById(R.id.post4likes);
 
+        post5 = findViewById(R.id.post5);
         post5image = findViewById(R.id.post5image);
         post5title = findViewById(R.id.post5title);
         post5collects = findViewById(R.id.post5collects);
         post5likes = findViewById(R.id.post5likes);
 
+        post6 = findViewById(R.id.post6);
         post6image = findViewById(R.id.post6image);
         post6title = findViewById(R.id.post6title);
         post6collects = findViewById(R.id.post6collects);
         post6likes = findViewById(R.id.post6likes);
+
+        // bottom bar interactions
+        home = findViewById(R.id.home);
+        newPost = findViewById(R.id.newPost);
+        profile = findViewById(R.id.profile);
+
+        // my posts and collection button
+        myPosts = findViewById(R.id.myPosts);
+        collections = findViewById(R.id.collections);
+        myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
+        collections.setColorFilter(Color.argb(255, 0, 0, 0));
 
         // load profile information
         Log.w("Profile Page", "set profile information");
@@ -154,75 +190,85 @@ public class ProfilePageActivity extends NotifyActivity {
         likesCount.setText(convertNumber(currentUser.getNumLikes()));
     }
 
-    void loadRecipes(){
+    private void loadRecipes(){
         Log.w("Profile Page", "load recipes");
+
+        postsLoaded = 0;
 
         int size = recipes.size();
         System.out.println("*********************" + Integer.toString(size));
         int counter = 0;
         if (size >= 6 + recipeCounter){
+            post6.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post6image, recipes.get(recipeCounter + 5).getCoverImageName());
             post6title.setText(recipes.get(recipeCounter + 5).getTitle());
             post6collects.setText(convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
             post6likes.setText(convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
             post6id = recipes.get(recipeCounter + 5).getKey();
             counter++;
+        } else {
+            post6.setVisibility(View.GONE);
         }
         if (size >= 5 + recipeCounter){
+            post5.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post5image, recipes.get(recipeCounter + 4).getCoverImageName());
             post5title.setText(recipes.get(recipeCounter + 4).getTitle());
             post5collects.setText(convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
             post5likes.setText(convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
             post5id = recipes.get(recipeCounter + 4).getKey();
             counter++;
+        } else {
+            post5.setVisibility(View.GONE);
         }
         if (size >= 4 + recipeCounter){
+            post4.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post4image, recipes.get(recipeCounter + 3).getCoverImageName());
             post4title.setText(recipes.get(recipeCounter + 3).getTitle());
             post4collects.setText(convertNumber(recipes.get(recipeCounter + 3).getNumCollects()));
             post4likes.setText(convertNumber(recipes.get(recipeCounter + 3).getNumLikes()));
             post4id = recipes.get(recipeCounter + 3).getKey();
             counter++;
+        } else {
+            post4.setVisibility(View.GONE);
         }
         if (size >= 3 + recipeCounter){
+            post3.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post3image, recipes.get(recipeCounter + 2).getCoverImageName());
             post3title.setText(recipes.get(recipeCounter + 2).getTitle());
             post3collects.setText(convertNumber(recipes.get(recipeCounter + 2).getNumCollects()));
             post3likes.setText(convertNumber(recipes.get(recipeCounter + 2).getNumLikes()));
             post3id = recipes.get(recipeCounter + 2).getKey();
             counter++;
+        } else {
+            post3.setVisibility(View.GONE);
         }
         if (size >= 2 + recipeCounter){
+            post2.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post2image, recipes.get(recipeCounter + 1).getCoverImageName());
             post2title.setText(recipes.get(recipeCounter + 1).getTitle());
             post2collects.setText(convertNumber(recipes.get(recipeCounter + 1).getNumCollects()));
             post2likes.setText(convertNumber(recipes.get(recipeCounter + 1).getNumLikes()));
             post2id = recipes.get(recipeCounter + 1).getKey();
             counter++;
+        } else {
+            post2.setVisibility(View.GONE);
         }
         if (size >= 1 + recipeCounter){
+            post1.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post1image, recipes.get(recipeCounter + 0).getCoverImageName());
             post1title.setText(recipes.get(recipeCounter + 0).getTitle());
             post1collects.setText(convertNumber(recipes.get(recipeCounter + 0).getNumCollects()));
             post1likes.setText(convertNumber(recipes.get(recipeCounter + 0).getNumLikes()));
             post1id = recipes.get(recipeCounter + 0).getKey();
             counter++;
+        } else {
+            post1.setVisibility(View.GONE);
         }
-        recipeCounter += counter;
+        postsLoaded += counter;
+        posts.scrollTo(0,0);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_profile);
-
-        initializeUI();
-
-        // set my posts
-        System.out.println(currentUser.getMyPostIDs());
-        firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
-
+    private void setUserInformationListeners() {
         // change profile image
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,10 +293,9 @@ public class ProfilePageActivity extends NotifyActivity {
                 firebaseClient.setUserDescription(target.getText().toString());
             }
         });
+    }
 
-        // bottom bar interactions
-        home = findViewById(R.id.home);
-        newPost = findViewById(R.id.newPost);
+    private void setBottomBarListeners() {
         home.setOnClickListener(new View.OnClickListener() {    // go to homepage
             @Override
             public void onClick(View view) {
@@ -267,34 +312,137 @@ public class ProfilePageActivity extends NotifyActivity {
                 startActivityIfNeeded(goCreatePostIntent, 0);
             }
         });
+        profile.setOnClickListener(new View.OnClickListener() { // refresh profile page
+            @Override
+            public void onClick(View view) {
+                if (onMyPost){
+                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+                    mypostCounter = 0;
+                } else {
+                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
+                    collectedCounter = 0;
+                }
+                recipeCounter = 0;
+            }
+        });
+    }
 
+    private void setViewOptionListeners() {
         // my post and collection interaction
-        myPosts = findViewById(R.id.myPosts);
-        collections = findViewById(R.id.collections);
-        myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
-        collections.setColorFilter(Color.argb(255, 0, 0, 0));
         myPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // change icon colour
                 collections.setColorFilter(Color.argb(255, 0, 0, 0));
                 myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
                 System.out.println("$$$$$mypost " + currentUser.getMyPostIDs());
-                firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+
+                // set variables
+                collection = recipes;
+                onMyPost = true;
                 collectedCounter = recipeCounter;
-                recipeCounter = 0;
+                recipeCounter = mypostCounter;
+
+                // load posts
+                if (myPost == null ||  myPost.size() == 0) {   // reduce calls to database
+                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+                } else {
+                    recipes = myPost;
+                    loadRecipes();
+                }
             }
         });
         collections.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // change icon colour
                 myPosts.setColorFilter(Color.argb(255, 0, 0, 0));
                 collections.setColorFilter(Color.argb(255, 255, 0, 0));
                 System.out.println("$$$$$collect " + currentUser.getCollectedPostIDs());
-                firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
+
+                // set variables
+                myPost = recipes;
+                onMyPost = false;
                 mypostCounter = recipeCounter;
-                recipeCounter = 0;
+                recipeCounter = collectedCounter;
+
+                // load posts
+                if (collection == null ||  collection.size() == 0) {   // reduce calls to database
+                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
+                } else {
+                    recipes = collection;
+                    loadRecipes();
+                }
             }
         });
+    }
+
+    private class TouchListenerImpl implements View.OnTouchListener {
+        int touchBottom = 0;
+        int touchTop = 0;
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    int scrollY = view.getScrollY();
+                    int height = view.getHeight();
+                    int scrollViewMeasuredHeight = posts.getChildAt(0).getMeasuredHeight();
+                    //Touch Top
+                    if (scrollY == 0) {
+                        touchBottom = 0;
+                        touchTop++;
+                        Log.e("Hi Top","Touch Top"+ touchTop);
+                        if (touchTop >= 15){
+                            touchTop = 0;
+                            if (recipeCounter - 6 >= 0){
+                                recipeCounter -= 6;
+                                loadRecipes();
+                            }
+                        }
+                    }
+                    //Touch Bottom
+                    if ((scrollY + height) == scrollViewMeasuredHeight) {
+                        touchTop = 0;
+                        touchBottom++;
+                        Log.e("Hi Bottom","Touch Bottom"+ touchBottom);
+                        if (touchBottom >= 15){
+                            touchBottom = 0;
+                            if (recipeCounter + postsLoaded <= recipes.size()){
+                                recipeCounter += postsLoaded;
+                                loadRecipes();
+                            }
+                        }
+
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_profile);
+
+        initializeUI();
+
+        // set my posts
+        System.out.println(currentUser.getMyPostIDs());
+        firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+
+        // set up listeners
+        setUserInformationListeners();
+        setBottomBarListeners();
+        setViewOptionListeners();
+        posts.setOnTouchListener(new TouchListenerImpl());
 
         // view post
         post1image = findViewById(R.id.post1image);
@@ -328,10 +476,8 @@ public class ProfilePageActivity extends NotifyActivity {
                 System.out.println("in notifyActivity. Here are the async results: " + recipes.get(0).getTitle());
                 loadRecipes();
                 break;
-            case GET_RECOMMENDED_POSTS:
-                // Upload UI
-                break;
             default:
+                break;
                 // Default case for all unused functions in firebaseClient
         }
     }
