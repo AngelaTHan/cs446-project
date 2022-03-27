@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import uwaterloo.cs446group6.increpeable.Recipe.DB_Recipe;
 import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
 import uwaterloo.cs446group6.increpeable.Users.User;
 import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
@@ -51,8 +53,13 @@ public class ProfilePageActivity extends NotifyActivity {
     private ImageView collections;
     private ImageView profile;
 
-    // recipes
+    // scrollview
     private ScrollView posts;
+    LinearLayout row1;
+    LinearLayout row2;
+    LinearLayout row3;
+
+    // recipes
     private LinearLayout post1;
     private LinearLayout post2;
     private LinearLayout post3;
@@ -98,9 +105,15 @@ public class ProfilePageActivity extends NotifyActivity {
     int collectedCounter = 0;
 
     // my recipes
-    ArrayList<Recipe> recipes;
-    ArrayList<Recipe> myPost;
-    ArrayList<Recipe> collection;
+    ArrayList<Recipe> recipes = new ArrayList<>();
+    ArrayList<Recipe> myPost = new ArrayList<>();
+    ArrayList<Recipe> collection = new ArrayList<>();
+
+    public int dpToPx(int dp) {
+        final float scale = getResources().getDisplayMetrics().density;
+        int pixels = (int) (dp * scale + 0.5f);
+        return pixels;
+    }
 
     private void initializeUI() {
         // setup firebase client
@@ -117,7 +130,10 @@ public class ProfilePageActivity extends NotifyActivity {
         likesCount = findViewById(R.id.likesCount);
 
         // scroll
-        posts = findViewById(R.id.scrollView2);
+        posts = findViewById(R.id.scrollView);
+        row1 = findViewById(R.id.row1);
+        row2 = findViewById(R.id.row2);
+        row3 = findViewById(R.id.row3);
 
         // posts
         post1 = findViewById(R.id.post1);
@@ -197,6 +213,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post6.setVisibility(View.GONE);
         }
         if (size >= 5 + recipeCounter){
+            ViewGroup.LayoutParams params = row3.getLayoutParams();
+            params.height = dpToPx(250);
+            row3.setLayoutParams(params);
             post5.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post5image, recipes.get(recipeCounter + 4).getCoverImageName());
             post5title.setText(recipes.get(recipeCounter + 4).getTitle());
@@ -205,6 +224,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post5id = recipes.get(recipeCounter + 4).getKey();
             counter++;
         } else {
+            ViewGroup.LayoutParams params = row3.getLayoutParams();
+            params.height = dpToPx(0);
+            row3.setLayoutParams(params);
             post5.setVisibility(View.GONE);
         }
         if (size >= 4 + recipeCounter){
@@ -219,6 +241,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post4.setVisibility(View.GONE);
         }
         if (size >= 3 + recipeCounter){
+            ViewGroup.LayoutParams params = row2.getLayoutParams();
+            params.height = dpToPx(250);
+            row3.setLayoutParams(params);
             post3.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post3image, recipes.get(recipeCounter + 2).getCoverImageName());
             post3title.setText(recipes.get(recipeCounter + 2).getTitle());
@@ -227,6 +252,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post3id = recipes.get(recipeCounter + 2).getKey();
             counter++;
         } else {
+            ViewGroup.LayoutParams params = row2.getLayoutParams();
+            params.height = dpToPx(0);
+            row3.setLayoutParams(params);
             post3.setVisibility(View.GONE);
         }
         if (size >= 2 + recipeCounter){
@@ -241,6 +269,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post2.setVisibility(View.GONE);
         }
         if (size >= 1 + recipeCounter){
+            ViewGroup.LayoutParams params = row1.getLayoutParams();
+            params.height = dpToPx(250);
+            row3.setLayoutParams(params);
             post1.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post1image, recipes.get(recipeCounter + 0).getCoverImageName());
             post1title.setText(recipes.get(recipeCounter + 0).getTitle());
@@ -249,6 +280,9 @@ public class ProfilePageActivity extends NotifyActivity {
             post1id = recipes.get(recipeCounter + 0).getKey();
             counter++;
         } else {
+            ViewGroup.LayoutParams params = row1.getLayoutParams();
+            params.height = dpToPx(0);
+            row3.setLayoutParams(params);
             post1.setVisibility(View.GONE);
         }
         postsLoaded += counter;
@@ -325,7 +359,8 @@ public class ProfilePageActivity extends NotifyActivity {
                 System.out.println("$$$$$mypost " + currentUser.getMyPostIDs());
 
                 // set variables
-                collection = recipes;
+                collection.clear();
+                collection.addAll(recipes);
                 onMyPost = true;
                 collectedCounter = recipeCounter;
                 recipeCounter = mypostCounter;
@@ -334,7 +369,8 @@ public class ProfilePageActivity extends NotifyActivity {
                 if (myPost == null ||  myPost.size() == 0) {   // reduce calls to database
                     firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
                 } else {
-                    recipes = myPost;
+                    recipes.clear();
+                    recipes.addAll(myPost);
                     loadRecipes();
                 }
             }
@@ -348,7 +384,8 @@ public class ProfilePageActivity extends NotifyActivity {
                 System.out.println("$$$$$collect " + currentUser.getCollectedPostIDs());
 
                 // set variables
-                myPost = recipes;
+                myPost.clear();
+                myPost.addAll(recipes);
                 onMyPost = false;
                 mypostCounter = recipeCounter;
                 recipeCounter = collectedCounter;
@@ -357,7 +394,8 @@ public class ProfilePageActivity extends NotifyActivity {
                 if (collection == null ||  collection.size() == 0) {   // reduce calls to database
                     firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
                 } else {
-                    recipes = collection;
+                    recipes.clear();
+                    recipes.addAll(collection);
                     loadRecipes();
                 }
             }
@@ -397,7 +435,9 @@ public class ProfilePageActivity extends NotifyActivity {
                         Log.e("Hi Bottom","Touch Bottom"+ touchBottom);
                         if (touchBottom >= 15){
                             touchBottom = 0;
-                            if (recipeCounter + postsLoaded <= recipes.size()){
+                            Log.e("load posts", String.valueOf(recipes.size()));
+                            if (recipeCounter + postsLoaded < recipes.size()){
+                                Log.e("load posts", "successful");
                                 recipeCounter += postsLoaded;
                                 loadRecipes();
                             }
@@ -411,6 +451,76 @@ public class ProfilePageActivity extends NotifyActivity {
             }
             return false;
         }
+    }
+
+    private void setViewPostListeners(){
+        // view post
+        post1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 1) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
+        post2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 2) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+1)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
+        post3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 3) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+2)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
+        post4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 4) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+3)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
+        post5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 5) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+4)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
+        post6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (postsLoaded >= 2) {
+                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+5)));
+                    startActivityIfNeeded(goViewPostIntent, 0);
+                }
+            }
+        });
     }
 
     @Override
@@ -430,22 +540,13 @@ public class ProfilePageActivity extends NotifyActivity {
         setBottomBarListeners();
         setViewOptionListeners();
         posts.setOnTouchListener(new TouchListenerImpl());
-
-        // view post
-        post1image = findViewById(R.id.post1image);
-        post1image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
-                goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                startActivityIfNeeded(goViewPostIntent, 0);
-            }
-        });
+        setViewPostListeners();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // pick profile picture from gallery successful
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             Uri imageUri = data.getData();
             profileImage.setImageURI(imageUri);
@@ -459,8 +560,9 @@ public class ProfilePageActivity extends NotifyActivity {
     public void notifyActivity(ReturnFromFunction func_name) {
         switch(func_name) {
             case GET_RECIPES_BY_ID:
-                recipes = firebaseClient.getCacheRecipePosts();
-                System.out.println("in notifyActivity. Here are the async results: " + recipes.get(0).getTitle());
+                recipes.clear();
+                recipes.addAll(firebaseClient.getCacheRecipePosts());
+                System.out.println("in notifyActivity. Here are the async results: " + recipes.size());
                 loadRecipes();
                 break;
             default:

@@ -9,7 +9,6 @@
         android:id="@+id/userInfo"
         android:layout_width="0dp"
         android:layout_height="145dp"
-        android:layout_weight="3"
         android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="3"
@@ -72,7 +71,6 @@
         android:id="@+id/stats"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_weight="1"
         android:gravity="center"
         android:weightSum="3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +170,6 @@
         android:id="@+id/viewOptions"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_weight="1"
         android:background="@drawable/customborder"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -205,11 +202,10 @@
 
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="3dp"
-        android:layout_weight="8.25"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/navBar"
         app:layout_constraintEnd_toEndOf="parent"

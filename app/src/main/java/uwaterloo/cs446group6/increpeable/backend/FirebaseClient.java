@@ -116,13 +116,14 @@ public class FirebaseClient {
                         for (DataSnapshot ds : result_ds.getChildren()) {
                             Log.e(LOG_TAG, "%%%%%%%%%" + ds.child("key").getValue(String.class));
                             if (keys.contains(ds.child("key").getValue(String.class))) {
+                                Log.e(LOG_TAG, "here" + ds.getValue(DB_Recipe.class).getKey());
                                 currentRecipes.add(ds.getValue(DB_Recipe.class));
                             }
                         }
                         if (currentRecipes.size() != keys.size()) {
-                            Log.e(LOG_TAG, "cannot find some of the recipes by ids");
+                            Log.e(LOG_TAG, "cannot find some of the recipes by ids" + currentRecipes.size() + " " + keys.size());
                         } else {
-                            Log.i(LOG_TAG, " recipes saved to the arraylist");
+                            Log.i(LOG_TAG, " recipes saved to the arraylist" + currentRecipes.size());
                         }
                         currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_ID);
                     }

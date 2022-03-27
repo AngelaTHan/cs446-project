@@ -1,11 +1,8 @@
 package uwaterloo.cs446group6.increpeable;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 
 import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
 import uwaterloo.cs446group6.increpeable.Users.User;
@@ -21,6 +18,12 @@ public class NotifyActivity extends AppCompatActivity {
 
         firebaseClient = FirebaseClient.getInstance();
         currentUser = firebaseClient.getCacheUser();
+        firebaseClient.setCurrentActivity(this);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
         firebaseClient.setCurrentActivity(this);
     }
 
