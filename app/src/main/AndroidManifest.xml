@@ -23,6 +23,10 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
+            android:name="uwaterloo.cs446group6.increpeable.EditPageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
             android:name="uwaterloo.cs446group6.increpeable.HomePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />

@@ -35,6 +35,19 @@
         android:background="@null"
         />
 
+    <ImageButton
+        android:id="@+id/editPost"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right|top"
+        android:layout_marginTop="20dp"
+        android:tint="@color/white"
+        android:src="@drawable/edit"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:visibility="gone"
+        />
+
     <TextView
         android:id="@+id/viewPostTitle"
         android:layout_width="wrap_content"

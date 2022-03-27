@@ -10,14 +10,12 @@ import java.util.ArrayList;
 public class DB_Recipe extends Recipe {
     // constructor
     public DB_Recipe() {}
-    public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients) {
-        super(key, title, location, description, authorKey, getCoverImageName, steps, ingredients);
+    public DB_Recipe (DatabaseReference mDatabase, String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients, Integer numLikes, Integer numCollects) {
+        super(key, title, location, description, authorKey, getCoverImageName, steps, ingredients, numLikes, numCollects);
     }
     public DB_Recipe (Recipe recipe) {
         super (recipe.getKey(), recipe.getTitle(), recipe.getLocation(), recipe.getDescription(), recipe.getAuthorKey(),
-                recipe.getCoverImageName(), recipe.getSteps(), recipe.getIngredients());
-        this.numLikes = recipe.getNumLikes();
-        this.numCollects = recipe.getNumCollects();
+                recipe.getCoverImageName(), recipe.getSteps(), recipe.getIngredients(), recipe.getNumLikes(), recipe.getNumCollects());
     }
 
     // Upload recipe into database
@@ -33,6 +31,10 @@ public class DB_Recipe extends Recipe {
     public void setDescription(DatabaseReference mDatabase, String description) {
         this.description = description;
         mDatabase.child("Recipes").child(key).child("description").setValue(description);
+    }
+    public void setLocation(DatabaseReference mDatabase, String location) {
+        this.location = location;
+        mDatabase.child("Recipes").child(key).child("location").setValue(location);
     }
     public void setCoverImageName(DatabaseReference mDatabase, String coverImageName) {
         this.coverImageName = coverImageName;
@@ -66,6 +68,10 @@ public class DB_Recipe extends Recipe {
     public void deleteIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient, String followingID) {
         this.ingredients.remove(ingredient);
         mDatabase.child("Recipes").child(key).child("ingredients").setValue(ingredients); //may be a bug
+    }
+    public void setIngredients (DatabaseReference mDatabase, ArrayList<String> ingredients) {
+        this.ingredients = ingredients;
+        mDatabase.child("Recipes").child(key).child("ingredients").setValue(ingredients);
     }
     public void addComment (DatabaseReference mDatabase, ArrayList<String> comment) {
         this.comments.add(comment);

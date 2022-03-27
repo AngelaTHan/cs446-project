@@ -450,6 +450,38 @@ public class FirebaseClient {
         currentActivity.notifyActivity(ReturnFromFunction.CREATE_NEW_POST);
     }
 
+    // Async function; UPDATE_POST in NotifyActivity
+    // This also updates currentRecipes in local cache to the updated post.
+    // Always cost money
+    public void updatePost(Recipe updatedRecipe) {
+        DB_Recipe recipe = new DB_Recipe(updatedRecipe);
+        currentRecipe = recipe;
+
+        // update recipe cache
+        for (int i = 0; i < currentRecipes.size(); i++) {
+            if (currentRecipes.get(i).getKey().equals(updatedRecipe.getKey())) {
+                currentRecipes.set(i, recipe);
+                break;
+            }
+        }
+
+        if (stage == Stage.DEV) {
+            for (int i = 0; i < allRecipesInFirebase.size(); i++) {
+                if (allRecipesInFirebase.get(i).getKey().equals(updatedRecipe.getKey())) {
+                    allRecipesInFirebase.set(i, recipe);
+                    break;
+                }
+            }
+        }
+
+        // update firebase
+        currentRecipe.setTitle(mDatabase, recipe.getTitle());
+        currentRecipe.setDescription(mDatabase, recipe.getDescription());
+        currentRecipe.setIngredients(mDatabase, recipe.getIngredients());
+        currentRecipe.setSteps(mDatabase, recipe.getSteps());
+        currentActivity.notifyActivity(ReturnFromFunction.UPDATE_POST);
+    }
+
     // Synchronized function; no need to prepare a case in NotifyActivity
     // Always cost money
     public void addComment(String postID, String comment, String username) {

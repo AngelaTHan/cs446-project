@@ -1,5 +1,6 @@
 package uwaterloo.cs446group6.increpeable;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -29,6 +30,7 @@ public class ViewPageActivity extends NotifyActivity {
     private User currentRecipeAuthor;
 
     private ImageButton backButton;
+    private ImageButton editPostButton;
     private Button followButton;
     private LinearLayout likeButton;
     private ImageView likeIcon;
@@ -46,6 +48,7 @@ public class ViewPageActivity extends NotifyActivity {
 
         // buttons
         backButton = findViewById(R.id.backFromView);
+        editPostButton = findViewById(R.id.editPost);
         followButton = findViewById(R.id.follow);
         likeButton = findViewById(R.id.like);
         likeIcon = findViewById(R.id.likeIcon);
@@ -58,8 +61,10 @@ public class ViewPageActivity extends NotifyActivity {
         yellowStateList = ContextCompat.getColorStateList(this, R.color.yellow);
 
         currentRecipe = firebaseClient.getCurrentRecipe();
-        System.out.println("VIEWPAGE" + String.valueOf(currentRecipe.getNumLikes()) + "   " + String.valueOf(currentRecipe.getNumCollects()));
         firebaseClient.setCurrentRecipeAuthor();
+        if (currentRecipe.getAuthorKey().equals(currentUser.getKey())) {
+            editPostButton.setVisibility(View.VISIBLE);
+        }
 
         // load recipe header
         ImageView imageCover = findViewById(R.id.viewPostImage);
@@ -110,6 +115,17 @@ public class ViewPageActivity extends NotifyActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
+                finish();
+            }
+        });
+
+        // edit button
+        editPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view) {
+                Intent goEditPostIntent = new Intent(ViewPageActivity.this, EditPageActivity.class);
+                goEditPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goEditPostIntent, 0);
                 finish();
             }
         });
