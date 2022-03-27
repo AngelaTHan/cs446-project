@@ -1,6 +1,7 @@
 package uwaterloo.cs446group6.increpeable;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,17 +10,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-//import androidx.activity.result.ActivityResultCallback;
-//import androidx.activity.result.ActivityResultLauncher;
-//import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -28,11 +26,11 @@ import uwaterloo.cs446group6.increpeable.Recipe.DB_Recipe;
 import uwaterloo.cs446group6.increpeable.Recipe.Recipe;
 import uwaterloo.cs446group6.increpeable.Users.User;
 import uwaterloo.cs446group6.increpeable.backend.FirebaseClient;
-import uwaterloo.cs446group6.increpeable.TextChangedListener;
 import uwaterloo.cs446group6.increpeable.backend.ReturnFromFunction;
 
-public class ProfilePageActivity extends NotifyActivity {
+public class ViewProfileActivity extends NotifyActivity {
     private static final int PICK_IMAGE = 100;
+    private User viewUser;
 
     // bottom navigation bar
     private ImageView home;
@@ -50,8 +48,10 @@ public class ProfilePageActivity extends NotifyActivity {
     private TextView likesCount;
 
     // view options
-    private ImageView myPosts;
-    private ImageView collections;
+    private Button follow;
+    private Boolean hasFollowed;
+    private ColorStateList redStateList = ContextCompat.getColorStateList(this, R.color.red);
+    private ColorStateList darkGrayStateList = ContextCompat.getColorStateList(this, R.color.dark_gray);
 
     // scrollview
     private ScrollView posts;
@@ -106,8 +106,6 @@ public class ProfilePageActivity extends NotifyActivity {
 
     // my recipes
     ArrayList<Recipe> recipes = new ArrayList<>();
-    ArrayList<Recipe> myPost = new ArrayList<>();
-    ArrayList<Recipe> collection = new ArrayList<>();
 
     public int dpToPx(int dp) {
         final float scale = getResources().getDisplayMetrics().density;
@@ -177,20 +175,26 @@ public class ProfilePageActivity extends NotifyActivity {
         newPost = findViewById(R.id.newPost);
         profile = findViewById(R.id.profile);
 
-        // my posts and collection button
-        myPosts = findViewById(R.id.myPosts);
-        collections = findViewById(R.id.collections);
-        myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
-        collections.setColorFilter(Color.argb(255, 0, 0, 0));
+        // follow button
+        follow.findViewById(R.id.follow);
+        viewUser = firebaseClient.getCurrentRecipeAuthor();
+        hasFollowed = currentUser.getFollowingIDs().contains(viewUser.getKey());
+        if (hasFollowed) {
+            follow.setText("Following");
+            follow.setBackgroundTintList(darkGrayStateList);
+        } else {
+            follow.setText("Follow");
+            follow.setBackgroundTintList(redStateList);
+        }
 
         // load profile information
         Log.w("Profile Page", "set profile information");
-        firebaseClient.getImageViewByName(profileImage, currentUser.getProfileImageName());
-        username.setText(currentUser.getUsername());
-        userBio.setText(currentUser.getDescription());
-        followingCount.setText(Util.convertNumber(currentUser.getNumFollowing()));
-        followersCount.setText(Util.convertNumber(currentUser.getNumFollowers()));
-        likesCount.setText(Util.convertNumber(currentUser.getNumLikes()));
+        firebaseClient.getImageViewByName(profileImage, viewUser.getProfileImageName());
+        username.setText(viewUser.getUsername());
+        userBio.setText(viewUser.getDescription());
+        followingCount.setText(Util.convertNumber(viewUser.getNumFollowing()));
+        followersCount.setText(Util.convertNumber(viewUser.getNumFollowers()));
+        likesCount.setText(Util.convertNumber(viewUser.getNumLikes()));
     }
 
     private void loadRecipes(){
@@ -320,7 +324,7 @@ public class ProfilePageActivity extends NotifyActivity {
         home.setOnClickListener(new View.OnClickListener() {    // go to homepage
             @Override
             public void onClick(View view) {
-                Intent goHomeIntent = new Intent(ProfilePageActivity.this, HomePageActivity.class);
+                Intent goHomeIntent = new Intent(ViewProfileActivity.this, HomePageActivity.class);
                 goHomeIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goHomeIntent, 0);
             }
@@ -328,7 +332,7 @@ public class ProfilePageActivity extends NotifyActivity {
         newPost.setOnClickListener(new View.OnClickListener() { // create new post
             @Override
             public void onClick(View view) {
-                Intent goCreatePostIntent = new Intent(ProfilePageActivity.this, CreatePageActivity.class);
+                Intent goCreatePostIntent = new Intent(ViewProfileActivity.this, CreatePageActivity.class);
                 goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goCreatePostIntent, 0);
             }
@@ -348,56 +352,21 @@ public class ProfilePageActivity extends NotifyActivity {
         });
     }
 
-    private void setViewOptionListeners() {
-        // my post and collection interaction
-        myPosts.setOnClickListener(new View.OnClickListener() {
+    private void setFollowListeners() {
+        // follow button
+        follow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // change icon colour
-                collections.setColorFilter(Color.argb(255, 0, 0, 0));
-                myPosts.setColorFilter(Color.argb(255, 255, 0, 0));
-                System.out.println("$$$$$mypost " + currentUser.getMyPostIDs());
-
-                // set variables
-                collection.clear();
-                collection.addAll(recipes);
-                onMyPost = true;
-                collectedCounter = recipeCounter;
-                recipeCounter = mypostCounter;
-
-                // load posts
-                if (myPost == null ||  myPost.size() == 0) {   // reduce calls to database
-                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+            public void onClick (View view) {
+                if (hasFollowed) {
+                    follow.setText("Follow");
+                    follow.setBackgroundTintList(redStateList);
+                    hasFollowed = false;
                 } else {
-                    recipes.clear();
-                    recipes.addAll(myPost);
-                    loadRecipes();
+                    follow.setText("Following");
+                    follow.setBackgroundTintList(darkGrayStateList);
+                    hasFollowed = true;
                 }
-            }
-        });
-        collections.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // change icon colour
-                myPosts.setColorFilter(Color.argb(255, 0, 0, 0));
-                collections.setColorFilter(Color.argb(255, 255, 0, 0));
-                System.out.println("$$$$$collect " + currentUser.getCollectedPostIDs());
-
-                // set variables
-                myPost.clear();
-                myPost.addAll(recipes);
-                onMyPost = false;
-                mypostCounter = recipeCounter;
-                recipeCounter = collectedCounter;
-
-                // load posts
-                if (collection == null ||  collection.size() == 0) {   // reduce calls to database
-                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
-                } else {
-                    recipes.clear();
-                    recipes.addAll(collection);
-                    loadRecipes();
-                }
+                firebaseClient.modifyFollowAuthor(viewUser.getKey(), hasFollowed);
             }
         });
     }
@@ -459,9 +428,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 1) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -470,9 +439,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 2) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter+1));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+1)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -481,9 +450,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 3) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter+2));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+2)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -492,9 +461,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 4) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter+3));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+3)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -503,9 +472,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 5) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter+4));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+4)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -514,9 +483,9 @@ public class ProfilePageActivity extends NotifyActivity {
             @Override
             public void onClick(View view) {
                 if (postsLoaded >= 2) {
-                    Intent goViewPostIntent = new Intent(ProfilePageActivity.this, ViewPageActivity.class);
+                    Intent goViewPostIntent = new Intent(ViewProfileActivity.this, ViewPageActivity.class);
                     goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    firebaseClient.setCurrentRecipe(recipes.get(recipeCounter+5));
+                    firebaseClient.setCurrentRecipe(new DB_Recipe(recipes.get(recipeCounter+5)));
                     startActivityIfNeeded(goViewPostIntent, 0);
                 }
             }
@@ -538,7 +507,7 @@ public class ProfilePageActivity extends NotifyActivity {
         // set up listeners
         setUserInformationListeners();
         setBottomBarListeners();
-        setViewOptionListeners();
+        setFollowListeners();
         posts.setOnTouchListener(new TouchListenerImpl());
         setViewPostListeners();
     }

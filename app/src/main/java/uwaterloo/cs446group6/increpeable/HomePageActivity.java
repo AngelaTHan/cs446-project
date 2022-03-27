@@ -205,7 +205,7 @@ public class HomePageActivity extends NotifyActivity {
                         Intent goProfileIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, ViewPageActivity.class);
                         System.out.println("HOMEPAGE" + String.valueOf(curR.getNumLikes()) + "   " + String.valueOf(curR.getNumCollects()));
                         //For Angie: get current recipe directly from firebase client by using: getCurrentRecipe()
-                        firebaseClient.setCurrentRecipe(new DB_Recipe(curR));
+                        firebaseClient.setCurrentRecipe(curR);
                         goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivityIfNeeded(goProfileIntent, 0);
                     } else {
