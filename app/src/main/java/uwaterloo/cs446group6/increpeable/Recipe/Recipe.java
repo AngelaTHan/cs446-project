@@ -31,6 +31,8 @@ public class Recipe {
         this.coverImageName = getCoverImageName;
         this.steps = steps;
         this.ingredients = ingredients;
+        this.numLikes = numLikes;
+        this.numCollects = numCollects;
     }
 
     // getters

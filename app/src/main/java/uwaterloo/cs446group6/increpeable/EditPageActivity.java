@@ -176,6 +176,7 @@ public class EditPageActivity extends NotifyActivity {
                 Intent goViewPostIntent = new Intent(EditPageActivity.this, ViewPageActivity.class);
                 goViewPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(goViewPostIntent);
+                finish();
                 break;
             default:
                 break;
