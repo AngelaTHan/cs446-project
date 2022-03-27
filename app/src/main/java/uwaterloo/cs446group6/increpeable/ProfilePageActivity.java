@@ -31,6 +31,7 @@ import uwaterloo.cs446group6.increpeable.backend.ReturnFromFunction;
 
 public class ProfilePageActivity extends NotifyActivity {
     private static final int PICK_IMAGE = 100;
+
     // bottom navigation bar
     private ImageView home;
     private ImageView newPost;
@@ -100,20 +101,6 @@ public class ProfilePageActivity extends NotifyActivity {
     ArrayList<Recipe> recipes;
     ArrayList<Recipe> myPost;
     ArrayList<Recipe> collection;
-
-    private String convertNumber(int num){
-        String result;
-        if (num >= 1000000000){
-            result = String.format("%.1f", num / 1000000000.0) + "B";
-        } else if (num >= 1000000){
-            result = String.format("%.1f", num / 1000000.0) + "M";
-        } else if (num >= 1000){
-            result = String.format("%.1f", num / 1000.0) + "K";
-        } else {
-            result = String.valueOf(num);
-        }
-        return result;
-    }
 
     private void initializeUI() {
         // setup firebase client
@@ -185,9 +172,9 @@ public class ProfilePageActivity extends NotifyActivity {
         firebaseClient.getImageViewByName(profileImage, currentUser.getProfileImageName());
         username.setText(currentUser.getUsername());
         userBio.setText(currentUser.getDescription());
-        followingCount.setText(convertNumber(currentUser.getNumFollowing()));
-        followersCount.setText(convertNumber(currentUser.getNumFollowers()));
-        likesCount.setText(convertNumber(currentUser.getNumLikes()));
+        followingCount.setText(Util.convertNumber(currentUser.getNumFollowing()));
+        followersCount.setText(Util.convertNumber(currentUser.getNumFollowers()));
+        likesCount.setText(Util.convertNumber(currentUser.getNumLikes()));
     }
 
     private void loadRecipes(){
@@ -202,8 +189,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post6.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post6image, recipes.get(recipeCounter + 5).getCoverImageName());
             post6title.setText(recipes.get(recipeCounter + 5).getTitle());
-            post6collects.setText(convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
-            post6likes.setText(convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
+            post6collects.setText(Util.convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
+            post6likes.setText(Util.convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
             post6id = recipes.get(recipeCounter + 5).getKey();
             counter++;
         } else {
@@ -213,8 +200,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post5.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post5image, recipes.get(recipeCounter + 4).getCoverImageName());
             post5title.setText(recipes.get(recipeCounter + 4).getTitle());
-            post5collects.setText(convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
-            post5likes.setText(convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
+            post5collects.setText(Util.convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
+            post5likes.setText(Util.convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
             post5id = recipes.get(recipeCounter + 4).getKey();
             counter++;
         } else {
@@ -224,8 +211,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post4.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post4image, recipes.get(recipeCounter + 3).getCoverImageName());
             post4title.setText(recipes.get(recipeCounter + 3).getTitle());
-            post4collects.setText(convertNumber(recipes.get(recipeCounter + 3).getNumCollects()));
-            post4likes.setText(convertNumber(recipes.get(recipeCounter + 3).getNumLikes()));
+            post4collects.setText(Util.convertNumber(recipes.get(recipeCounter + 3).getNumCollects()));
+            post4likes.setText(Util.convertNumber(recipes.get(recipeCounter + 3).getNumLikes()));
             post4id = recipes.get(recipeCounter + 3).getKey();
             counter++;
         } else {
@@ -235,8 +222,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post3.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post3image, recipes.get(recipeCounter + 2).getCoverImageName());
             post3title.setText(recipes.get(recipeCounter + 2).getTitle());
-            post3collects.setText(convertNumber(recipes.get(recipeCounter + 2).getNumCollects()));
-            post3likes.setText(convertNumber(recipes.get(recipeCounter + 2).getNumLikes()));
+            post3collects.setText(Util.convertNumber(recipes.get(recipeCounter + 2).getNumCollects()));
+            post3likes.setText(Util.convertNumber(recipes.get(recipeCounter + 2).getNumLikes()));
             post3id = recipes.get(recipeCounter + 2).getKey();
             counter++;
         } else {
@@ -246,8 +233,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post2.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post2image, recipes.get(recipeCounter + 1).getCoverImageName());
             post2title.setText(recipes.get(recipeCounter + 1).getTitle());
-            post2collects.setText(convertNumber(recipes.get(recipeCounter + 1).getNumCollects()));
-            post2likes.setText(convertNumber(recipes.get(recipeCounter + 1).getNumLikes()));
+            post2collects.setText(Util.convertNumber(recipes.get(recipeCounter + 1).getNumCollects()));
+            post2likes.setText(Util.convertNumber(recipes.get(recipeCounter + 1).getNumLikes()));
             post2id = recipes.get(recipeCounter + 1).getKey();
             counter++;
         } else {
@@ -257,8 +244,8 @@ public class ProfilePageActivity extends NotifyActivity {
             post1.setVisibility(View.VISIBLE);
             firebaseClient.getImageViewByName(post1image, recipes.get(recipeCounter + 0).getCoverImageName());
             post1title.setText(recipes.get(recipeCounter + 0).getTitle());
-            post1collects.setText(convertNumber(recipes.get(recipeCounter + 0).getNumCollects()));
-            post1likes.setText(convertNumber(recipes.get(recipeCounter + 0).getNumLikes()));
+            post1collects.setText(Util.convertNumber(recipes.get(recipeCounter + 0).getNumCollects()));
+            post1likes.setText(Util.convertNumber(recipes.get(recipeCounter + 0).getNumLikes()));
             post1id = recipes.get(recipeCounter + 0).getKey();
             counter++;
         } else {

@@ -16,6 +16,8 @@ public class DB_Recipe extends Recipe {
     public DB_Recipe (Recipe recipe) {
         super (recipe.getKey(), recipe.getTitle(), recipe.getLocation(), recipe.getDescription(), recipe.getAuthorKey(),
                 recipe.getCoverImageName(), recipe.getSteps(), recipe.getIngredients());
+        this.numLikes = recipe.getNumLikes();
+        this.numCollects = recipe.getNumCollects();
     }
 
     // Upload recipe into database
