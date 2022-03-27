@@ -18,7 +18,7 @@
         android:background="@color/white">
 
         <ImageButton
-            android:id="@+id/backImageButton"
+            android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="20dp"
             android:layout_gravity="left|center"
@@ -47,15 +47,6 @@
             android:textColor="@android:color/black"
             android:textSize="11sp"
             android:textStyle="bold" />
-        <ImageButton
-            android:id="@+id/saveImageButton"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right|center"
-            android:src="@drawable/save_icon"
-            android:scaleType="fitCenter"
-            android:background="@color/white"
-            />
 
 
     </FrameLayout>
@@ -71,150 +62,243 @@
         app:layout_constraintTop_toBottomOf="@+id/createPostHeader">
 
         <LinearLayout
-            android:id="@+id/viewPost"
+            android:id="@+id/wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="15dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/imageSection"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
 
-            // upload image
-            <TextView
-                android:id="@+id/uploadImageTitle"
+                // upload image
+                <TextView
+                    android:id="@+id/uploadImageTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Select Recipe Background Image*"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+                <ImageView
+                    android:id="@+id/imageToUpload"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@color/grey_200"
+                    android:layout_marginTop="15dp" />
+    <!--            <EditText-->
+    <!--                android:id="@+id/editUploadName"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Enter your uploaded Image Name"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:outlineAmbientShadowColor="@color/black"-->
+    <!--                android:textSize="12sp" />-->
+                <Button
+                    android:id="@+id/selectImageButton"
+                    android:text="Select Image"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/red"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/enterTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:text="Upload Recipe Background Image"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"/>
-            <ImageView
-                android:id="@+id/imageToUpload"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:background="@color/grey_200"
-                android:layout_marginTop="15dp" />
-<!--            <EditText-->
-<!--                android:id="@+id/editUploadName"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Enter your uploaded Image Name"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:outlineAmbientShadowColor="@color/black"-->
-<!--                android:textSize="12sp" />-->
-            <Button
-                android:id="@+id/uploadImageButton"
-                android:text="Upload Image"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/red"
-                android:textAllCaps="false"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="2dp"
-                android:background="@android:color/darker_gray" />
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
 
-            // enter title
+                <TextView
+                    android:id="@+id/createTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Title*"
+                    android:textColor="@android:color/black"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+                <EditText
+                    android:id="@+id/recipeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter recipe name"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/createTitle"
+            // enter location
+            <LinearLayout
+                android:id="@+id/enterLocation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:text="Recipe Name"
-                android:textColor="@android:color/black"
-                android:textAllCaps="false"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"/>
-            <EditText
-                android:id="@+id/recipeName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter Recipe Name"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="2dp"
-                android:background="@android:color/darker_gray" />
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/locationTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Location*"
+                    android:textColor="@android:color/black"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:hint="Enter location"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
 
             // enter introduction
-            <TextView
-                android:id="@+id/enterIntro"
+            <LinearLayout
+                android:id="@+id/enterIntroduction"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:text="Introduction"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"/>
-            <EditText
-                android:id="@+id/intro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter Description"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="2dp"
-                android:background="@android:color/darker_gray" />
-
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/enterDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Description*"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+                <EditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter description"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
             // enter ingredients
-            <TextView
-                android:id="@+id/createIngredients"
+            <LinearLayout
+                android:id="@+id/enterIngredients"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:text="Ingredients"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"/>
-            <EditText
-                android:id="@+id/ingredient"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/createIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Ingredients*"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"/>
+                <LinearLayout
+                    android:id="@+id/inputIngredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/ingredient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:hint="Enter ingredient"
+                        />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/addIngredientButton"
+                    android:text="Add Another Ingredient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/red"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginVertical="2dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/enterSteps"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter Ingredients"
-            />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="2dp"
-                android:background="@android:color/darker_gray" />
-
-            // enter steps
-            <TextView
-                android:id="@+id/createSteps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:text="Steps"
-                android:textColor="@android:color/black"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                />
-            <EditText
-                android:id="@+id/recipeSteps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Enter Steps"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="2dp"
-                android:background="@android:color/darker_gray" />
-
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="15dp"
+                android:orientation="vertical">
+                // enter steps
+                <TextView
+                    android:id="@+id/createSteps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:text="Steps*"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    />
+                <LinearLayout
+                    android:id="@+id/inputStep"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <EditText
+                        android:id="@+id/step"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left|center"
+                        android:hint="Enter step"
+                        />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/addStepButton"
+                    android:text="Add Another Step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/red"
+                    android:textAllCaps="false"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
