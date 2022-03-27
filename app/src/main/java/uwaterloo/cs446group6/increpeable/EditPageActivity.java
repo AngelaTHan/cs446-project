@@ -127,7 +127,7 @@ public class EditPageActivity extends NotifyActivity {
                 }
 
                 if (!(title.isEmpty() && description.isEmpty() && ingredients.isEmpty() && steps.isEmpty())) {
-                    Recipe recipe = new Recipe(currentRecipe.getKey(), title, currentRecipe.getLocation(), description, currentRecipe.getAuthorKey(), currentRecipe.getCoverImageName(), steps, ingredients);
+                    Recipe recipe = new Recipe(currentRecipe.getKey(), title, currentRecipe.getLocation(), description, currentRecipe.getAuthorKey(), currentRecipe.getCoverImageName(), steps, ingredients, currentRecipe.getNumLikes(), currentRecipe.getNumCollects());
                     firebaseClient.updatePost(recipe);
                 }
             }

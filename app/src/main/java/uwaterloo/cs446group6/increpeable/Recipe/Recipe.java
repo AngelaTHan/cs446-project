@@ -22,7 +22,7 @@ public class Recipe {
 
     // constructor
     public Recipe() {}
-    public Recipe(String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients) {
+    public Recipe(String key, String title, String location, String description, String authorKey, String getCoverImageName, ArrayList<String> steps, ArrayList<String> ingredients, Integer numLikes, Integer numCollects) {
         this.key = key;
         this.title = title;
         this.location = location;

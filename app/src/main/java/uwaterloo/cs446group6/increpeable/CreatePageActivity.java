@@ -197,7 +197,7 @@ public class CreatePageActivity extends NotifyActivity {
                 }
 
                 if (!(imageToUploadView.getDrawable() != null && title.isEmpty() && location.isEmpty() && description.isEmpty() && ingredients.isEmpty() && steps.isEmpty())) {
-                    Recipe recipe = new Recipe(key, title, location, description, authorKey, coverImageName, steps, ingredients);
+                    Recipe recipe = new Recipe(key, title, location, description, authorKey, coverImageName, steps, ingredients, 0, 0);
                     firebaseClient.createNewPost(recipe);
                     firebaseClient.setRecipeCoverImageName(key, coverImageName);
                     firebaseClient.uploadImageView(imageToUploadView, key);
