@@ -34,6 +34,10 @@ public class DB_Recipe extends Recipe {
         this.description = description;
         mDatabase.child("Recipes").child(key).child("description").setValue(description);
     }
+    public void setLocation(DatabaseReference mDatabase, String location) {
+        this.location = location;
+        mDatabase.child("Recipes").child(key).child("location").setValue(location);
+    }
     public void setCoverImageName(DatabaseReference mDatabase, String coverImageName) {
         this.coverImageName = coverImageName;
         mDatabase.child("Recipes").child(key).child("coverImageName").setValue(coverImageName);
@@ -66,6 +70,10 @@ public class DB_Recipe extends Recipe {
     public void deleteIngredient (DatabaseReference mDatabase, ArrayList<String> ingredient, String followingID) {
         this.ingredients.remove(ingredient);
         mDatabase.child("Recipes").child(key).child("ingredients").setValue(ingredients); //may be a bug
+    }
+    public void setIngredients (DatabaseReference mDatabase, ArrayList<String> ingredients) {
+        this.ingredients = ingredients;
+        mDatabase.child("Recipes").child(key).child("ingredients").setValue(ingredients);
     }
     public void addComment (DatabaseReference mDatabase, ArrayList<String> comment) {
         this.comments.add(comment);
