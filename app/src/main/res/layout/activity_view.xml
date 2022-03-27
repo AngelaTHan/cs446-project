@@ -21,8 +21,19 @@
         android:foreground="#6F696969"
         android:foregroundTintMode="src_atop"
         android:gravity="center"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/food" />
+        android:scaleType="centerCrop" />
+
+    <ImageButton
+        android:id="@+id/backFromView"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:layout_gravity="left|top"
+        android:layout_marginTop="20dp"
+        android:tint="@color/white"
+        android:src="@drawable/back_arrow"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        />
 
     <TextView
         android:id="@+id/viewPostTitle"
@@ -30,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:text="Beef Wellington"
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -41,7 +51,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="30dp"
-        android:text="Likes 1.1M      Collects 987k"
         android:textColor="@android:color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -52,7 +61,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="10dp"
-        android:text="Waterloo, ON, Canada"
         android:textColor="@android:color/white"
         android:textSize="11sp"
         android:textStyle="bold" />
@@ -82,7 +90,6 @@
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/viewPostAuthorProfile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginVertical="15dp"
@@ -91,10 +98,11 @@
                 app:cardCornerRadius="250sp">
 
                 <ImageView
+                    android:id="@+id/viewPostAuthorProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/gordon" />
+                    app:srcCompat="@drawable/emptyprofileimg" />
 
             </androidx.cardview.widget.CardView>
 
@@ -105,7 +113,6 @@
                 android:layout_gravity="left|center"
                 android:layout_marginLeft="75dp"
                 android:ellipsize="end"
-                android:text="Gordon Ramsay"
                 android:textColor="@android:color/black"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -118,8 +125,6 @@
                 android:layout_marginRight="25dp"
                 android:ellipsize="end"
                 android:paddingVertical="2dp"
-                android:backgroundTint="@color/red"
-                android:text="Follow"
                 android:textAllCaps="false"
                 android:textSize="14sp" />
 
@@ -130,7 +135,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:text="A traditional Beef Wellington consists of a beef tenderloin wrapped in layers of pâté, duxelles (a finely chopped mushroom mixture), parma ham, and puff pastry, then baked. Rumor has it that Beef Wellington got its name from Arthur Wellesley, the 1st Duke of Wellington, who counted the dish among his favorite recipes."
             android:textColor="@android:color/black"
             android:textSize="14sp" />
 
@@ -150,14 +154,12 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/viewPostIngredient"
+        <LinearLayout
+            android:id="@+id/viewPostIngredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="2 x 400g beef fillets\nOlive oil, for frying\n500g mixture of wild mushrooms, cleaned\n1 thyme sprig, leaves only\n500g puff pastry\nslices of Parma ham\n2 egg yolks, beaten with 1 tbsp water and a pinch of salt\nSea salt and freshly ground black pepper"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:orientation="vertical">
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -165,165 +167,81 @@
             android:layout_marginVertical="2dp"
             android:background="@android:color/darker_gray" />
 
-        <TextView
-            android:id="@+id/viewPostStep1Header"
+        <LinearLayout
+            android:id="@+id/viewPostSteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Step 1"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewPostStep1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Season beef liberally with salt and pepper on all sides. Use your hands to press salt and pepper in while rolling and shaping beef into a cylinder."
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="2dp"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/viewPostStep2Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Step 2"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewPostStep2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Heat a cast iron skillet and add grapeseed oil, then sear beef, cooking 1 minute per side."
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="2dp"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/viewPostStep3Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Step 3"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewPostStep3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Remove beef to sheet tray and pour the pan juices over it. While hot, brush Dijon mustard all over, and then allow to rest."
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="2dp"
-            android:background="@android:color/darker_gray" />
-
-        <TextView
-            android:id="@+id/viewPostStep4Header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Step 4"
-            android:textColor="@android:color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewPostStep4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:text="Take a damp towel and moisten your cutting board. Layer three pieces of plastic wrap overlapping each other on the board."
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="2dp"
-            android:background="@android:color/darker_gray" />
-
+            android:orientation="vertical">
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
 
-<LinearLayout
-    android:id="@+id/navBar"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent">
+    <LinearLayout
+        android:id="@+id/navBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/like2"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="like"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/like"
-        app:iconSize="30dp"
-        app:iconTint="@color/dark_gray" />
+        <LinearLayout
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/collect"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="collect"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/collect"
-        app:iconSize="30dp"
-        app:iconTint="@color/dark_gray" />
+            <ImageView
+                android:id="@+id/likeIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginRight="5dp">
+            </ImageView>
 
-    <Button
-        android:id="@+id/comment"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="left|center_vertical"
-        android:text="comment"
-        android:textAllCaps="false"
-        android:textColor="@color/dark_gray"
-        android:textSize="14sp"
-        app:icon="@drawable/comment"
-        app:iconSize="22dp"
-        app:iconTint="@color/dark_gray" />
+            <TextView
+                android:id="@+id/likeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="like"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp">
+            </TextView>
 
-</LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/collect"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/collectIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:layout_marginRight="5dp">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/collectText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:text="collect"
+                android:textColor="@color/dark_gray"
+                android:textSize="14sp">
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

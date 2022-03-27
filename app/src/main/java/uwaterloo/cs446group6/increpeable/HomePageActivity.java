@@ -58,8 +58,8 @@ class Post {
             postFrame.setVisibility(View.VISIBLE);
             name.setText(recipe.getTitle());
             intro.setText(recipe.getDescription());
-            likeNum.setText(convertNumber(recipe.getNumLikes()));
-            collectNum.setText(convertNumber(recipe.getNumCollects()));
+            likeNum.setText(Util.convertNumber(recipe.getNumLikes()));
+            collectNum.setText(Util.convertNumber(recipe.getNumCollects()));
             firebaseClient.getImageViewByName(img, recipe.getCoverImageName());
         } else {
             Log.d("HomePage", "Recipe Not Attached");
@@ -70,20 +70,6 @@ class Post {
 //            collectNum.setText(null);
 //            img.setImageDrawable(null);
         }
-    }
-
-    private String convertNumber(int num){
-        String result;
-        if (num >= 1000000000){
-            result = String.format("%.1f", num / 1000000000.0) + "B";
-        } else if (num >= 1000000){
-            result = String.format("%.1f", num / 1000000.0) + "M";
-        } else if (num >= 1000){
-            result = String.format("%.1f", num / 1000.0) + "K";
-        } else {
-            result = String.valueOf(num);
-        }
-        return result;
     }
 }
 
@@ -217,6 +203,7 @@ public class HomePageActivity extends NotifyActivity {
                     Recipe curR = curPost.getRecipe();
                     if (curR != null){
                         Intent goProfileIntent = new Intent(uwaterloo.cs446group6.increpeable.HomePageActivity.this, ViewPageActivity.class);
+                        System.out.println("HOMEPAGE" + String.valueOf(curR.getNumLikes()) + "   " + String.valueOf(curR.getNumCollects()));
                         //For Angie: get current recipe directly from firebase client by using: getCurrentRecipe()
                         firebaseClient.setCurrentRecipe(new DB_Recipe(curR));
                         goProfileIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

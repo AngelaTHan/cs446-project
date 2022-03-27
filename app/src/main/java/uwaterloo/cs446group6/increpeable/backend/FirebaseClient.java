@@ -35,6 +35,7 @@ public class FirebaseClient {
     private DB_User currentUser;
     private ArrayList<DB_Recipe> currentRecipes = new ArrayList<>(); // Recipes for this class, can change values
     private DB_Recipe currentRecipe;
+    private DB_User currentRecipeAuthor;
 
     // If Stage == DEV, firebase client will make "fake" transaction calls to save cost
     // It will save all the recipes in allRecipesInFirebase
@@ -61,9 +62,10 @@ public class FirebaseClient {
         return recipesToReturn;
     }
 
-    public void setCurrentRecipe (DB_Recipe recipe) { this.currentRecipe = recipe; }
-    public Recipe getCurrentRecipe () { return currentRecipe; }
-
+    public Recipe getCurrentRecipe () {
+        System.out.println("FIREBASE CLIENT" + String.valueOf(currentRecipe.getNumLikes()) + "   " + String.valueOf(currentRecipe.getNumCollects()));
+        return currentRecipe; }
+    public User getCurrentRecipeAuthor() { return currentRecipeAuthor; }
 
     //  ==================================================================================
     //  ================ setCurrentActivity and setCurrentDBUser =========================
@@ -176,7 +178,6 @@ public class FirebaseClient {
         }
     }
 
-
     // returns a list of recipes that contains the keywords in their title
     public void getRecipesByKeywords(String keyWords) {
         if (!currentRecipes.isEmpty()) { currentRecipes.clear(); } // empty the arraylist
@@ -209,6 +210,30 @@ public class FirebaseClient {
                         Log.i(LOG_TAG, " recipes saved to the arraylist");
                     }
                     currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_TITLE);
+                }
+            }
+        });
+    }
+
+    // async function;
+    // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_CURRENT_RECIPE_AUTHOR)
+    // when current recipe is set.
+    // These functions cost money
+    public void setCurrentRecipe (DB_Recipe recipe) {
+        this.currentRecipe = recipe;
+    }
+
+    public void setCurrentRecipeAuthor() {
+        // Set current recipe author information
+        mDatabase.child("UserAccounts").child(currentRecipe.getAuthorKey()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting data", task.getException());
+                } else {
+                    Log.d(LOG_TAG, "get User success");
+                    currentRecipeAuthor = task.getResult().getValue(DB_User.class);
+                    currentActivity.notifyActivity(ReturnFromFunction.GET_CURRENT_RECIPE_AUTHOR);
                 }
             }
         });
@@ -292,6 +317,11 @@ public class FirebaseClient {
             }
         }
 
+        // update current recipe cache
+        if (postKey.equals(currentRecipe.getKey())) {
+            currentRecipe = recipe;
+        }
+
         // update post author numLike
         mDatabase.child("UserAccounts").child(recipe.getAuthorKey()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -340,12 +370,18 @@ public class FirebaseClient {
             }
         }
 
+        // update current recipe cache
+        if (article_id.equals(currentRecipe.getKey())) {
+            currentRecipe = recipe;
+        }
+
         // add the collected recipe to current user's collectedRecipes list
         if (isCollect) {
             currentUser.addCollectedPostID(mDatabase, recipe.getKey());
         } else {
             currentUser.deleteCollectedPostID(mDatabase, recipe.getKey());
         }
+
     }
 
     // async function; UI does not need to wait for this to finish
