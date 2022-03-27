@@ -30,11 +30,17 @@ import android.location.Location;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-//import com.androidnetworking.AndroidNetworking;
-//import com.androidnetworking.error.ANError;
-//import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -46,7 +52,6 @@ public class CreatePageActivity extends NotifyActivity {
     public static final int PICK_IMAGE = 100;
 
     private ImageButton backButton;
-    private ImageButton saveButton;
     private Button selectImageButton;
     private LinearLayout imageSectionView;
     private ImageView imageToUploadView;
@@ -74,10 +79,11 @@ public class CreatePageActivity extends NotifyActivity {
     private ArrayList<String> ingredients;
     private ArrayList<String> steps;
 
-    // location variables
+    // location helper variables
     private String longitude;
     private String latitude;
-
+    private String city;
+    private String province;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 1;
 
@@ -88,7 +94,6 @@ public class CreatePageActivity extends NotifyActivity {
 
         // views
         backButton = findViewById(R.id.backButton);
-        saveButton = findViewById(R.id.saveButton);
         imageSectionView = findViewById(R.id.imageSection);
         imageToUploadView = findViewById(R.id.imageToUpload);
         selectImageButton = findViewById(R.id.selectImageButton);
@@ -115,25 +120,12 @@ public class CreatePageActivity extends NotifyActivity {
             OnGPS();
         } else {
             getLocation();
+            if (longitude != null && latitude != null) {
+                fetchData();
+            }
         }
 
-//        AndroidNetworking.initialize(getApplicationContext());
-//        AndroidNetworking.get("http://dev.virtualearth.net/REST/v1/Locations/" + latitude + ", " + longitude + "?key={AnnVlNDWt7a8pHmWJQ_OoqVkOrl_RJie4cb6exfB3cgTBOi3MlHlUVo0fn97nejJ}")
-//                .build()
-//                .getAsJSONArray(new JSONArrayRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        // do anything with response
-//                        System.out.println(response);
-//                    }
-//                    @Override
-//                    public void onError(ANError error) {
-//                        // handle error
-//                        System.out.println(error);
-//                    }
-//                });
-
-        // set up listeners
+        // set up listeners for adding ingredients
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +133,7 @@ public class CreatePageActivity extends NotifyActivity {
             }
         });
 
+        // set up listeners for adding steps
         addStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,7 +141,7 @@ public class CreatePageActivity extends NotifyActivity {
             }
         });
 
-        // upload photo method
+        // selects a photo from the users photo gallery
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +154,15 @@ public class CreatePageActivity extends NotifyActivity {
             }
         });
 
-        // post final recipe
+        // back
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        // posts the final recipe
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,7 +207,7 @@ public class CreatePageActivity extends NotifyActivity {
 
     }
 
-
+    // addEditTextView() adds an edit text view
     private void addEditTextView(LinearLayout parentView) {
         EditText lastIngredient = (EditText) parentView.getChildAt(parentView.getChildCount()-1);
         String lastIngredientText = lastIngredient.getText().toString();
@@ -227,6 +228,7 @@ public class CreatePageActivity extends NotifyActivity {
         }
     }
 
+    // getAllChildrenText() gets all of the children in the LinearLayout
     private ArrayList<String> getAllChildrenText(LinearLayout parentView) {
         ArrayList<String> childrenText = new ArrayList<String>();
         // save only the non-empty text
@@ -240,6 +242,8 @@ public class CreatePageActivity extends NotifyActivity {
         return childrenText;
     }
 
+
+    // onActivityResult() sets the image Uri for the image to upload
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -261,6 +265,7 @@ public class CreatePageActivity extends NotifyActivity {
         }
     }
 
+    // onGPS() enables location services
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes", new  DialogInterface.OnClickListener() {
@@ -278,6 +283,7 @@ public class CreatePageActivity extends NotifyActivity {
         alertDialog.show();
     }
 
+    // getLocation() sends a request and retrieves the user's longitude and latitude
     private void getLocation() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         if (ActivityCompat.checkSelfPermission(
@@ -298,6 +304,34 @@ public class CreatePageActivity extends NotifyActivity {
         }
     }
 
+    // fetchData() sends a request to retrieve the city and province of the user
+    private void fetchData(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://dev.virtualearth.net/REST/v1/Locations/" + latitude + ", " + longitude + "?key=AnnVlNDWt7a8pHmWJQ_OoqVkOrl_RJie4cb6exfB3cgTBOi3MlHlUVo0fn97nejJ";
 
-
+        // Sends a request to the URL and retrieves a string response
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONObject obj;
+                JSONArray cityArr;
+                try {
+                    obj = new JSONObject(response);
+                    cityArr = obj.getJSONArray("resourceSets").getJSONObject(0).getJSONArray("resources");
+                    city = cityArr.getJSONObject(0).getJSONObject("address").getString("locality");
+                    province = cityArr.getJSONObject(0).getJSONObject("address").getString("adminDistrict");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // displays the city and province
+                locationView.setText(city + ", " + province);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                locationView.setText("No Location Found!");
+            }
+        });
+        queue.add(stringRequest);
+    }
 }
