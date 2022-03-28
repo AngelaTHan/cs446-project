@@ -305,14 +305,9 @@ public class ViewProfileActivity extends NotifyActivity {
         profile.setOnClickListener(new View.OnClickListener() { // refresh profile page
             @Override
             public void onClick(View view) {
-                if (onMyPost){
-                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
-                    mypostCounter = 0;
-                } else {
-                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
-                    collectedCounter = 0;
-                }
-                recipeCounter = 0;
+                Intent goCreatePostIntent = new Intent(ViewProfileActivity.this, ProfilePageActivity.class);
+                goCreatePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goCreatePostIntent, 0);
             }
         });
     }
