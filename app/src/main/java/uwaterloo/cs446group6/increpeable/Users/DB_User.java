@@ -73,10 +73,10 @@ public class DB_User extends User {
     }
     public void addLikedPostID(DatabaseReference mDatabase, String likeID) {
         likedPostIDs.add(likeID);
-        mDatabase.child("UserAccounts").child(key).child("likedPostIDs").setValue(followingIDs);
+        mDatabase.child("UserAccounts").child(key).child("likedPostIDs").setValue(likedPostIDs);
     }
     public void deleteLikedPostID(DatabaseReference mDatabase, String likeID) {
         likedPostIDs.remove(likeID);
-        mDatabase.child("UserAccounts").child(key).child("likedPostIDs").setValue(followingIDs);
+        mDatabase.child("UserAccounts").child(key).child("likedPostIDs").setValue(likedPostIDs);
     }
 } 
