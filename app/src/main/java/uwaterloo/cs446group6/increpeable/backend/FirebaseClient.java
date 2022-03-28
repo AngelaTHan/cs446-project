@@ -37,15 +37,6 @@ public class FirebaseClient {
     private DB_Recipe currentRecipe;
     private DB_User currentRecipeAuthor;
 
-    // If Stage == DEV, firebase client will make "fake" transaction calls to save cost
-    // It will save all the recipes in allRecipesInFirebase
-    private ArrayList<DB_Recipe> allRecipesInFirebase = new ArrayList<>();
-    private enum Stage {
-        DEV,
-        PROD
-    }
-    private Stage stage = Stage.PROD;
-
 
     //  ==================================================================================
     //  ================================ Cache Getters ===================================
@@ -55,17 +46,25 @@ public class FirebaseClient {
     // These functions don't cost money
 
 
+    // return currentUser in cache
     public User getCacheUser() { return currentUser; }
+
+    // return currentRecipes in cache
     public ArrayList<Recipe> getCacheRecipePosts() {
         ArrayList<Recipe> recipesToReturn = new ArrayList<>();
+        // convert Recipes into DB_Recipes
         currentRecipes.forEach(recipe -> recipesToReturn.add(recipe));
         return recipesToReturn;
     }
 
+    // return currentRecipe in cache
     public Recipe getCurrentRecipe () {
-        System.out.println("FIREBASE CLIENT" + String.valueOf(currentRecipe.getNumLikes()) + "   " + String.valueOf(currentRecipe.getNumCollects()));
-        return currentRecipe; }
+        return currentRecipe;
+    }
+
+    // return currentRecipeAuthor in cache
     public User getCurrentRecipeAuthor() { return currentRecipeAuthor; }
+
 
     //  ==================================================================================
     //  ================ setCurrentActivity and setCurrentDBUser =========================
@@ -80,6 +79,10 @@ public class FirebaseClient {
     // Called once logged in by MainActivity
     public void setCurrentDBUser(DB_User user) { currentUser = user; }
 
+    // Set the currentRecipe field in cache
+    public void setCurrentRecipe (Recipe recipe) {
+        this.currentRecipe = new DB_Recipe(recipe);
+    }
 
     //  ==================================================================================
     //  ===================== getRecipesByID and getRecommendedPosts =====================
@@ -89,97 +92,69 @@ public class FirebaseClient {
     // retrieve the recipes
 
 
+    // Get some recipes by keys;
     // async function;
     // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_RECIPES_BY_ID)
     // when posts are retrieved from firebase.
-    // When stage is DEV, these functions don't cost money; otherwise, they cost money
     public void getRecipesByID(ArrayList<String> keys) {
-        // DEV mode - cost saving mode; make calls to the local recipes
-        if (stage == Stage.DEV) {
-            currentRecipes.clear();
-            allRecipesInFirebase.forEach(recipe -> {
-                if (keys.contains(recipe.getKey()))
-                    currentRecipes.add(recipe);
-            });
-            currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_ID);
-        } else {
-        // PROD mode - make real transaction calls to the database
-            if (!currentRecipes.isEmpty()) { currentRecipes.clear(); } // empty the arraylist
-            mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
-                    }
-                    else {
-                        DataSnapshot result_ds = task.getResult();
-                        for (DataSnapshot ds : result_ds.getChildren()) {
-                            Log.e(LOG_TAG, "%%%%%%%%%" + ds.child("key").getValue(String.class));
-                            if (keys.contains(ds.child("key").getValue(String.class))) {
-                                Log.e(LOG_TAG, "here" + ds.getValue(DB_Recipe.class).getKey());
-                                currentRecipes.add(ds.getValue(DB_Recipe.class));
-                            }
-                        }
-                        if (currentRecipes.size() != keys.size()) {
-                            Log.e(LOG_TAG, "cannot find some of the recipes by ids" + currentRecipes.size() + " " + keys.size());
-                        } else {
-                            Log.i(LOG_TAG, " recipes saved to the arraylist" + currentRecipes.size());
-                        }
-                        currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_ID);
-                    }
+        if (!currentRecipes.isEmpty()) { currentRecipes.clear(); } // empty the arraylist
+        mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
                 }
-            });
-        }
+                else {
+                    DataSnapshot result_ds = task.getResult();
+                    for (DataSnapshot ds : result_ds.getChildren()) {
+                        if (keys.contains(ds.child("key").getValue(String.class))) {
+                            currentRecipes.add(ds.getValue(DB_Recipe.class));
+                        }
+                    }
+                    if (currentRecipes.size() != keys.size()) {
+                        Log.e(LOG_TAG, "cannot find some of the recipes by ids" + currentRecipes.size() + " " + keys.size());
+                    } else {
+                        Log.i(LOG_TAG, "recipes saved to the arraylist" + currentRecipes.size());
+                    }
+                    currentActivity.notifyActivity(ReturnFromFunction.GET_RECIPES_BY_ID);
+                }
+            }
+        });
     }
 
+    // get n recommended recipes for the home page;
     // async function;
     // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_RECOMMENDED_POSTS)
     // when posts are retrieved from firebase.
-    // When stage is DEV, these functions don't cost money; otherwise, they cost money
     public void getRecommendedRecipes(int size) {
-        // DEV mode - cost saving mode; make calls to the local recipes
-        if (stage == Stage.DEV) {
-            // Get recipes
-            int sizeToGet = min(allRecipesInFirebase.size() - startFrom, size);
-            List<DB_Recipe> recipeSubset = allRecipesInFirebase.subList(startFrom, startFrom + sizeToGet); // bug here: if required size > current size
-            currentRecipes.clear();
-            currentRecipes.addAll(recipeSubset);
-            //startFrom += sizeToGet;
-            //changed:
-            if (startFrom == 0){
-                startFrom += sizeToGet - 1;
-            } else {
-                startFrom += sizeToGet;
-            }
-            currentActivity.notifyActivity(ReturnFromFunction.GET_RECOMMENDED_POSTS);
-        } else {
-        // PROD mode - make real transaction calls to the database; costs money
-            currentRecipes.clear();
-            // start to get data from firebase
-            mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
-                    }
-                    else {
-                        DataSnapshot result_ds = task.getResult(); // result_ds is all users in database
-                        ArrayList<DB_Recipe> returnedRecipes = new ArrayList<>();
-                        result_ds.getChildren().forEach(ds -> {
-                            returnedRecipes.add(ds.getValue(DB_Recipe.class));
-                        });
-                        int sizeToGet = min(returnedRecipes.size() - startFrom, size);
-                        List<DB_Recipe> recipeSubset = returnedRecipes.subList(startFrom, startFrom + sizeToGet); // bug here: need to fix: returnedRecipes.subList(startFrom - 1, sizeToGet);
-                        currentRecipes.addAll(recipeSubset);
-                        startFrom += sizeToGet;
-                        currentActivity.notifyActivity(ReturnFromFunction.GET_RECOMMENDED_POSTS);
-                    }
+        currentRecipes.clear();
+        // start to get data from firebase
+        mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
                 }
-            });
-        }
+                else {
+                    DataSnapshot result_ds = task.getResult(); // result_ds is all users in database
+                    ArrayList<DB_Recipe> returnedRecipes = new ArrayList<>();
+                    result_ds.getChildren().forEach(ds -> {
+                        returnedRecipes.add(ds.getValue(DB_Recipe.class));
+                    });
+                    int sizeToGet = min(returnedRecipes.size() - startFrom, size);
+                    List<DB_Recipe> recipeSubset = returnedRecipes.subList(startFrom, startFrom + sizeToGet); // bug here: need to fix: returnedRecipes.subList(startFrom - 1, sizeToGet);
+                    currentRecipes.addAll(recipeSubset);
+                    startFrom += sizeToGet;
+                    currentActivity.notifyActivity(ReturnFromFunction.GET_RECOMMENDED_POSTS);
+                }
+            }
+        });
     }
 
-    // returns a list of recipes that contains the keywords in their title
+    // returns a list of recipes that contains the keywords in their title;
+    // async function;
+    // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_RECOMMENDED_POSTS)
+    // when posts are retrieved from firebase.
     public void getRecipesByKeywords(String keyWords) {
         if (!currentRecipes.isEmpty()) { currentRecipes.clear(); } // empty the arraylist
         mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -216,17 +191,14 @@ public class FirebaseClient {
         });
     }
 
+    // get the author of the current recipe, and save it to currentRecipeAuthor;
     // async function;
-    // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_CURRENT_RECIPE_AUTHOR)
-    // when current recipe is set.
-    // These functions cost money
-    public void setCurrentRecipe (DB_Recipe recipe) {
-        this.currentRecipe = recipe;
-    }
-
+    // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_RECOMMENDED_POSTS)
+    // when posts are retrieved from firebase.
     public void setCurrentRecipeAuthor() {
         // Set current recipe author information
-        mDatabase.child("UserAccounts").child(currentRecipe.getAuthorKey()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mDatabase.child("UserAccounts").child(currentRecipe.getAuthorKey())
+                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -254,7 +226,6 @@ public class FirebaseClient {
     // async function;
     // Will call currentActivity.notifyActivity (ReturnFromFunction.REFRESH_USER)
     // when user is retrieved from firebase.
-    // Always cost money
     public void refreshUser() {
         String userid = currentUser.getKey();
         mDatabase.child("UserAccounts").child(userid).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -275,7 +246,6 @@ public class FirebaseClient {
     // Will call currentActivity.notifyActivity (ReturnFromFunction.GET_RECIPES_BY_ID)
     // when recipes are retrieved from firebase.
     // Note: It doesn't use ReturnFromFunction.REFRESH_RECIPES!
-    // Always cost money
     public void refreshRecipes() {
         if (currentRecipes.isEmpty()) {
             Log.d(LOG_TAG, "cannot refresh recipes because currentRecipes is empty");
@@ -354,7 +324,6 @@ public class FirebaseClient {
     // post is already collected, and vice versa
     // isCollect == true  => collect
     // isCollect == false => uncollect
-    // Always cost money
     public void modifyCollectPost(String article_id, boolean isCollect) {
         // increase the numCollects in the recipe
         DB_Recipe recipe = new DB_Recipe();
@@ -391,7 +360,6 @@ public class FirebaseClient {
     // author is already followed, and vice versa
     // isFollow == true  => follow
     // isFollow == false => unfollow
-    // Always cost money
     public void modifyFollowAuthor(String idToFollow, boolean isFollow) {
         // add the id of user that the current user wants to follow to its followingIDs array
         if (isFollow) {
@@ -439,13 +407,10 @@ public class FirebaseClient {
 
         // save newPost locally
         DB_Recipe recipe = new DB_Recipe(newPost); // cast Recipe to DB_Recipe
-
         currentRecipes.add(recipe);
+
         // save newPost to firebase
         mDatabase.child("Recipes").child(newPost.getKey()).setValue(newPost);
-        if (stage == Stage.DEV) {
-            allRecipesInFirebase.add(recipe);
-        }
         currentUser.addMyPostID(mDatabase, newPost.getKey());
         currentActivity.notifyActivity(ReturnFromFunction.CREATE_NEW_POST);
     }
@@ -465,15 +430,6 @@ public class FirebaseClient {
             }
         }
 
-        if (stage == Stage.DEV) {
-            for (int i = 0; i < allRecipesInFirebase.size(); i++) {
-                if (allRecipesInFirebase.get(i).getKey().equals(updatedRecipe.getKey())) {
-                    allRecipesInFirebase.set(i, recipe);
-                    break;
-                }
-            }
-        }
-
         // update firebase
         currentRecipe.setTitle(mDatabase, recipe.getTitle());
         currentRecipe.setDescription(mDatabase, recipe.getDescription());
@@ -483,7 +439,6 @@ public class FirebaseClient {
     }
 
     // Synchronized function; no need to prepare a case in NotifyActivity
-    // Always cost money
     public void addComment(String postID, String comment, String username) {
         Long tsLong = System.currentTimeMillis()/1000;
         String time = tsLong.toString();
@@ -492,23 +447,13 @@ public class FirebaseClient {
         newComment.add(time);
         newComment.add(username);
 
-        DB_Recipe db_recipe = new DB_Recipe();
         for (DB_Recipe dr : currentRecipes) {
             if (dr.getKey().equals(postID)) {
-                db_recipe = dr;
                 dr.addComment(mDatabase, newComment);
                 break;
             }
         }
 
-        if (stage == Stage.DEV) {
-            for (int i = 0; i < allRecipesInFirebase.size(); i++) {
-                if (allRecipesInFirebase.get(i).getKey().equals(postID)) {
-                    allRecipesInFirebase.set(i, db_recipe);
-                    break;
-                }
-            }
-        }
         currentActivity.notifyActivity(ReturnFromFunction.CREATE_NEW_POST);
     }
 
@@ -522,7 +467,6 @@ public class FirebaseClient {
     // async function
     // Will call currentActivity.notifyActivity(ReturnFromFunction.GET_IMAGE_VIEW_BY_NAME)
     // and set the imageView when download is completed.
-    // Always cost money
     public void getImageViewByName(ImageView imageView, String name) {
         fileStorageEngine.downloadImage(imageView, name, currentActivity);
     }
@@ -530,7 +474,6 @@ public class FirebaseClient {
     // async function
     // Will call currentActivity.notifyActivity(ReturnFromFunction.UPLOAD_IMAGEVIEW)
     // when the upload is complete
-    // Always cost money
     public void uploadImageView(ImageView iv, String name) {
         fileStorageEngine.uploadImage(iv, name, currentActivity);
     }
@@ -550,9 +493,11 @@ public class FirebaseClient {
         }
     }
 
+
     //  ==================================================================================
     //  ===================== setUsername and setUserDescription =====================
     //  ==================================================================================
+
 
     // set current user's username
     public void setUsername (String name) {
@@ -564,6 +509,7 @@ public class FirebaseClient {
         currentUser.setDescription(mDatabase, description);
     }
 
+
     //  ==================================================================================
     //  ===================== Singleton Constructor and getInstance() ====================
     //  ==================================================================================
@@ -572,24 +518,6 @@ public class FirebaseClient {
     private FirebaseClient() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
         this.fileStorageEngine = new FileStorageEngine();
-
-        // If stage == DEV, load all recipes from firebase database locally, and query from this.
-        if (stage == Stage.DEV) {
-            mDatabase.child("Recipes").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    if (!task.isSuccessful()) {
-                        Log.e(LOG_TAG, "Error getting recipes from firebase", task.getException());
-                    }
-                    else {
-                        DataSnapshot result_ds = task.getResult();
-                        for (DataSnapshot ds : result_ds.getChildren()) {
-                            allRecipesInFirebase.add(ds.getValue(DB_Recipe.class));
-                        }
-                    }
-                }
-            });
-        }
     }
 
     public static FirebaseClient getInstance() {
