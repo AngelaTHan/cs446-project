@@ -48,7 +48,7 @@ public class ViewProfileActivity extends NotifyActivity {
     private TextView likesCount;
 
     // view options
-    private Button follow;
+    private Button followButton;
     private Boolean hasFollowed;
     private ColorStateList redStateList;
     private ColorStateList darkGrayStateList;
@@ -70,32 +70,26 @@ public class ViewProfileActivity extends NotifyActivity {
     private TextView post1title;
     private TextView post1collects;
     private TextView post1likes;
-    private String post1id;
     private ImageView post2image;
     private TextView post2title;
     private TextView post2collects;
     private TextView post2likes;
-    private String post2id;
     private ImageView post3image;
     private TextView post3title;
     private TextView post3collects;
     private TextView post3likes;
-    private String post3id;
     private ImageView post4image;
     private TextView post4title;
     private TextView post4collects;
     private TextView post4likes;
-    private String post4id;
     private ImageView post5image;
     private TextView post5title;
     private TextView post5collects;
     private TextView post5likes;
-    private String post5id;
     private ImageView post6image;
     private TextView post6title;
     private TextView post6collects;
     private TextView post6likes;
-    private String post6id;
 
     // recipe counter
     Boolean onMyPost = true;
@@ -180,15 +174,15 @@ public class ViewProfileActivity extends NotifyActivity {
         profile = findViewById(R.id.profile);
 
         // follow button
-        follow.findViewById(R.id.follow);
+        followButton = findViewById(R.id.followButton);
         viewUser = firebaseClient.getCurrentRecipeAuthor();
         hasFollowed = currentUser.getFollowingIDs().contains(viewUser.getKey());
         if (hasFollowed) {
-            follow.setText("Following");
-            follow.setBackgroundTintList(darkGrayStateList);
+            followButton.setText("Following");
+            followButton.setBackgroundTintList(darkGrayStateList);
         } else {
-            follow.setText("Follow");
-            follow.setBackgroundTintList(redStateList);
+            followButton.setText("Follow");
+            followButton.setBackgroundTintList(redStateList);
         }
 
         // load profile information
@@ -215,7 +209,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post6title.setText(recipes.get(recipeCounter + 5).getTitle());
             post6collects.setText(Util.convertNumber(recipes.get(recipeCounter + 5).getNumCollects()));
             post6likes.setText(Util.convertNumber(recipes.get(recipeCounter + 5).getNumLikes()));
-            post6id = recipes.get(recipeCounter + 5).getKey();
             counter++;
         } else {
             post6.setVisibility(View.GONE);
@@ -229,7 +222,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post5title.setText(recipes.get(recipeCounter + 4).getTitle());
             post5collects.setText(Util.convertNumber(recipes.get(recipeCounter + 4).getNumCollects()));
             post5likes.setText(Util.convertNumber(recipes.get(recipeCounter + 4).getNumLikes()));
-            post5id = recipes.get(recipeCounter + 4).getKey();
             counter++;
         } else {
             ViewGroup.LayoutParams params = row3.getLayoutParams();
@@ -243,7 +235,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post4title.setText(recipes.get(recipeCounter + 3).getTitle());
             post4collects.setText(Util.convertNumber(recipes.get(recipeCounter + 3).getNumCollects()));
             post4likes.setText(Util.convertNumber(recipes.get(recipeCounter + 3).getNumLikes()));
-            post4id = recipes.get(recipeCounter + 3).getKey();
             counter++;
         } else {
             post4.setVisibility(View.GONE);
@@ -257,7 +248,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post3title.setText(recipes.get(recipeCounter + 2).getTitle());
             post3collects.setText(Util.convertNumber(recipes.get(recipeCounter + 2).getNumCollects()));
             post3likes.setText(Util.convertNumber(recipes.get(recipeCounter + 2).getNumLikes()));
-            post3id = recipes.get(recipeCounter + 2).getKey();
             counter++;
         } else {
             ViewGroup.LayoutParams params = row2.getLayoutParams();
@@ -271,7 +261,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post2title.setText(recipes.get(recipeCounter + 1).getTitle());
             post2collects.setText(Util.convertNumber(recipes.get(recipeCounter + 1).getNumCollects()));
             post2likes.setText(Util.convertNumber(recipes.get(recipeCounter + 1).getNumLikes()));
-            post2id = recipes.get(recipeCounter + 1).getKey();
             counter++;
         } else {
             post2.setVisibility(View.GONE);
@@ -285,7 +274,6 @@ public class ViewProfileActivity extends NotifyActivity {
             post1title.setText(recipes.get(recipeCounter + 0).getTitle());
             post1collects.setText(Util.convertNumber(recipes.get(recipeCounter + 0).getNumCollects()));
             post1likes.setText(Util.convertNumber(recipes.get(recipeCounter + 0).getNumLikes()));
-            post1id = recipes.get(recipeCounter + 0).getKey();
             counter++;
         } else {
             ViewGroup.LayoutParams params = row1.getLayoutParams();
@@ -295,33 +283,6 @@ public class ViewProfileActivity extends NotifyActivity {
         }
         postsLoaded += counter;
         posts.scrollTo(0,0);
-    }
-
-    private void setUserInformationListeners() {
-        // change profile image
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent GalleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(GalleryIntent, PICK_IMAGE);
-            }
-        });
-
-        // change user name or user bio
-        username.addTextChangedListener(new TextChangedListener<EditText>(username) {
-            @Override
-            public void onTextChanged(EditText target, Editable s) {
-                System.out.println("*********************username changes");
-                firebaseClient.setUsername(target.getText().toString());
-            }
-        });
-        userBio.addTextChangedListener(new TextChangedListener<EditText>(userBio) {
-            @Override
-            public void onTextChanged(EditText target, Editable s) {
-                System.out.println("*********************userBio changes");
-                firebaseClient.setUserDescription(target.getText().toString());
-            }
-        });
     }
 
     private void setBottomBarListeners() {
@@ -358,16 +319,16 @@ public class ViewProfileActivity extends NotifyActivity {
 
     private void setFollowListeners() {
         // follow button
-        follow.setOnClickListener(new View.OnClickListener() {
+        followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view) {
                 if (hasFollowed) {
-                    follow.setText("Follow");
-                    follow.setBackgroundTintList(redStateList);
+                    followButton.setText("Follow");
+                    followButton.setBackgroundTintList(redStateList);
                     hasFollowed = false;
                 } else {
-                    follow.setText("Following");
-                    follow.setBackgroundTintList(darkGrayStateList);
+                    followButton.setText("Following");
+                    followButton.setBackgroundTintList(darkGrayStateList);
                     hasFollowed = true;
                 }
                 firebaseClient.modifyFollowAuthor(viewUser.getKey(), hasFollowed);
@@ -500,7 +461,7 @@ public class ViewProfileActivity extends NotifyActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_viewprofile);
 
         initializeUI();
 
@@ -509,24 +470,10 @@ public class ViewProfileActivity extends NotifyActivity {
         firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
 
         // set up listeners
-        setUserInformationListeners();
         setBottomBarListeners();
         setFollowListeners();
         posts.setOnTouchListener(new TouchListenerImpl());
         setViewPostListeners();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        // pick profile picture from gallery successful
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            Uri imageUri = data.getData();
-            profileImage.setImageURI(imageUri);
-            String imageID = UUID.randomUUID().toString();
-            firebaseClient.uploadImageView(profileImage, imageID);
-            firebaseClient.setProfileImageName(imageID + ".jpg");
-        }
     }
 
     @Override
