@@ -50,8 +50,8 @@ public class ViewProfileActivity extends NotifyActivity {
     // view options
     private Button follow;
     private Boolean hasFollowed;
-    private ColorStateList redStateList = ContextCompat.getColorStateList(this, R.color.red);
-    private ColorStateList darkGrayStateList = ContextCompat.getColorStateList(this, R.color.dark_gray);
+    private ColorStateList redStateList;
+    private ColorStateList darkGrayStateList;
 
     // scrollview
     private ScrollView posts;
@@ -118,6 +118,10 @@ public class ViewProfileActivity extends NotifyActivity {
         firebaseClient = FirebaseClient.getInstance();
         currentUser = firebaseClient.getCacheUser();
         firebaseClient.setCurrentActivity(this);
+
+        // colors
+        redStateList = ContextCompat.getColorStateList(this, R.color.red);
+        darkGrayStateList = ContextCompat.getColorStateList(this, R.color.dark_gray);
 
         // profile information
         profileImage = findViewById(R.id.profile_image);

@@ -19,6 +19,10 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
+            android:name="uwaterloo.cs446group6.increpeable.ViewProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication.NoActionBar" />
+        <activity
             android:name="uwaterloo.cs446group6.increpeable.CreatePageActivity"
             android:exported="false"
             android:theme="@style/Theme.MyApplication.NoActionBar" />

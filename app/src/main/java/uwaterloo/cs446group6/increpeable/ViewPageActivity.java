@@ -31,6 +31,7 @@ public class ViewPageActivity extends NotifyActivity {
 
     private ImageButton backButton;
     private ImageButton editPostButton;
+    private ImageView viewPostAuthorProfileView;
     private Button followButton;
     private LinearLayout likeButton;
     private ImageView likeIcon;
@@ -49,6 +50,7 @@ public class ViewPageActivity extends NotifyActivity {
         // buttons
         backButton = findViewById(R.id.backFromView);
         editPostButton = findViewById(R.id.editPost);
+        viewPostAuthorProfileView = findViewById(R.id.viewPostAuthorProfile);
         followButton = findViewById(R.id.follow);
         likeButton = findViewById(R.id.like);
         likeIcon = findViewById(R.id.likeIcon);
@@ -64,6 +66,7 @@ public class ViewPageActivity extends NotifyActivity {
         firebaseClient.setCurrentRecipeAuthor();
         if (currentRecipe.getAuthorKey().equals(currentUser.getKey())) {
             editPostButton.setVisibility(View.VISIBLE);
+            followButton.setVisibility(View.GONE);
         }
 
         // load recipe header
@@ -126,6 +129,17 @@ public class ViewPageActivity extends NotifyActivity {
                 Intent goEditPostIntent = new Intent(ViewPageActivity.this, EditPageActivity.class);
                 goEditPostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivityIfNeeded(goEditPostIntent, 0);
+                finish();
+            }
+        });
+
+        // profile image
+        viewPostAuthorProfileView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view) {
+                Intent goProfilePostIntent = new Intent(ViewPageActivity.this, ViewProfileActivity.class);
+                goProfilePostIntent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(goProfilePostIntent, 0);
                 finish();
             }
         });
