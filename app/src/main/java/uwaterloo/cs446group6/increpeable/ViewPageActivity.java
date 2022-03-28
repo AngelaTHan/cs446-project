@@ -223,7 +223,7 @@ public class ViewPageActivity extends NotifyActivity {
             case GET_CURRENT_RECIPE_AUTHOR:
                 currentRecipeAuthor = firebaseClient.getCurrentRecipeAuthor();
                 ImageView userProfile = findViewById(R.id.viewPostAuthorProfile);
-                firebaseClient.getImageViewByName(userProfile, currentUser.getProfileImageName());
+                firebaseClient.getImageViewByName(userProfile, currentRecipeAuthor.getProfileImageName());
                 TextView userName = findViewById(R.id.viewPostAuthorName);
                 userName.setText(currentRecipeAuthor.getUsername());
 

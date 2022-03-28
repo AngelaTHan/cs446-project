@@ -336,14 +336,7 @@ public class ProfilePageActivity extends NotifyActivity {
         profile.setOnClickListener(new View.OnClickListener() { // refresh profile page
             @Override
             public void onClick(View view) {
-                if (onMyPost){
-                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
-                    mypostCounter = 0;
-                } else {
-                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
-                    collectedCounter = 0;
-                }
-                recipeCounter = 0;
+                firebaseClient.refreshUser();
             }
         });
     }
@@ -564,6 +557,16 @@ public class ProfilePageActivity extends NotifyActivity {
                 recipes.addAll(firebaseClient.getCacheRecipePosts());
                 System.out.println("in notifyActivity. Here are the async results: " + recipes.size());
                 loadRecipes();
+                break;
+            case REFRESH_USER:
+                if (onMyPost){
+                    firebaseClient.getRecipesByID(currentUser.getMyPostIDs());
+                    mypostCounter = 0;
+                } else {
+                    firebaseClient.getRecipesByID(currentUser.getCollectedPostIDs());
+                    collectedCounter = 0;
+                }
+                recipeCounter = 0;
                 break;
             default:
                 break;
