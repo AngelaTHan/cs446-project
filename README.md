@@ -15,3 +15,6 @@ InCRÊPEable is a recipe management and recipe-sharing app. Throughout history, 
 ### Test User Account
 * email: williamnb@gmail.com
 * password: abc123
+
+### Notes
+* To enable location service in the App, need to set emulator location in settings and open google map prior to using the app.
